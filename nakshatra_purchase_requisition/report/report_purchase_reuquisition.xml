@@ -1,0 +1,88 @@
+<odoo>
+    <template id="report_purchase_requisition_document">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <h2>Purchase Requisition - <span t-field="doc.name" /></h2>
+                <p>
+                    <strong>PR Date:</strong>
+                    <span t-field="doc.pr_date" />
+                </p>
+                <p>
+                    <strong>Project:</strong>
+                    <span t-field="doc.project_id.name" />
+                </p>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>SN</th>
+                            <th>Number</th>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Qty</th>
+                            <th>UOM</th>
+                            <th>Available Qty</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-set="sq_no" t-value="1" />
+                        <t t-foreach="doc.line_ids" t-as="line">
+                            <tr>
+                                <td>
+                                    <span t-esc="sq_no" />
+                                </td>
+                                <td>
+                                    <span t-field="line.product_code" />
+                                </td>
+                                <td>
+                                    <img
+                                        t-if="line.image"
+                                        t-att-src="image_data_uri(line.image)"
+                                        style="height:40px;"
+                                    />
+                                </td>
+                                <td>
+                                    <span t-field="line.product_id.name" />
+                                </td>
+                                <td>
+                                    <span t-field="line.required_qty" />
+                                </td>
+                                <td>
+                                    <span t-field="line.uom_id.name" />
+                                </td>
+                                <td>
+                                    <span t-field="line.available_qty" />
+                                </td>
+                            </tr>
+                            <t t-set="sq_no" t-value="sq_no+1" />
+                        </t>
+                    </tbody>
+                </table>
+
+                <div class="row mt-5">
+                    <div class="col-4 text-center border">
+                        <strong>Created By</strong>
+                        <br />
+                        <span t-field="doc.create_uid.name" />
+                    </div>
+                    <div class="col-4 text-center border">
+                    <strong>Checked By</strong><br />
+                    ______________________
+                </div>
+                    <div class="col-4 text-center border">
+                    <strong>Authorized By</strong><br />
+                    ______________________
+                </div>
+                </div>
+            </div>
+        </t>
+    </template>
+    <template id="report_purchase_requisition">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t
+                    t-call="nakshatra_purchase_requisition.report_purchase_requisition_document"
+                />
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,20 @@
+{
+    "name": "Dynamic Approval Rule",
+    "version": "18.0.1.0.0",
+    "depends": ["base", "mail"],
+    "website": "https://7span.com/",
+    "author": "7Span",
+    "category": "Approval Workflow",
+    "summary": "Dynamic approval workflow rules.",
+    "license": "LGPL-3",
+    "data": [
+        "security/dynamic_approver_groups.xml",
+        "security/ir.model.access.csv",
+        "data/approval_sequence.xml",
+        "data/approval_reminder_cron.xml",
+        "views/approval_rule_views.xml",
+        "views/approval_request_views.xml",
+        "wizards/approval_reject_wizard_views.xml",
+    ],
+    "application": True,
+}

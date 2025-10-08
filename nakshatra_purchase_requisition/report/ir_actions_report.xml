@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="action_report_purchase_requisition" model="ir.actions.report">
+        <field name="name">Purchase Requisition</field>
+        <field name="model">nakshatra.purchase.requisition</field>
+        <field name="report_type">qweb-pdf</field>
+        <field
+            name="report_name"
+        >nakshatra_purchase_requisition.report_purchase_requisition</field>
+        <field
+            name="report_file"
+        >nakshatra_purchase_requisition.report_purchase_requisition</field>
+        <field
+            name="binding_model_id"
+            ref="nakshatra_purchase_requisition.model_nakshatra_purchase_requisition"
+        />
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

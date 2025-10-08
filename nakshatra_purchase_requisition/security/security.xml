@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- PR User Group -->
+    <record id="group_pr_user" model="res.groups">
+        <field name="name">PR User</field>
+        <field name="category_id" ref="base.module_category_inventory_purchase" />
+    </record>
+
+    <!-- PR Admin Group -->
+    <record id="group_pr_admin" model="res.groups">
+        <field name="name">PR Administration</field>
+        <field name="category_id" ref="base.module_category_inventory_purchase" />
+        <field name="implied_ids" eval="[(4, ref('group_pr_user'))]" />
+    </record>
+</odoo>

@@ -1,0 +1,55 @@
+<odoo noupdate="1">
+    <record id="partner_rule_deny_all" model="ir.rule">
+        <field name="name">Deny All Partners (Except Own)</field>
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="domain_force">[('id', '=', user.partner_id.id)]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]" />
+    </record>
+
+    <record id="partner_rule_all_access_for_settings" model="ir.rule">
+        <field name="name">Access All Contacts (Settings Users)</field>
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <!-- always true -->
+        <field name="groups" eval="[(4, ref('base.group_system'))]" />
+    </record>
+
+    <!-- Salesperson: only customers -->
+    <record id="partner_rule_customer" model="ir.rule">
+        <field name="name">Customer Contact Only</field>
+        <field name="model_id" ref="base.model_res_partner" />
+        <field
+            name="domain_force"
+        >['|', ('id', '=', user.partner_id.id), ('contact_type', '=', 'customer')]</field>
+        <field
+            name="groups"
+            eval="[(4, ref('nakshatra_customization.group_salesperson'))]"
+        />
+    </record>
+
+    <!-- Purchase User: only vendors -->
+    <record id="partner_rule_vendor" model="ir.rule">
+        <field name="name">Vendor Contact Only</field>
+        <field name="model_id" ref="base.model_res_partner" />
+        <field
+            name="domain_force"
+        >['|', ('id', '=', user.partner_id.id), ('contact_type', '=', 'vendor')]</field>
+        <field
+            name="groups"
+            eval="[(4, ref('nakshatra_customization.group_purchase_user'))]"
+        />
+    </record>
+
+    <!-- Employeer: only employees -->
+    <record id="partner_rule_employee" model="ir.rule">
+        <field name="name">Employee Contact Only</field>
+        <field name="model_id" ref="base.model_res_partner" />
+        <field
+            name="domain_force"
+        >['|', ('id', '=', user.partner_id.id), ('contact_type', '=', 'employee')]</field>
+        <field
+            name="groups"
+            eval="[(4, ref('nakshatra_customization.group_employer'))]"
+        />
+    </record>
+</odoo>

@@ -1,0 +1,12 @@
+<odoo noupdate="1">
+    <!-- Scheduled Action to Run Approval Reminder -->
+    <record id="ir_cron_run_approval_reminders" model="ir.cron">
+        <field name="name">Run Approval Reminders</field>
+        <field name="model_id" ref="model_dynamic_approval_rule" />
+        <field name="state">code</field>
+        <field name="code">model.process_dynamic_approval_reminders()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">minutes</field>
+        <field name="active">True</field>
+    </record>
+</odoo>

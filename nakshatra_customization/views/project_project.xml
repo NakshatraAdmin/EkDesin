@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_edit_project_inherit_form_inherit_PR" model="ir.ui.view">
+        <field name="name">project.project.view.inherit.inherit.pr</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="sale_project.view_edit_project_inherit_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//div[@name='button_box']//button[@name='action_view_sos']"
+                position="attributes"
+            >
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button
+                    class="oe_stat_button"
+                    type="object"
+                    name="action_view_sos"
+                    icon="fa-dollar"
+                    invisible="not display_sales_stat_buttons or sale_order_count == 0"
+                    groups="sales_team.group_sale_salesman_all_leads"
+                    context="{
+                        'create_for_project_id': id,
+                        'default_project_id': id,
+                        'default_partner_id': partner_id
+                    }"
+                >
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_value">
+                            <field name="sale_order_count" nolabel="1" />
+                        </span>
+                        <span class="o_stat_text">
+                            SO
+                        </span>
+                    </div>
+                </button>
+            </xpath>
+            <xpath
+                expr="//div[@name='button_box']//button[@name='action_customer_preview']"
+                position="attributes"
+            >
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_edit_project_inherit_form_inherit" model="ir.ui.view">
+        <field name="name">project.project.view.inherit.inherit</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='alias_def']" position="after">
+                <field name="warehouse_id" />
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button
+                    name="action_view_project_purchase_orders"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-credit-card"
+                    groups='purchase.group_purchase_user'
+                >
+                    <field name="purchase_order_count" widget="statinfo" string="PO" />
+                </button>
+                <button
+                    name="action_view_mrp_production"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-wrench"
+                    invisible="production_count == 0"
+                    groups="mrp.group_mrp_user"
+                >
+                    <field name="production_count" widget="statinfo" string="MO" />
+                </button>
+                <button
+                    name="action_view_invoice"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-pencil-square-o"
+                    invisible="invoice_count == 0"
+                >
+                    <field name="invoice_count" widget="statinfo" string="Invoices" />
+                </button>
+                <button
+                    type="object"
+                    name="action_view_vendor_bills"
+                    class="oe_stat_button"
+                    icon="fa-pencil-square-o"
+                    invisible="vendor_bill_count == 0"
+                >
+                    <field
+                        name="vendor_bill_count"
+                        widget="statinfo"
+                        string="Vendor Bills"
+                    />
+                </button>
+                <button
+                    class="oe_stat_button"
+                    type="object"
+                    name="action_view_purchase_requisitions"
+                    icon="fa-shopping-cart"
+                >
+                    <field
+                        name="purchase_requisition_count"
+                        widget="statinfo"
+                        string="PR"
+                    />
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>

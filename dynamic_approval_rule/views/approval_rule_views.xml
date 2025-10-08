@@ -1,0 +1,260 @@
+<odoo>
+    <record id="view_dynamic_approval_rule_form" model="ir.ui.view">
+        <field name="name">dynamic.approval.rule.form</field>
+        <field name="model">dynamic.approval.rule</field>
+        <field name="arch" type="xml">
+            <form string="Restriction Rule">
+                <sheet>
+                    <group>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1" />
+                            </h1>
+                            <h3>
+                                <field name="title" />
+                            </h3>
+                        </div>
+                        <field
+                            name="model_id"
+                            options="{'no_create': True, 'no_create_edit': True}"
+                        />
+                        <field name="is_active" widget="boolean_toggle" />
+                        <field name="model_name" invisible="1" />
+                        <field name="available_model_ids" invisible="1" />
+                    </group>
+                    <group>
+                        <field
+                            name="domain"
+                            widget="domain"
+                            options="{'model': 'model_name'}"
+                        />
+                        <notebook>
+                            <page string="Approval Flow">
+                                <group>
+                                    <field name="approval_level" widget="radio" />
+                                    <field name="approval_type" readonly="True" />
+                                </group>
+                                <group>
+                                    <field
+                                        name="approval_line_ids"
+                                        nolabel="1"
+                                        widget="one2many"
+                                        invisible="approval_level == 'multi'"
+                                    >
+                                        <list
+                                            editable="bottom"
+                                            class="o_list_view_auto_width"
+                                            style="overflow-y: auto;"
+                                            create="false"
+                                        >
+                                            <field
+                                                name="primary_approver"
+                                                required="1"
+                                                string="Approver"
+                                            />
+                                            <field
+                                                name="primary_response_duration"
+                                                required="1"
+                                                string="Due"
+                                            />
+                                            <field
+                                                name="primary_response_duration_unit"
+                                                required="1"
+                                                string="Unit"
+                                            />
+                                            <field
+                                                name="primary_reminder_interval"
+                                                required="1"
+                                                string="Interval (Min)"
+                                            />
+                                            <field
+                                                name="primary_reminder_count"
+                                                required="1"
+                                                string="Count"
+                                            />
+                                            <field
+                                                name="primary_post_reminder_action"
+                                                required="1"
+                                                string="Action"
+                                            />
+                                            <field
+                                                name="secondary_approver"
+                                                string="Alt. Approver"
+                                                readonly="primary_post_reminder_action != 'reallocate'"
+                                                required="primary_post_reminder_action == 'reallocate'"
+                                            />
+                                            <field
+                                                name="secondary_response_duration"
+                                                string="Alt. Due"
+                                                readonly="primary_post_reminder_action != 'reallocate'"
+                                                required="primary_post_reminder_action == 'reallocate'"
+                                            />
+                                            <field
+                                                name="secondary_response_duration_unit"
+                                                string="Alt. Deadline Unit"
+                                                column_invisible="True"
+                                                readonly="primary_post_reminder_action != 'reallocate'"
+                                                required="primary_post_reminder_action == 'reallocate'"
+                                            />
+                                            <field
+                                                name="secondary_reminder_interval"
+                                                string="Alt. Interval (Min)"
+                                                readonly="primary_post_reminder_action != 'reallocate'"
+                                                required="primary_post_reminder_action == 'reallocate'"
+                                            />
+                                            <field
+                                                name="secondary_reminder_count"
+                                                string="Count"
+                                                readonly="primary_post_reminder_action != 'reallocate'"
+                                                required="primary_post_reminder_action == 'reallocate'"
+                                            />
+                                            <field
+                                                name="secondary_post_reminder_action"
+                                                string="Alt. Action"
+                                                readonly="primary_post_reminder_action != 'reallocate'"
+                                                required="primary_post_reminder_action == 'reallocate'"
+                                            />
+                                        </list>
+                                    </field>
+                                    <field
+                                        name="approval_line_ids"
+                                        nolabel="1"
+                                        widget="one2many"
+                                        invisible="approval_level == 'single'"
+                                    >
+                                        <list
+                                            editable="bottom"
+                                            class="o_list_view_auto_width"
+                                            style="overflow-y: auto;"
+                                        >
+                                            <field
+                                                name="sequence"
+                                                required="1"
+                                                widget="handle"
+                                            />
+                                            <field
+                                                name="primary_approver"
+                                                required="1"
+                                                string="Approver"
+                                            />
+                                            <field
+                                                name="primary_response_duration"
+                                                required="1"
+                                                string="Due"
+                                            />
+                                            <field
+                                                name="primary_response_duration_unit"
+                                                required="1"
+                                                string="Unit"
+                                            />
+                                            <field
+                                                name="primary_reminder_interval"
+                                                required="1"
+                                                string="Interval (Min)"
+                                            />
+                                            <field
+                                                name="primary_reminder_count"
+                                                required="1"
+                                                string="Count"
+                                            />
+                                            <field
+                                                name="primary_post_reminder_action"
+                                                required="1"
+                                                string="Action"
+                                            />
+                                            <field
+                                                name="secondary_approver"
+                                                string="Alt. Approver"
+                                                readonly="primary_post_reminder_action != 'reallocate'"
+                                                required="primary_post_reminder_action == 'reallocate'"
+                                            />
+                                            <field
+                                                name="secondary_response_duration"
+                                                string="Alt. Due"
+                                                readonly="primary_post_reminder_action != 'reallocate'"
+                                                required="primary_post_reminder_action == 'reallocate'"
+                                            />
+                                            <field
+                                                name="secondary_response_duration_unit"
+                                                string="Alt. Deadline Unit"
+                                                column_invisible="True"
+                                                readonly="primary_post_reminder_action != 'reallocate'"
+                                                required="primary_post_reminder_action == 'reallocate'"
+                                            />
+                                            <field
+                                                name="secondary_reminder_interval"
+                                                string="Alt. Interval (Min)"
+                                                readonly="primary_post_reminder_action != 'reallocate'"
+                                                required="primary_post_reminder_action == 'reallocate'"
+                                            />
+                                            <field
+                                                name="secondary_reminder_count"
+                                                string="Count"
+                                                readonly="primary_post_reminder_action != 'reallocate'"
+                                                required="primary_post_reminder_action == 'reallocate'"
+                                            />
+                                            <field
+                                                name="secondary_post_reminder_action"
+                                                string="Alt. Action"
+                                                readonly="primary_post_reminder_action != 'reallocate'"
+                                                required="primary_post_reminder_action == 'reallocate'"
+                                            />
+                                        </list>
+                                    </field>
+                                </group>
+                            </page>
+
+                            <page string="Notification">
+                                <group>
+                                    <field name="notify_email" />
+                                    <field name="notify_in_app" required="1" />
+                                </group>
+                            </page>
+                        </notebook>
+                    </group>
+                </sheet>
+                <div class="o_attachment_preview" />
+                <chatter />
+            </form>
+        </field>
+    </record>
+
+    <record id="approval_request_list_view" model="ir.ui.view">
+        <field name="name">dynamic.approval.rule.list</field>
+        <field name="model">dynamic.approval.rule</field>
+        <field name="arch" type="xml">
+            <list string="Approval Request">
+                <field name="name" />
+                <field name="title" />
+                <field name="approval_level" optional="hide" />
+                <field name="is_active" optional="show" />
+                <field
+                    name="model_id"
+                    options="{'no_create': True, 'no_create_edit': True}"
+                    domain="[('model', 'not like', 'ir.%'), ('transient', '=', False)]"
+                />
+            </list>
+        </field>
+    </record>
+
+    <record id="action_dynamic_approval_rule" model="ir.actions.act_window">
+        <field name="name">Dynamic Approval Rules</field>
+        <field name="res_model">dynamic.approval.rule</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="approval_request_list_view" />
+    </record>
+
+    <menuitem id="menu_dynamic_approval_root" name="Dynamic Approval Rules" />
+    <menuitem
+        id="menu_dynamic_approval_rules"
+        name="Approval Rules"
+        parent="menu_dynamic_approval_root"
+    />
+    <menuitem
+        id="menu_dynamic_approval_rules_action"
+        name="Rules"
+        parent="menu_dynamic_approval_rules"
+        action="action_dynamic_approval_rule"
+        groups="dynamic_approval_rule.group_dynamic_approver_role"
+    />
+</odoo>

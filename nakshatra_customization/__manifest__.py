@@ -1,0 +1,28 @@
+{
+    "name": "Nakshatra Customization",
+    "summary": "Nakshatra Customization",
+    "author": "7Span",
+    "website": "https://7span.com/",
+    "category": "Customizations",
+    "version": "18.0.1.0.1",
+    "license": "LGPL-3",
+    "depends": [
+        "base",
+        "sale_management",
+        "account",
+        "sale_mrp",
+        "sale_project",
+        "contacts",
+        "hr",
+        "nakshatra_purchase_requisition",
+    ],
+    "data": [
+        "views/mrp_production.xml",
+        "views/project_project.xml",
+        "views/mrp_workorder_views.xml",
+        "views/res_partner_views.xml",
+        "security/security_views.xml",
+        "security/ir_rule.xml",
+        "data/contact_sequence.xml",
+    ],
+}

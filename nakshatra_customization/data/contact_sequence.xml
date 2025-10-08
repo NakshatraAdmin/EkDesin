@@ -1,0 +1,25 @@
+<odoo>
+    <!-- Customer Sequence -->
+    <record id="seq_customer" model="ir.sequence">
+        <field name="name">Customer Sequence</field>
+        <field name="code">res.partner.customer</field>
+        <field name="prefix">CUST</field>
+        <field name="padding">4</field>
+    </record>
+
+    <!-- Vendor Sequence -->
+    <record id="seq_vendor" model="ir.sequence">
+        <field name="name">Vendor Sequence</field>
+        <field name="code">res.partner.vendor</field>
+        <field name="prefix">VEND</field>
+        <field name="padding">4</field>
+    </record>
+
+    <!-- Employee Sequence -->
+    <record id="seq_employee" model="ir.sequence">
+        <field name="name">Employee Sequence</field>
+        <field name="code">res.partner.employee</field>
+        <field name="prefix">EMPL</field>
+        <field name="padding">4</field>
+    </record>
+</odoo>

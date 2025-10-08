@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_pr_tracking_report_list" model="ir.ui.view">
+        <field name="name">pr.tracking.report.list</field>
+        <field name="model">nakshatra.purchase.requisition.line</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="pr_id" widget="many2one" />
+                <field name="pr_date" />
+                <field name="pr_state" />
+                <field name="item_status" />
+                <field name="create_uid" />
+                <field name="product_id" />
+                <field name="image" widget="image" />
+                <field name="requested_qty" />
+                <field name="project_id" />
+                <field name="pr_reference" />
+                <field name="pr_mrp_ids" widget="many2many_tags" />
+                <field name="date_planned" />
+                <field name="po_id" />
+                <field name="approved_qty" />
+                <field name="received_qty" />
+                <field name="pending_qty" />
+            </list>
+        </field>
+    </record>
+    <record id="view_pr_tracking_report_graph" model="ir.ui.view">
+        <field name="name">pr.tracking.report.graph</field>
+        <field name="model">nakshatra.purchase.requisition.line</field>
+        <field name="arch" type="xml">
+            <graph string="PR Tracking Analysis" type="bar">
+                <field name="pr_id" type="row" />
+                <field name="requested_qty" type="measure" />
+                <field name="received_qty" type="measure" />
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_pr_tracking_report_search" model="ir.ui.view">
+        <field name="name">pr.tracking.report.search</field>
+        <field name="model">nakshatra.purchase.requisition.line</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="project_id" filter_domain="[]" />
+                <field name="pr_id" />
+                <field name="pr_reference" />
+                <field name="pr_state" />
+                <field name="item_status" />
+                <field name="create_uid" />
+                <field name="date_planned" />
+                <field name="product_id" />
+
+                <group expand="1" string="Group By">
+                    <filter
+                        name="group_by_project"
+                        string="Project"
+                        context="{'group_by': 'project_id'}"
+                    />
+                    <filter
+                        name="group_by_pr"
+                        string="PR No"
+                        context="{'group_by': 'pr_id'}"
+                    />
+                    <filter
+                        name="group_by_state"
+                        string="PR Status"
+                        context="{'group_by': 'pr_state'}"
+                    />
+                    <filter
+                        name="group_by_status"
+                        string="Item Status"
+                        context="{'group_by': 'item_status'}"
+                    />
+                    <filter
+                        name="group_by_product"
+                        string="Product"
+                        context="{'group_by': 'product_id'}"
+                    />
+                    <filter
+                        name="group_by_ref"
+                        string="Reference"
+                        context="{'group_by': 'pr_reference'}"
+                    />
+                    <filter
+                        name="group_by_creator"
+                        string="Requested By"
+                        context="{'group_by': 'create_uid'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_pr_tracking_report" model="ir.actions.act_window">
+        <field name="name">PR Tracking</field>
+        <field name="res_model">nakshatra.purchase.requisition.line</field>
+        <field name="view_mode">list,graph</field>
+        <field name="search_view_id" ref="view_pr_tracking_report_search" />
+        <field name="view_id" ref="view_pr_tracking_report_list" />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No PR Tracking data found.</p>
+        </field>
+    </record>
+
+    <menuitem
+        id="menu_pr_tracking_root"
+        name="PR Tracking"
+        parent="purchase.purchase_report_main"
+        sequence="50"
+    />
+    <menuitem
+        id="menu_pr_tracking_report"
+        name="Tracking Report"
+        action="action_pr_tracking_report"
+        parent="menu_pr_tracking_root"
+    />
+</odoo>

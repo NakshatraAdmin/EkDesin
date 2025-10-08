@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="action_cancel_pr" model="ir.actions.server">
+        <field name="name">Cancel PR</field>
+        <field
+            name="model_id"
+            ref="nakshatra_purchase_requisition.model_nakshatra_purchase_requisition"
+        />
+        <field
+            name="binding_model_id"
+            ref="nakshatra_purchase_requisition.model_nakshatra_purchase_requisition"
+        />
+        <field name="state">code</field>
+        <field name="code">records.action_cancel_pr()</field>
+    </record>
+</odoo>

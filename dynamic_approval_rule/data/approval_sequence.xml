@@ -1,0 +1,18 @@
+<odoo noupdate="1">
+    <record id="seq_approval_request" model="ir.sequence">
+        <field name="name">Approval Request</field>
+        <field name="code">approval.request</field>
+        <field name="prefix">APR</field>
+        <field name="padding">5</field>
+        <field name="number_increment">1</field>
+        <field name="number_next">1</field>
+    </record>
+    <record id="seq_approval_type" model="ir.sequence">
+        <field name="name">Approval Type</field>
+        <field name="code">dynamic.approval.rule</field>
+        <field name="prefix">R</field>
+        <field name="padding">5</field>
+        <field name="number_increment">1</field>
+        <field name="number_next">1</field>
+    </record>
+</odoo>

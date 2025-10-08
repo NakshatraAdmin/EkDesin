@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="res_config_settings_view_form_purchase_requisition" model="ir.ui.view">
+        <field
+            name="name"
+        >res.config.settings.view.form.inherit.purchase.requisition</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="25" />
+        <field name="inherit_id" ref="base.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//app[@name='purchase']" position="inside">
+                <block
+                    title="Purchase Requisition"
+                    name="purchase_requisition_container"
+                >
+                    <setting
+                        id="pr_lead_time"
+                        string="PR Lead time"
+                        help="Lead time use to show expected delivery date"
+                    >
+                        <field name="pr_lead" />
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>

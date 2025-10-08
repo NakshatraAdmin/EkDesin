@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="res_partner_form_inherit_bifurcation" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.bifurcation</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_type']" position="attributes">
+                <attribute name="readonly">id</attribute>
+            </xpath>
+            <xpath expr="//field[@name='company_type']" position="after">
+                <group>
+                    <field
+                        name="contact_type_show"
+                        widget="selection"
+                        required="1"
+                        readonly="set_contact_type_from_context == True or id"
+                        invisible="contact_type in ('employee')"
+                    />
+                    <field name="contact_type" widget="selection" invisible="1" />
+                    <h1 class="o_row">
+                        <label for="sequence_code" string="Sequence Code" />
+                        <field name="sequence_code" />
+                    </h1>
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='parent_id']" position="after">
+                <br />
+            </xpath>
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="cust_1" invisible="contact_type != 'customer'" />
+                <field name="cust_2" invisible="contact_type != 'customer'" />
+                <field name="cust_3" invisible="contact_type != 'customer'" />
+                <field name="ven_1" invisible="contact_type != 'vendor'" />
+                <field name="ven_2" invisible="contact_type != 'vendor'" />
+                <field name="ven_3" invisible="contact_type != 'vendor'" />
+                <field name="emp_1" invisible="contact_type != 'employee'" />
+                <field name="emp_2" invisible="contact_type != 'employee'" />
+                <field name="emp_3" invisible="contact_type != 'employee'" />
+            </xpath>
+        </field>
+    </record>
+    <record id="res_partner_list_inherit_bifurcation" model="ir.ui.view">
+        <field name="name">res.partner.list.inherit.bifurcation</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='complete_name']" position="after">
+                <field name="contact_type" required="1" />
+                <field name="sequence_code" readonly="1" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

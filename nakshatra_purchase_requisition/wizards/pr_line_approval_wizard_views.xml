@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_pr_line_approval_wizard_form" model="ir.ui.view">
+        <field name="name">pr.line.approval.wizard.form</field>
+        <field name="model">pr.line.approval.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Approve PR Line Items">
+                <sheet>
+                    <group>
+                        <field name="line_ids">
+                            <list editable="bottom" create="0">
+                                <field name="pr_id" />
+                                <field name="project_id" />
+                                <field name="prl_id" column_invisible="1" />
+                                <field name="product_id" />
+                                <field name="requested_qty" />
+                                <field name="approved_qty" />
+                                <field name="rejected_qty" />
+                                <field name="reject_reason" />
+                            </list>
+                        </field>
+                    </group>
+                    <footer>
+                        <button
+                            string="Submit"
+                            type="object"
+                            name="button_approve"
+                            class="btn-primary"
+                        />
+                        <button
+                            string="Cancel"
+                            class="btn-secondary"
+                            special="cancel"
+                        />
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

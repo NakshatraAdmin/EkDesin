@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="mrp_bom_form_view_inherit_approval" model="ir.ui.view">
+        <field name="name">mrp.bom.form.inherit.approval</field>
+        <field name="model">mrp.bom</field>
+        <field name="inherit_id" ref="mrp.mrp_bom_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <button
+                        class="btn btn-primary"
+                        name="button_send_for_approval"
+                        type="object"
+                        invisible="not is_approval_required or state != False"
+                        string="Send For Approval"
+                        data-hotkey="q"
+                    />
+                    <button
+                        class="btn btn-primary"
+                        name="button_send_to_draft"
+                        type="object"
+                        invisible="state != 'rejected'"
+                        string="Set to Draft"
+                        data-hotkey="q"
+                    />
+                    <button
+                        name="action_approve"
+                        type="object"
+                        string="Approve"
+                        class="btn-primary"
+                        invisible="not is_show_approve_reject_button"
+                    />
+                    <button
+                        name="action_reject"
+                        type="object"
+                        string="Reject"
+                        class="btn-danger"
+                        invisible="not is_show_approve_reject_button"
+                    />
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        statusbar_visible="pending_approval,approved"
+                    />
+                    <field name="is_show_approve_reject_button" invisible="1" />
+                </header>
+            </xpath>
+            <xpath expr="//field[@name='product_tmpl_id']" position="attributes">
+                <attribute name="readonly">state != False</attribute>
+            </xpath>
+            <xpath expr="//field[@name='product_id']" position="attributes">
+                <attribute name="readonly">state != False</attribute>
+            </xpath>
+            <xpath expr="//field[@name='product_qty']" position="attributes">
+                <attribute name="readonly">state != False</attribute>
+            </xpath>
+            <xpath expr="//field[@name='code']" position="attributes">
+                <attribute name="readonly">state != False</attribute>
+            </xpath>
+            <xpath expr="//field[@name='type']" position="attributes">
+                <attribute name="readonly">state != False</attribute>
+            </xpath>
+            <xpath expr="//field[@name='bom_line_ids']" position="attributes">
+                <attribute name="readonly">state != False</attribute>
+            </xpath>
+            <xpath expr="//field[@name='operation_ids']" position="attributes">
+                <attribute name="readonly">state != False</attribute>
+            </xpath>
+            <xpath expr="//field[@name='byproduct_ids']" position="attributes">
+                <attribute name="readonly">state != False</attribute>
+            </xpath>
+            <xpath expr="//field[@name='ready_to_produce']" position="attributes">
+                <attribute name="readonly">state != False</attribute>
+            </xpath>
+            <xpath expr="//field[@name='consumption']" position="attributes">
+                <attribute name="readonly">state != False</attribute>
+            </xpath>
+            <xpath expr="//field[@name='picking_type_id']" position="attributes">
+                <attribute name="readonly">state != False</attribute>
+            </xpath>
+            <xpath expr="//field[@name='days_to_prepare_mo']" position="attributes">
+                <attribute name="readonly">state != False</attribute>
+            </xpath>
+            <xpath expr="//field[@name='produce_delay']" position="attributes">
+                <attribute name="readonly">state != False</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_mrp_bom_search_list" model="ir.ui.view">
+        <field name="name">mrp.bom.search</field>
+        <field name="model">mrp.bom</field>
+        <field name="arch" type="xml">
+            <search string="Search PR Items">
+                <!-- Filters -->
+                <filter
+                    name="assigned_approvals"
+                    string="My Assigned Approvals"
+                    domain="[('assigned_approver_id', '=', uid)]"
+                />
+            </search>
+        </field>
+    </record>
+    <record id="mrp_bom_approval_list" model="ir.ui.view">
+        <field name="name">mrp.bom.view.list</field>
+        <field name="model">mrp.bom</field>
+        <field name="arch" type="xml">
+            <list string="Bill of Materials">
+                <field name="product_tmpl_id" />
+                <field name="code" />
+                <field name="type" />
+                <field name="company_id" />
+                <field name="assigned_approver_id" />
+                <field name="approver_state" />
+            </list>
+        </field>
+    </record>
+    <record id="mrp_bom_approval_form_action" model="ir.actions.act_window">
+        <field name="name">Approval Request for BOM</field>
+        <field name="res_model">mrp.bom</field>
+        <field name="domain">[('state', '=', 'pending_approval')]</field>
+        <field name="view_mode">list,form</field>
+        <field
+            name="context"
+        >{'create': False, 'search_default_assigned_approvals': 1}</field>
+        <field name="view_id" ref="mrp_bom_approval_list" />
+        <field name="search_view_id" ref="view_mrp_bom_search_list" />
+    </record>
+    <menuitem
+        id="menu_mrp_bom_approval_request_form_action"
+        action="mrp_bom_approval_form_action"
+        parent="mrp.menu_mrp_bom"
+        sequence="15"
+    />
+</odoo>

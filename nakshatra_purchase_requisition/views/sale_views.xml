@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_order_form_inherit_pr" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.pr</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <header position="inside">
+                <button
+                    name="action_state_convert_to_so"
+                    type="object"
+                    string="Convert to SO"
+                    class="oe_highlight"
+                    groups="base.group_user"
+                    invisible="state != 'approved'"
+                />
+            </header>
+            <xpath
+                expr="//header//button[@name='action_confirm'][1]"
+                position="attributes"
+            >
+                <attribute name="invisible">state != 'sales_order'</attribute>
+            </xpath>
+            <xpath expr="(//button[@name='action_confirm'])[2]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

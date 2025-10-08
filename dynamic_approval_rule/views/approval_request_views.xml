@@ -1,0 +1,112 @@
+<odoo>
+    <record id="view_form_approval_request" model="ir.ui.view">
+        <field name="name">approval.request.form</field>
+        <field name="model">approval.request</field>
+        <field name="arch" type="xml">
+            <form string="Approval Request">
+                <header>
+                    <field name="state" readonly="1" widget="statusbar" />
+                    <!-- <button
+                        name="action_approve"
+                        type="object"
+                        string="Approve"
+                        class="btn-primary"
+                        invisible="not is_show_approve_reject_button"
+                    />
+                    <button
+                        name="action_reject"
+                        type="object"
+                        string="Reject"
+                        class="btn-danger"
+                        invisible="not is_show_approve_reject_button"
+                    /> -->
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1" />
+                        </h1>
+                        <h3>
+                            <field name="title" readonly="1" />
+                        </h3>
+                    </div>
+                    <group>
+                        <field name="approval_rule_id" readonly="1" />
+                        <field name="request_owner_id" readonly="1" />
+                        <field name="requested_date" readonly="1" />
+                        <field name="is_show_approve_reject_button" invisible="1" />
+                    </group>
+
+                    <notebook>
+                        <page string="Approver(s)">
+                            <field name="approval_line_ids">
+                                <list>
+                                    <field name="sequence" />
+                                    <field name="primary_approver" />
+                                    <field name="primary_approval_state" />
+                                    <field name="secondary_approver" />
+                                    <field name="secondary_approval_state" />
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Description">
+                            <field name="description" />
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="o_attachment_preview" />
+                <chatter />
+            </form>
+        </field>
+    </record>
+
+    <record id="view_list_approval_request" model="ir.ui.view">
+        <field name="name">approval.request.list</field>
+        <field name="model">approval.request</field>
+        <field name="arch" type="xml">
+            <list create="false" string="Approval Request">
+                <field name="name" />
+                <field name="title" />
+                <field name="model_id" />
+                <field name="approval_rule_id" />
+                <!-- <field name="priority" widget="priority"/> -->
+                <field name="request_owner_id" />
+                <field name="requested_date" />
+                <!-- <field name="state" widget="statusbar" statusbar_visible="draft,pending,approved,rejected"/> -->
+                <field
+                    name="state"
+                    widget="badge"
+                    decoration-info="state == 'draft'"
+                    decoration-primary="state == 'pending'"
+                    decoration-success="state == 'approved'"
+                    decoration-danger="state == 'rejected'"
+                    decoration-muted="state == 'skipped'"
+                />
+                <field name="assigned_approver_id" />
+                <field
+                    name="approver_state"
+                    widget="badge"
+                    decoration-info="state == 'draft'"
+                    decoration-primary="state == 'pending'"
+                    decoration-success="state == 'approved'"
+                    decoration-danger="state == 'rejected'"
+                    decoration-muted="state == 'skipped'"
+                />
+            </list>
+        </field>
+    </record>
+
+    <record id="action_approval_request" model="ir.actions.act_window">
+        <field name="name">Approval Requests</field>
+        <field name="res_model">approval.request</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem
+        id="menu_my_approval_request"
+        name="My Requests"
+        parent="menu_dynamic_approval_rules"
+        action="action_approval_request"
+        sequence="20"
+    />
+</odoo>
