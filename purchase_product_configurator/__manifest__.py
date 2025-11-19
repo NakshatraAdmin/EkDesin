@@ -4,7 +4,7 @@
     'version': '18.0.1.0.0',
     'category': 'Purchases',
     'summary': """Purchase variant selection options for products.""",
-    'description': """This module helps you to configure product variant
+    'description': """This module helps you configure product variant
     selection in the purchase order lines.""",
     'author': 'Nakshatraadmin Solutions',
     'company': 'Nakshatraadmin Techno Solutions',

@@ -1,7 +1,7 @@
 {
     "name": "BOM Line Product Template Wizard",
     "version": "18.0.0.1",
-    "summary": "Add product.template field to BOM lines and open a select-template wizard.",
+    "summary": "Add product.template field to BOM lines and open select-template wizard.",
     "category": "Manufacturing",
     "author": "You",
     "depends": ["mrp", "product"],
