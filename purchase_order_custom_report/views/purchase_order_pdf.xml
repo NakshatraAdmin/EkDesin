@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="report_purchaseorder_custom">
+<t t-call="web.external_layout">
+
+        <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)"/>
+
+    <div class="page">
+
+        <div style="text-align:center; margin-bottom:10px;">
+            <h2 style="font-weight:700; text-transform:uppercase;">Purchase Order</h2>
+        </div>
+
+        <table style="width:100%; border-collapse:collapse; font-size:15px;">
+            <tr>
+
+                <!-- Supplier -->
+                <td style="width:50%; border:1px solid #000; padding:5px;">
+                    <strong>Supplier Name (Bill From)</strong><br/>
+                    <t t-esc="o.partner_id.name"/><br/>
+                    <t t-esc="o.partner_id.street or ''"/><br/>
+                    <t t-esc="o.partner_id.street2 or ''"/><br/>
+                    <t t-esc="(o.partner_id.city or '') + ' ' + (o.partner_id.zip or '')"/><br/>
+                    <t t-esc="o.partner_id.state_id.name or ''"/> ,
+                    <t t-esc="o.partner_id.country_id.name or ''"/><br/>
+                    GSTIN: <t t-esc="o.partner_id.vat or '-'"/>
+                </td>
+
+                <!-- PO Info -->
+                <td style="width:50%; border:1px solid #000; padding:5px;">
+                    <strong>PO No :</strong> <t t-esc="o.name"/><br/>
+                    <strong>PO Date :</strong> <t t-esc="o.date_order.strftime('%d/%m/%Y')"/><br/>
+                    <strong>Reference No  Date :</strong> <t t-esc="o.partner_ref or '-'"/><br/>
+                    <strong>Terms Of Delivery :</strong> Ex Factory<br/>
+                    <strong>Terms Of Payment :</strong> <t t-esc="o.payment_term_id.name or '-'"/>
+                </td>
+
+            </tr>
+        </table>
+
+        <table style="width:100%; border-collapse:collapse; margin-top:8px; font-size:15px;">
+            <tr>
+
+                <!-- Bill To -->
+                <td style="width:50%; border:1px solid #000; padding:5px;">
+                    <strong>Bill To</strong><br/>
+                    <t t-esc="o.company_id.name"/><br/>
+                    <t t-esc="o.company_id.street or ''"/><br/>
+                    <t t-esc="o.company_id.street2 or ''"/><br/>
+                    <t t-esc="(o.company_id.city or '') + ' ' + (o.company_id.zip or '')"/><br/>
+                    <t t-esc="o.company_id.state_id.name or ''"/> ,
+                    <t t-esc="o.company_id.country_id.name or ''"/><br/>
+                    GSTIN: <t t-esc="o.company_id.vat or '-'"/>
+                </td>
+
+                <!-- Ship To -->
+                <td style="width:50%; border:1px solid #000; padding:5px;">
+                    <strong>Ship To</strong><br/>
+                    <!-- <t t-esc="o.dest_address_id.name"/><br/>
+                    <t t-esc="o.dest_address_id.street or ''"/><br/>
+                    <t t-esc="o.dest_address_id.street2 or ''"/><br/>
+                    <t t-esc="(o.dest_address_id.city or '') + ' ' + (o.dest_address_id.zip or '')"/><br/>
+                    <t t-esc="o.dest_address_id.state_id.name or ''"/> ,
+                    <t t-esc="o.dest_address_id.country_id.name or ''"/><br/>
+                    GSTIN: <t t-esc="o.dest_address_id.vat or '-'"/> -->
+                    <t t-esc="o.company_id.name"/><br/>
+                    <t t-esc="o.company_id.street or ''"/><br/>
+                    <t t-esc="o.company_id.street2 or ''"/><br/>
+                    <t t-esc="(o.company_id.city or '') + ' ' + (o.company_id.zip or '')"/><br/>
+                    <t t-esc="o.company_id.state_id.name or ''"/> ,
+                    <t t-esc="o.company_id.country_id.name or ''"/><br/>
+                    GSTIN: <t t-esc="o.company_id.vat or '-'"/>
+                </td>
+
+            </tr>
+        </table>
+
+                <table class="table table-bordered order-table" style="width:100%; border-collapse: collapse; margin-top:10px;font-size:15px;">
+            <thead>
+                <tr>
+                    <th style="border:1px solid #000; padding:4px; width:10%;">Product Code</th>
+                    <th style="border:1px solid #000; padding:4px; width:30%;">Product Name</th>
+                    <th style="border:1px solid #000; padding:4px; width:10%;">Expected date</th>
+                    <th style="border:1px solid #000; padding:4px; width:6%;">UOM</th>
+                    <th style="border:1px solid #000; padding:4px; width:6%;">Disc</th>
+                    <th style="border:1px solid #000; padding:4px; width:6%;">Qty</th>
+                    <th style="border:1px solid #000; padding:4px; width:10%;">Unit Price</th>
+                    <th style="border:1px solid #000; padding:4px; width:10%;">Taxes</th>
+                    <th style="border:1px solid #000; padding:4px; width:12%;">Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr t-foreach="o.order_line" t-as="l">
+                    <td style="border:1px solid #000; padding:4px;"><span t-esc="l.product_id.default_code or ''"/></td>
+                    <td style="border:1px solid #000; padding:4px;"><span t-esc="l.product_id.name"/></td>
+                    <td style="border:1px solid #000; padding:4px;"><span t-esc="l.date_planned and l.date_planned.strftime('%d/%m/%Y') or ''"/></td>
+                    <td style="border:1px solid #000; padding:4px;"><span t-esc="l.product_uom.name"/></td>
+                    <td style="border:1px solid #000; padding:4px;"><span t-esc="l.discount"/>%</td>
+                    <td style="border:1px solid #000; padding:4px;"><span t-esc="l.product_qty"/></td>
+                    <td style="border:1px solid #000; padding:4px; text-align:left;"><span t-esc="'{:,.2f}'.format(l.price_unit)"/></td>
+                    <td style="border:1px solid #000; padding:4px;">
+                        <span t-foreach="l.taxes_id" t-as="tx" t-esc="tx.name + ' '"/>
+                    </td>
+                    <td style="border:1px solid #000; padding:4px; text-align:left;">(₹)<span t-esc="'{:,.2f}'.format(l.price_subtotal)"/></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-bordered totals-table" style="width:40%; float:right; border-collapse: collapse; margin-top:8px;">
+            <tr>
+                <td style="border:1px solid #000; padding:4px;"><strong>Untaxed Amount</strong></td>
+                <td style="border:1px solid #000; padding:4px; text-align:right;"><span t-esc="'{:,.2f}'.format(o.amount_untaxed)"/></td>
+            </tr>
+            <tr>
+                <td style="border:1px solid #000; padding:4px;"><strong>SGST on (₹) <span t-esc="'{:,.2f}'.format(o.amount_untaxed)"/></strong></td>
+                <td style="border:1px solid #000; padding:4px; text-align:right;"><span t-esc="'{:,.2f}'.format(o.amount_tax / 2)"/></td>
+            </tr>
+            <tr>
+                <td style="border:1px solid #000; padding:4px;"><strong>CGST on (₹) <span t-esc="'{:,.2f}'.format(o.amount_untaxed)"/></strong></td>
+                <td style="border:1px solid #000; padding:4px; text-align:right;"><span t-esc="'{:,.2f}'.format(o.amount_tax / 2)"/></td>
+            </tr>
+            <tr>
+                <td style="border:1px solid #000; padding:4px;"><strong>Round Off</strong></td>
+                <td style="border:1px solid #000; padding:4px; text-align:right;">0.00</td>
+            </tr>
+            <tr>
+                <td style="border:1px solid #000; padding:4px;"><strong>Total</strong></td>
+                <td style="border:1px solid #000; padding:4px; text-align:right;"><strong><span t-esc="'{:,.2f}'.format(o.amount_total)"/></strong></td>
+            </tr>
+        </table>
+        <!-- <xpath expr="//div[@class='footer']" position="replace">
+          <div class="custom-footer"
+                 style="text-align:center; font-size:12px; margin-top:20px;
+                        padding-top:10px; border-top:1px solid #000;">
+                <span>EK Design Industries Ltd | www.ekdesign.com | support@ekdesign.com</span><br/>
+                <span>Thank you for your business!</span>
+            </div>
+        </xpath> -->
+
+    </div>
+    </t> <!-- END PAGE -->
+
+
+<!-- <xpath expr="//div[@class='footer']" position="inside">
+
+        <div style="font-size:12px; text-align:center; margin-top:4px;">
+            <hr/>
+            <strong>This is a computer-generated Purchase Order. No signature required.</strong><br/>
+            <span t-esc="o.company_id.name"/> |
+            GSTIN: <t t-esc="o.company_id.vat or '-'"/> |
+            Email: <t t-esc="o.company_id.email or '-'"/> |
+            Phone: <t t-esc="o.company_id.phone or '-'"/>
+        </div>
+ -->
+        <!-- Page number -->
+       <!--  <div style="font-size:11px; text-align:center; margin-top:2px;">
+            Page <span class="page"></span> / <span class="topage"></span>
+        </div> 
+
+    </xpath>-->
+</template>
+
+
+<template id="purchase_order_pdf">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="purchase_order_custom_report.report_purchaseorder_custom" t-lang="o.partner_id.lang"/>
+        </t>
+    </t>
+</template>
+
+ <record id="purchase.action_report_purchase_order" model="ir.actions.report">
+        <field name="report_name">purchase_order_custom_report.purchase_order_pdf</field>
+        <field name="report_file">purchase_order_custom_report.purchase_order_pdf</field>
+        <field name="name">Purchase Order</field>
+    </record>
+
+</odoo>
+

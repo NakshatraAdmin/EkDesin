@@ -1,0 +1,24 @@
+<odoo>
+    <template id="po_footer_fixed_generic" inherit_id="web.external_layout">
+
+        <!-- Replace entire footer block -->
+
+            <div class="footer" style="text-align:center; font-size:11px; width:100%; padding-top:8px;">
+                <hr style="margin: 0 0 6px 0;" />
+
+                <div>
+                    EK Design Industries Ltd | www.ekdesign.com | support@ekdesign.com
+                </div>
+
+                <div style="margin-top:2px;">
+                    Thank you for your business!
+                </div>
+
+                <div style="margin-top:4px;">
+                    Page <span class="page"/> / <span class="topage"/>
+                </div>
+            </div>
+
+
+    </template>
+</odoo>
