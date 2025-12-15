@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
+    <record id="paperformat_purchase_order" model="report.paperformat">
+    <field name="name">Custom Purchase Order</field>
+    <field name="default">False</field>
+    <field name="format">A4</field> <!-- Options: A4, Letter -->
+    <field name="orientation">Portrait</field> <!-- Portrait or Landscape -->
+    <field name="margin_top">10</field>
+    <field name="margin_bottom">10</field>
+    <field name="margin_left">10</field>
+    <field name="margin_right">10</field>
+    </record>
    		 <record id="custome_action_report_purchase_order" model="ir.actions.report">
 
         <field name="name"></field>
@@ -10,6 +21,7 @@
             <field name="binding_model_id" ref="purchase.model_purchase_order"/>
             <field name="binding_type">report</field>
             <field name="print_report_name">object.partner_id.name + '_' + object.name</field>
+            <field name="paperformat_id" ref="paperformat_purchase_order"/>
 
         </record>
     />
