@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 <template id="report_purchaseorder_custom">
-<t t-call="web.external_layout">
+<t t-call="web.basic_layout">
 
         <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)"/>
-
-    <div class="page">
-
-        <div style="text-align:center; margin-bottom:10px;">
+          <div style="text-align:left; margin-bottom:10px;">
+            <img t-if="o.company_id.logo"
+                 t-att-src="image_data_uri(o.company_id.logo)"
+                 style="max-height:80px;"/>
+        </div>
+        <div style="text-align:center; margin-top:-50px;">
             <h2 style="font-weight:700; text-transform:uppercase;">Purchase Order</h2>
         </div>
+    <div class="page">
 
         <table style="width:100%; border-collapse:collapse; font-size:15px;">
             <tr>
@@ -121,43 +124,17 @@
             </tr>
             <tr>
                 <td style="border:1px solid #000; padding:4px;"><strong>Round Off</strong></td>
-                <td style="border:1px solid #000; padding:4px; text-align:right;">0.00</td>
+                <td style="border:1px solid #000; padding:4px; text-align:right;"><strong><span t-esc="'{:,.2f}'.format(o.amount_roundoff)"/></strong></td>
             </tr>
             <tr>
                 <td style="border:1px solid #000; padding:4px;"><strong>Total</strong></td>
-                <td style="border:1px solid #000; padding:4px; text-align:right;"><strong><span t-esc="'{:,.2f}'.format(o.amount_total)"/></strong></td>
+                <td style="border:1px solid #000; padding:4px; text-align:right;"><strong><span t-esc="'{:,.2f}'.format(o.amount_total_rounded)"/></strong></td>
             </tr>
         </table>
-        <!-- <xpath expr="//div[@class='footer']" position="replace">
-          <div class="custom-footer"
-                 style="text-align:center; font-size:12px; margin-top:20px;
-                        padding-top:10px; border-top:1px solid #000;">
-                <span>EK Design Industries Ltd | www.ekdesign.com | support@ekdesign.com</span><br/>
-                <span>Thank you for your business!</span>
-            </div>
-        </xpath> -->
+        
 
     </div>
-    </t> <!-- END PAGE -->
-
-
-<!-- <xpath expr="//div[@class='footer']" position="inside">
-
-        <div style="font-size:12px; text-align:center; margin-top:4px;">
-            <hr/>
-            <strong>This is a computer-generated Purchase Order. No signature required.</strong><br/>
-            <span t-esc="o.company_id.name"/> |
-            GSTIN: <t t-esc="o.company_id.vat or '-'"/> |
-            Email: <t t-esc="o.company_id.email or '-'"/> |
-            Phone: <t t-esc="o.company_id.phone or '-'"/>
-        </div>
- -->
-        <!-- Page number -->
-       <!--  <div style="font-size:11px; text-align:center; margin-top:2px;">
-            Page <span class="page"></span> / <span class="topage"></span>
-        </div> 
-
-    </xpath>-->
+    </t> 
 </template>
 
 

@@ -1,0 +1,57 @@
+<odoo>
+    <record id="sale_order_form_roundoff" model="ir.ui.view">
+        <field name="name">sale.order.form.roundoff</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Add after total -->
+
+              <xpath expr="//group[@name='sale_total']" position="inside">
+                   <group class="oe_subtotal_footer" col="1" style="font-weight: bold;">
+    <field name="amount_roundoff" widget="monetary" readonly="1" string="Round Off" options="{'currency_field': 'currency_id'}"/>
+    <field name="amount_total_rounded" widget="monetary" readonly="1" string="Final Amount" options="{'currency_field': 'currency_id'}"/>
+</group>
+
+
+            </xpath> 
+
+
+
+        </field>
+    </record>
+
+    <record id="action_sale_cancel_reason_wizard" model="ir.actions.act_window">
+        <field name="name">Cancel Sale Order</field>
+        <field name="res_model">sale.cancel.reason.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+
+     <record id="sale_order_form_cancel_reason" model="ir.ui.view">
+        <field name="name">sale.order.form.cancel.reason</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+
+           <xpath expr="//field[@name='payment_term_id']" position="after">
+            <field name="cancel_reason"/>
+           </xpath>
+             
+           <xpath expr="//button[@name='action_cancel']" position="replace">
+                <button name="%(sale_order_custom_report.action_sale_cancel_reason_wizard)d"
+                        string="Cancel"
+                        type="action"
+                        class="btn-danger"
+                         invisible="state not in ('sent', 'draft', 'sale')"
+                        />
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- Wizard Action -->
+   
+</odoo>

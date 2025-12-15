@@ -1,24 +1,23 @@
 <odoo>
-    <template id="po_footer_fixed_generic" inherit_id="web.external_layout">
+    <record id="purchase_order_form_roundoff" model="ir.ui.view">
+        <field name="name">purchase.order.form.roundoff</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
 
-        <!-- Replace entire footer block -->
+            <!-- Add after total -->
+            <xpath expr="//field[@name='tax_totals']" position="after">
+               
 
-            <div class="footer" style="text-align:center; font-size:11px; width:100%; padding-top:8px;">
-                <hr style="margin: 0 0 6px 0;" />
-
-                <div>
-                    EK Design Industries Ltd | www.ekdesign.com | support@ekdesign.com
-                </div>
-
-                <div style="margin-top:2px;">
-                    Thank you for your business!
-                </div>
-
-                <div style="margin-top:4px;">
-                    Page <span class="page"/> / <span class="topage"/>
-                </div>
-            </div>
+            <field name="amount_roundoff"  colspan="2"  widget="monetary" readonly="1" options="{'currency_field': 'currency_id'}"  style="font-weight: bold;"
+                         />
+                      <field name="amount_total_rounded" colspan="2"  
+                        widget="monetary" readonly="1" string="Final Total"
+                         options="{'currency_field': 'currency_id'}" style="font-weight: bold;" />
+                     </xpath>
 
 
-    </template>
+
+        </field>
+    </record>
 </odoo>

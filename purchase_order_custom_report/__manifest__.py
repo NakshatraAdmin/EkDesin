@@ -8,7 +8,7 @@
     "data": [
         "views/report_purchase_order.xml",
         "views/purchase_order_pdf.xml",
-        # "views/report_purchase_fotter.xml"
+         "views/report_purchase_fotter.xml"
     ],
     "assets": {
         "web.report_assets_pdf": [

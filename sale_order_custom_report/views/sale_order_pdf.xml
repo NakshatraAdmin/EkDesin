@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+ <record id="sale.action_report_saleorder" model="ir.actions.report">
+        <field name="report_name">sale_order_custom_report.sale_order_pdf</field>
+        <field name="report_file">sale_order_custom_report.sale_order_pdf</field>
+        <field name="name">Sale Order</field>
+    </record>
+ <!-- <record id="sale.action_report_saleorder" model="ir.actions.report">
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">report</field>
+    </record>
+    <record id="sale.action_report_saleorder" model="ir.actions.report">
+    <field name="binding_model_id" ref="sale.model_sale_order"/>
+    <field name="binding_type">report</field>
+</record> -->
+</odoo>
+
