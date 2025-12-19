@@ -1,2 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_sale_cancel_reason_wizard,sale.cancel.reason.wizard,model_sale_cancel_reason_wizard,,1,1,1,1
+access_sale_cancel_reason_user,sale.cancel.reason user,model_sale_cancel_reason,,1,1,1,0

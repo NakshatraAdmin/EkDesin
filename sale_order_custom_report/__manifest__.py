@@ -10,6 +10,8 @@
         "views/report_sale_order.xml",
         "views/sale_order_pdf.xml",
          "views/report_sale_fotter.xml",
+         "views/sale_exisitng_hide.xml",
+         "views/product_product.xml",
 	"wizard/cancel_reason_wizard.xml"
     ],
     "assets": {
