@@ -32,6 +32,10 @@ class SaleOrder(models.Model):
         readonly=True,
         copy=False,
     )
+    sale_comment = fields.Html(
+        string="Sale Comment",
+        help="This comment will appear in Sale Order PDF"
+    )
 
     @api.depends('amount_total')
     def _compute_roundoff(self):

@@ -177,8 +177,8 @@
                 </td>
 
                 <!-- Comments -->
-                <td style="border:1px solid #000; padding:4px;">
-                    <t t-raw="line.product_template_id.product_comment"/>
+                <td style="border:1px solid #000;text-align:right; padding:4px;">
+                    <t t-raw="o.sale_comment"/>
                 </td>
             </tr>
         </t>
