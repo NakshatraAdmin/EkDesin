@@ -36,7 +36,7 @@ class SaleOrder(models.Model):
         string="Sale Comment",
         help="This comment will appear in Sale Order PDF"
     )
-
+    
     @api.depends('amount_total')
     def _compute_roundoff(self):
         for order in self:
@@ -80,6 +80,14 @@ class SaleCancelReason(models.Model):
     name = fields.Char(required=True)
     sequence = fields.Integer(default=10)
     active = fields.Boolean(default=True)
+
+class SaleOrderLine(models.Model):
+    _inherit = "sale.order.line"
+
+    sale_comment = fields.Html(
+        string="Sale Comment",
+        help="This comment will appear in Sale Order PDF"
+    )
 
 
 class KPIProvider(models.Model):

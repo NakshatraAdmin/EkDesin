@@ -54,10 +54,8 @@
                     </group>
                 </page>
             </xpath>
-             <xpath expr="//sheet/notebook" position="inside">
-                <page string="Sale Comments" >
-                        <field name="sale_comment"/>
-                </page>
+            <xpath expr="//field[@name='order_line']/list/field[@name='price_subtotal']" position="after">
+                  <field name="sale_comment"  widget="html"  class="sale_comment_html"/>
             </xpath>
 
         </field>

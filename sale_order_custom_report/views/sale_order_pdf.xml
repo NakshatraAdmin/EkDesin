@@ -177,9 +177,18 @@
                 </td>
 
                 <!-- Comments -->
-                <td style="border:1px solid #000;text-align:right; padding:4px;">
-                    <t t-raw="o.sale_comment"/>
-                </td>
+                <td style="border:1px solid #000; padding:4px;">
+                <div class="sale-comment">
+                    <t t-raw="line.sale_comment"/>
+                </div>
+            </td>
+
+            <style>
+            .sale-comment img {
+                width: 50px !important;
+                height: auto !important;
+            }
+            </style>
             </tr>
         </t>
     </tbody>

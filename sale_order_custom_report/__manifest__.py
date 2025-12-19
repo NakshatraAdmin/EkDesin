@@ -15,8 +15,8 @@
 	"wizard/cancel_reason_wizard.xml"
     ],
     "assets": {
-        "web.report_assets_pdf": [
-            "sale_order_custom_report/static/src/css/sale_report.css"
+        "web.assets_backend": [
+            "sale_order_custom_report/static/src/css/sale_comment.css"
         ]
     },
     "installable": True,
