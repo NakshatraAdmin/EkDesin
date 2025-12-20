@@ -19,8 +19,7 @@
 
                 <!-- Supplier -->
                 <td style="width:50%; border:1px solid #000; padding:5px;">
-                    <strong>Bill To</strong><br/>
-                    <t t-esc="o.company_id.name"/><br/>
+                    <strong><t t-esc="o.company_id.name"/></strong><br/>
                     <t t-esc="o.company_id.street or ''"/><br/>
                     <t t-esc="o.company_id.street2 or ''"/><br/>
                     <t t-esc="(o.company_id.city or '') + ' ' + (o.company_id.zip or '')"/><br/>
@@ -48,7 +47,7 @@
                 <!-- Bill To -->
                 
                  <td style="width:50%; border:1px solid #000; padding:5px;">
-                    <strong>Supplier Name (Bill From)</strong><br/>
+                    <strong>Vendor</strong><br/>
                     <t t-esc="o.partner_id.name"/><br/>
                     <t t-esc="o.partner_id.street or ''"/><br/>
                     <t t-esc="o.partner_id.street2 or ''"/><br/>
@@ -186,4 +185,5 @@
     </record>-->
 
 </odoo> 
+
 
