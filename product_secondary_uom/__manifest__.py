@@ -1,0 +1,22 @@
+{
+    "name": "product_secondary_uom",
+    "summary": "Product Secondary Uom",
+    "description": """Product Secondary Uom""",
+    "author": "7span",
+    "website": "https://www.7span.com",
+    "license": "LGPL-3",
+    "category": "Inventory",
+    "version": "18.0.1.0.1",
+    "depends": ["sale_management", "purchase", "mrp", "stock"],
+    "data": [
+        'security/ir.model.access.csv',
+        'report/stock_report_views.xml',
+        "views/mrp_production_views.xml",
+        "views/product_views.xml",
+        "views/purchase_order_views.xml",
+        "views/sale_order_views.xml",
+        "views/stock_move_line_views.xml",
+        "views/stock_quant_views.xml",
+        'wizard/stock_move_wizard_views.xml',
+    ],
+}

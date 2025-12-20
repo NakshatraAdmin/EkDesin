@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="product_normal_form_view_inherit_seconday_uom" model="ir.ui.view">
+        <field name="name">product.product.view.form.inherit.product.secondary.uom</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='uom_po_id']" position="after">
+                <field name="is_need_secondary_uom" groups="uom.group_uom"/>
+                <field name="sec_uom_id" invisible="not is_need_secondary_uom" groups="uom.group_uom"/>
+                <field name="sec_uom_ratio" invisible="not is_need_secondary_uom" groups="uom.group_uom"/>
+                <field name="ratio" invisible="not is_need_secondary_uom" groups="uom.group_uom"/>
+                <field name="inverse_ratio" invisible="not is_need_secondary_uom" groups="uom.group_uom"/>
+                <field name="is_need_consumption_uom" groups="uom.group_uom"/>
+                <field name="consumption_uom_id" invisible="not is_need_consumption_uom" groups="uom.group_uom"/>
+                <field name="consumption_uom_ratio" invisible="not is_need_consumption_uom" groups="uom.group_uom"/>
+                <field name="consumption_ratio" invisible="not is_need_consumption_uom" groups="uom.group_uom"/>
+                <field name="consumption_inverse_ratio" invisible="not is_need_consumption_uom" groups="uom.group_uom"/>
+            </xpath>
+            <xpath expr="//field[@name='categ_id']" position="before">
+                <field name="std_unit_cost" string="STD Unit Cost"/>
+                <field name="landing_cost" string="Landing Cost (%)"/>
+                <field name="net_unit_cost" string="Net Unit Cost"/>
+                <field name="consumable_unit_rate" string="Consumable Unit Rate"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="product_product_stock_tree_inherit_seconday_uom" model="ir.ui.view">
+        <field name="name">product.product.stock.view.tree.inherit.product.secondary.uom</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="stock.product_product_stock_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='uom_id']" position="after">
+                <field name="sec_uom_qty"/>
+                <field name="sec_uom_id"/>
+                <field name="consumption_product_uom_qty"/>
+                <field name="consumption_uom_id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

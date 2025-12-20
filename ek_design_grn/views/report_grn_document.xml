@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="report_grn_custom">
+<t t-call="web.html_container">
+
+        <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)"/>
+          <div style="text-align:left; margin-bottom:10px;">
+            <img t-if="o.company_id.logo"
+                 t-att-src="image_data_uri(o.company_id.logo)"
+                 style="max-height:80px;"/>
+        </div>
+        <div style="text-align:center; margin-top:-50px;">
+            <h2 style="font-weight:700; text-transform:uppercase;">GOODS RECEIPT NOTE (GRN)</h2>
+        </div>
+    <div class="page" style="padding-top:0;">
+
+        <table style="width:100%; border-collapse:collapse; font-size:15px;">
+            <tr>
+
+                <!-- Supplier -->
+                <td style="width:50%; border:1px solid #000; padding:5px;">
+                    <strong>Bill To</strong><br/>
+                    <t t-esc="o.company_id.name"/><br/>
+                    <t t-esc="o.company_id.street or ''"/><br/>
+                    <t t-esc="o.company_id.street2 or ''"/><br/>
+                    <t t-esc="(o.company_id.city or '') + ' ' + (o.company_id.zip or '')"/><br/>
+                    <t t-esc="o.company_id.state_id.name or ''"/> ,
+                    <t t-esc="o.company_id.country_id.name or ''"/><br/>
+                    GSTIN: <t t-esc="o.company_id.vat or '-'"/>
+                </td>
+               
+
+                <!-- PO Info -->
+                <td style="width:50%; border:1px solid #000; padding:5px;">
+                    <strong>Invoice No :</strong> CS/25-26/402<br/>
+                    <strong>Terms Of Delivery:</strong> Paid Basis<br/>
+                    <strong>Invoice Date :</strong> <t t-esc="o.scheduled_date.strftime('%d/%m/%Y')"/><br/>
+                    <strong>GRN No :</strong> <t t-esc="o.name or '-'"/><br/>
+                    <strong>GRN Date:</strong> <t t-esc="o.date_done.strftime('%d/%m/%Y')"/>
+                </td>
+
+            </tr>
+        </table>
+
+        <table style="width:100%; border-collapse:collapse; margin-top:8px; font-size:15px;">
+            <tr>
+
+                <!-- Bill To -->
+                
+                 <td style="width:50%; border:1px solid #000; padding:5px;">
+                    <strong>Supplier Name (Bill From)</strong><br/>
+                    <t t-esc="o.partner_id.name"/><br/>
+                    <t t-esc="o.partner_id.street or ''"/><br/>
+                    <t t-esc="o.partner_id.street2 or ''"/><br/>
+                    <t t-esc="(o.partner_id.city or '') + ' ' + (o.partner_id.zip or '')"/><br/>
+                    <t t-esc="o.partner_id.state_id.name or ''"/> ,
+                    <t t-esc="o.partner_id.country_id.name or ''"/><br/>
+                    GSTIN: <t t-esc="o.partner_id.vat or '-'"/>
+                </td>
+                <!-- Ship To -->
+                <td style="width:50%; border:1px solid #000; padding:5px;">
+                    <strong>Ship To</strong><br/>
+                    <!-- <t t-esc="o.dest_address_id.name"/><br/>
+                    <t t-esc="o.dest_address_id.street or ''"/><br/>
+                    <t t-esc="o.dest_address_id.street2 or ''"/><br/>
+                    <t t-esc="(o.dest_address_id.city or '') + ' ' + (o.dest_address_id.zip or '')"/><br/>
+                    <t t-esc="o.dest_address_id.state_id.name or ''"/> ,
+                    <t t-esc="o.dest_address_id.country_id.name or ''"/><br/>
+                    GSTIN: <t t-esc="o.dest_address_id.vat or '-'"/> -->
+                    <t t-esc="o.company_id.name"/><br/>
+                    <t t-esc="o.company_id.street or ''"/><br/>
+                    <t t-esc="o.company_id.street2 or ''"/><br/>
+                    <t t-esc="(o.company_id.city or '') + ' ' + (o.company_id.zip or '')"/><br/>
+                    <t t-esc="o.company_id.state_id.name or ''"/> ,
+                    <t t-esc="o.company_id.country_id.name or ''"/><br/>
+                    GSTIN: <t t-esc="o.company_id.vat or '-'"/>
+                </td>
+
+            </tr>
+        </table>
+        <table style="width:100%; border:1px solid black; border-collapse:collapse; font-size:12px;margin-top:15px;">
+            <thead>
+                <tr style="background:#f0f0f0;">
+                <th style="border:1px solid black; padding:5px;">Part Code</th>
+                <th style="border:1px solid black; padding:5px;">Product Name</th>
+                <th style="border:1px solid black; padding:5px;">Description</th>
+                <th style="border:1px solid black; padding:5px;">Inv. Qty</th>
+                <th style="border:1px solid black; padding:5px;">UOM</th>
+                <th style="border:1px solid black; padding:5px;">Rec. Qty</th>
+                <th style="border:1px solid black; padding:5px;">Accepted Qty</th>
+                <th style="border:1px solid black; padding:5px;">Rej/Short Qty</th>
+                <th style="border:1px solid black; padding:5px;">Warehouse</th>
+                </tr>
+            </thead>
+            <tbody>
+                <t t-foreach="o.move_ids_without_package" t-as="l">
+                <tr>
+                <td style="border:1px solid black; padding:5px;" t-esc="l.product_id.default_code"></td>
+                <td style="border:1px solid black; padding:5px;" t-esc="l.product_id.name"/>
+                <td style="border:1px solid black; padding:5px;" t-esc="l.name"/>
+                <td style="border:1px solid black; padding:5px; text-align:right;" t-esc="l.product_uom_qty"/>
+                <td style="border:1px solid black; padding:5px;" t-esc="l.product_uom.name"/>
+                <td style="border:1px solid black; padding:5px; text-align:right;" t-esc="l.quantity"/>
+                <td style="border:1px solid black; padding:5px; text-align:right;" t-esc="l.quantity"/>
+                <td style="border:1px solid black; padding:5px; text-align:right;" t-esc="l.quantity"/>
+                <td style="border:1px solid black; padding:5px;">EK DESIGN INDUSTRIES LIMITED</td>
+                </tr>
+                </t>
+            </tbody>
+    </table>
+
+    <!-- FOOTER -->
+<div style="margin-top:60px; font-size:12px;">
+
+    <!-- Prepared / Approved -->
+    <table style="width:100%; margin-top:80px;">
+        <tr>
+            <td style="width:50%; text-align:left;">
+
+                <div style="
+                    display:inline-block;
+                    border:1px solid black;
+                    padding:6px 20px;">
+                    <strong>Prepared By:</strong><t t-esc="o.prepared_by_id.name"/>
+                </div> 
+            </td>
+            <td style="width:50%; text-align:right;">
+                <div style="
+                    display:inline-block;
+                    border:1px solid black;
+                    padding:6px 20px;
+                "><strong>Approved By:</strong><t t-esc="o.approved_by_id.name"/>
+                </div> 
+            </td>
+        </tr>
+    </table>
+
+    <!-- DOC INFO LINE -->
+    <table style="
+        width:100%;
+        border:1px solid black;
+        border-collapse:collapse;
+        margin-top:80px;
+    ">
+        <tr>
+            <td style="padding:6px; width:40%;">
+                Doc No
+                <span t-esc="o.doc_no"/>
+            </td>
+            <td style="padding:6px; width:20%; text-align:center;">
+                Rev No
+                <span t-esc="o.revision_no"/>
+            </td>
+            <td style="padding:6px; width:40%; text-align:right;">
+                Rev Date
+                <t t-esc="o.revision_date and o.revision_date.strftime('%d/%m/%Y') or ''"/>
+            </td>
+        </tr>
+    </table>
+
+    <!-- FOOT NOTE -->
+    <div style="text-align:center; font-size:11px; margin-top:10px;">
+        This is a computer-generated document and does not require a signature.
+    </div>
+
+</div>
+
+
+    </div>
+    </t> 
+</template>
+
+
+<template id="report_grn_document">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="ek_design_grn.report_grn_custom" t-lang="o.partner_id.lang"/>
+        </t>
+    </t>
+</template>
+
+ <!-- <record id="purchase.action_report_purchase_order" model="ir.actions.report">
+        <field name="report_name">purchase_order_custom_report.purchase_order_pdf</field>
+        <field name="report_file">purchase_order_custom_report.purchase_order_pdf</field>
+        <field name="name">Purchase Order</field>
+    </record>-->
+
+</odoo> 
+

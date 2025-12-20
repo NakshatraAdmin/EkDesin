@@ -1,0 +1,22 @@
+<odoo>
+    <record id="view_picking_form_grn_footer" model="ir.ui.view">
+        <field name="name">stock.picking.form.grn.footer</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//sheet/notebook" position="inside">
+                <page string="GRN Footer">
+                    <group>
+                        <field name="prepared_by_id"/>
+                        <field name="approved_by_id"/>
+                        <field name="doc_no"/>
+                        <field name="revision_no"/>
+                        <field name="revision_date"/>
+                    </group>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>
