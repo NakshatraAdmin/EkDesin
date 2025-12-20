@@ -36,7 +36,7 @@
                     <strong>Terms Of Delivery:</strong> Paid Basis<br/>
                     <strong>Invoice Date :</strong> <t t-esc="o.scheduled_date.strftime('%d/%m/%Y')"/><br/>
                     <strong>GRN No :</strong> <t t-esc="o.name or '-'"/><br/>
-                    <strong>GRN Date:</strong> <t t-esc="o.date_done.strftime('%d/%m/%Y')"/>
+                    <strong>GRN Date:</strong> <t t-esc="o.date_done"/>
                 </td>
 
             </tr>
