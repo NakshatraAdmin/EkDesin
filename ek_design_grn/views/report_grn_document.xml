@@ -12,34 +12,32 @@
         <div style="text-align:center; margin-top:-50px;">
             <h2 style="font-weight:700; text-transform:uppercase;">GOODS RECEIPT NOTE (GRN)</h2>
         </div>
+        <table style="
+        width:100%;
+        border:1px solid black;
+        border-collapse:collapse;
+        margin-top:10px;
+    ">
+        <tr>
+            <td style="padding:6px; width:10%; text-align:center;">
+                Rev No
+                <span t-esc="o.revision_no"/>
+            </td>
+            <td style="padding:6px; width:40%; text-align:right;">
+                Rev Date
+                <t t-esc="o.revision_date and o.revision_date.strftime('%d/%m/%Y') or ''"/>
+            <td style="padding:6px; width:40%;text-align:right;">
+                Doc No
+                <span t-esc="o.doc_no"/>
+            </td>
+            
+            
+            </td>
+        </tr>
+    </table>
     <div class="page" style="padding-top:0;">
 
-        <table style="width:100%; border-collapse:collapse; font-size:15px;">
-            <tr>
-
-                <!-- Supplier -->
-                <td style="width:50%; border:1px solid #000; padding:5px;">
-                    <strong><t t-esc="o.company_id.name"/></strong><br/>
-                    <t t-esc="o.company_id.street or ''"/><br/>
-                    <t t-esc="o.company_id.street2 or ''"/><br/>
-                    <t t-esc="(o.company_id.city or '') + ' ' + (o.company_id.zip or '')"/><br/>
-                    <t t-esc="o.company_id.state_id.name or ''"/> ,
-                    <t t-esc="o.company_id.country_id.name or ''"/><br/>
-                    GSTIN: <t t-esc="o.company_id.vat or '-'"/>
-                </td>
-               
-
-                <!-- PO Info -->
-                <td style="width:50%; border:1px solid #000; padding:5px;">
-                    <strong>Invoice No :</strong> CS/25-26/402<br/>
-                    <strong>Terms Of Delivery:</strong> Paid Basis<br/>
-                    <strong>Invoice Date :</strong> <t t-esc="o.scheduled_date.strftime('%d/%m/%Y')"/><br/>
-                    <strong>GRN No :</strong> <t t-esc="o.name or '-'"/><br/>
-                    <strong>GRN Date:</strong> <t t-esc="o.date_done"/>
-                </td>
-
-            </tr>
-        </table>
+        
 
         <table style="width:100%; border-collapse:collapse; margin-top:8px; font-size:15px;">
             <tr>
@@ -59,13 +57,6 @@
                 <!-- Ship To -->
                 <td style="width:50%; border:1px solid #000; padding:5px;">
                     <strong>Ship To</strong><br/>
-                    <!-- <t t-esc="o.dest_address_id.name"/><br/>
-                    <t t-esc="o.dest_address_id.street or ''"/><br/>
-                    <t t-esc="o.dest_address_id.street2 or ''"/><br/>
-                    <t t-esc="(o.dest_address_id.city or '') + ' ' + (o.dest_address_id.zip or '')"/><br/>
-                    <t t-esc="o.dest_address_id.state_id.name or ''"/> ,
-                    <t t-esc="o.dest_address_id.country_id.name or ''"/><br/>
-                    GSTIN: <t t-esc="o.dest_address_id.vat or '-'"/> -->
                     <t t-esc="o.company_id.name"/><br/>
                     <t t-esc="o.company_id.street or ''"/><br/>
                     <t t-esc="o.company_id.street2 or ''"/><br/>
@@ -77,11 +68,68 @@
 
             </tr>
         </table>
+        <table style="width:100%; border-collapse:collapse; font-size:15px;">
+            <tr>
+
+                <!-- Supplier -->
+                <td style="width:50%; border:1px solid #000; padding:5px;">
+                    <strong><t t-esc="o.company_id.name"/></strong><br/>
+                    <t t-esc="o.company_id.street or ''"/><br/>
+                    <t t-esc="o.company_id.street2 or ''"/><br/>
+                    <t t-esc="(o.company_id.city or '') + ' ' + (o.company_id.zip or '')"/><br/>
+                    <t t-esc="o.company_id.state_id.name or ''"/> ,
+                    <t t-esc="o.company_id.country_id.name or ''"/><br/>
+                    GSTIN: <t t-esc="o.company_id.vat or '-'"/>
+                </td>
+               
+
+                <!-- PO Info -->
+               <td style="width:50%; border:1px solid #000; padding:5px; vertical-align:top;">
+    <table style="width:100%; border-collapse:collapse; font-size:13px;">
+        <tr>
+            <td style="width:45%; font-weight:bold;">Invoice No</td>
+            <td style="width:5%;">:</td>
+            <td style="width:50%;"><t t-esc="o.invoice_no or '-'"/></td>
+        </tr>
+        <tr>
+            <td style="font-weight:bold;">Invoice Date</td>
+            <td>:</td>
+            <td>
+                <t t-esc="o.invoice_date"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:bold;">Terms Of Delivery</td>
+            <td>:</td>
+            <td>
+                <t t-esc="o.terms_of_delivery"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:bold;">GRN No</td>
+            <td>:</td>
+            <td><t t-esc="o.name or '-'"/></td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:bold;">GRN Date</td>
+            <td>:</td>
+            <td>
+                <t t-esc="o.date_done"/>
+            </td>
+        </tr>
+    </table>
+</td>
+
+
+            </tr>
+        </table>
         <table style="width:100%; border:1px solid black; border-collapse:collapse; font-size:12px;margin-top:15px;">
             <thead>
                 <tr style="background:#f0f0f0;">
                 <th style="border:1px solid black; padding:5px;">Part Code</th>
-                <th style="border:1px solid black; padding:5px;">Product Name</th>
                 <th style="border:1px solid black; padding:5px;">Description</th>
                 <th style="border:1px solid black; padding:5px;">Inv. Qty</th>
                 <th style="border:1px solid black; padding:5px;">UOM</th>
@@ -95,74 +143,80 @@
                 <t t-foreach="o.move_ids_without_package" t-as="l">
                 <tr>
                 <td style="border:1px solid black; padding:5px;" t-esc="l.product_id.default_code"></td>
-                <td style="border:1px solid black; padding:5px;" t-esc="l.product_id.name"/>
-                <td style="border:1px solid black; padding:5px;" t-esc="l.name"/>
-                <td style="border:1px solid black; padding:5px; text-align:right;" t-esc="l.product_uom_qty"/>
-                <td style="border:1px solid black; padding:5px;" t-esc="l.product_uom.name"/>
-                <td style="border:1px solid black; padding:5px; text-align:right;" t-esc="l.quantity"/>
-                <td style="border:1px solid black; padding:5px; text-align:right;" t-esc="l.quantity"/>
-                <td style="border:1px solid black; padding:5px; text-align:right;" t-esc="l.quantity"/>
-                <td style="border:1px solid black; padding:5px;">EK DESIGN INDUSTRIES LIMITED</td>
+                <td style="border:1px solid black; padding:5px;" t-esc="l.product_id.name"></td>
+                <td style="border:1px solid black; padding:5px; text-align:right;" t-esc="l.product_uom_qty"></td>
+                <td style="border:1px solid black; padding:5px;" t-esc="l.product_uom.name"></td>
+                <td style="border:1px solid black; padding:5px; text-align:right;" t-esc="l.quantity"></td>
+                <td style="border:1px solid black; padding:5px; text-align:right;" t-esc="l.quantity"></td>
+                <td style="border:1px solid black; padding:5px; text-align:right;" t-esc="l.quantity"></td>
+                <td style="border:1px solid black; padding:5px;" t-esc="o.location_dest_id.name"></td>
                 </tr>
                 </t>
             </tbody>
     </table>
 
-    <!-- FOOTER -->
-<div style="margin-top:60px; font-size:12px;">
+<!-- <t t-set="sign_name" t-value="o.user_id.name or 'OdooBot'"/>
+ -->
+<table style="width:100%; margin-top:120px; border-collapse:collapse;">
+    <tr>
+        <!-- Prepared By -->
+        <td style="width:50%; text-align:left; vertical-align:top;">
+            <table style="margin-left:0 50px; border-collapse:collapse;">
+                <tr>
+                    <td style="
+                        width:200px;
+                        height:30px;
+                        border:1px solid #000;
+                        vertical-align:middle;
+                        text-align:left;
+                        font-size:13px;">
+                        <t t-esc="o.prepared_by_id.name"/>
+                        <!-- Empty box or name -->
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-top:6px;text-align:center; font-size:12px;">
+                        Prepared By
+                    </td>
+                </tr>
+            </table>
+        </td>
 
-    <!-- Prepared / Approved -->
-    <table style="width:100%; margin-top:80px;">
-        <tr>
-            <td style="width:50%; text-align:left;">
+        <!-- Accepted By -->
+        <td style="width:50%;margin-left:-450px; text-align:right; vertical-align:top;">
+            <table style="margin-left:250px; border-collapse:collapse;">
+                <tr>
+                    <td style="
+                        width:200px;
+                        height:30px;
+                        border:1px solid #000;
+                        vertical-align:middle;
+                        text-align:center;
+                        font-size:13px;">
+                        <t t-esc="o.approved_by_id.name"/>
+                        <!-- Empty box or name -->
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-top:6px; text-align:center;font-size:12px;">
+                        Accepted By
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
 
-                <div style="
-                    display:inline-block;
-                    border:1px solid black;
-                    padding:6px 20px;">
-                    <strong>Prepared By:</strong><t t-esc="o.prepared_by_id.name"/>
-                </div> 
-            </td>
-            <td style="width:50%; text-align:right;">
-                <div style="
-                    display:inline-block;
-                    border:1px solid black;
-                    padding:6px 20px;
-                "><strong>Approved By:</strong><t t-esc="o.approved_by_id.name"/>
-                </div> 
-            </td>
-        </tr>
-    </table>
 
     <!-- DOC INFO LINE -->
-    <table style="
-        width:100%;
-        border:1px solid black;
-        border-collapse:collapse;
-        margin-top:80px;
-    ">
-        <tr>
-            <td style="padding:6px; width:40%;">
-                Doc No
-                <span t-esc="o.doc_no"/>
-            </td>
-            <td style="padding:6px; width:20%; text-align:center;">
-                Rev No
-                <span t-esc="o.revision_no"/>
-            </td>
-            <td style="padding:6px; width:40%; text-align:right;">
-                Rev Date
-                <t t-esc="o.revision_date and o.revision_date.strftime('%d/%m/%Y') or ''"/>
-            </td>
-        </tr>
-    </table>
+
 
     <!-- FOOT NOTE -->
-    <div style="text-align:center; font-size:11px; margin-top:10px;">
+    <div style="text-align:center; font-size:11px; margin-top:50px;">
         This is a computer-generated document and does not require a signature.
     </div>
 
-</div>
+
 
 
     </div>
@@ -185,5 +239,4 @@
     </record>-->
 
 </odoo> 
-
 

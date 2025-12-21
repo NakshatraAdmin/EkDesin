@@ -28,3 +28,17 @@ class StockPicking(models.Model):
         string="Revision Date",
         default=fields.Datetime.now()
     )
+
+    invoice_no = fields.Char(
+        string="Invoice No",
+        
+    )
+
+    invoice_date = fields.Date(
+        string="Invoice Date",
+        default=fields.Datetime.now()
+    )
+    terms_of_delivery= fields.Char(
+        string="Terms Of Delivery"
+        
+    )
