@@ -14,6 +14,26 @@ class PurchaseOrder(models.Model):
         compute="_compute_roundoff",
         store=True,
     )
+    doc_no = fields.Char(
+        string="Document No",
+        default="EKD/STR/FR/01"
+    )
+
+    revision_no = fields.Char(
+        string="Revision No",
+        default="0"
+    )
+
+    revision_date = fields.Date(
+        string="Revision Date",
+        default=fields.Datetime.now()
+    )
+    reference_date = fields.Date(
+        string="Reference No & Date :",
+        default=fields.Datetime.now()
+    )
+    terms_of_delivery = fields.Char("Terms Of Delivery")
+    
 
     @api.depends('amount_total')
     def _compute_roundoff(self):

@@ -16,7 +16,17 @@
                          options="{'currency_field': 'currency_id'}" style="font-weight: bold;" />
                      </xpath>
 
-
+             <xpath expr="//sheet/notebook" position="inside">
+                <page string="Purchase Data">
+                    <group>
+                        <field name="doc_no"/>
+                        <field name="revision_no"/>
+                        <field name="revision_date"/>
+                        <field name="reference_date"/>
+                        <field name="terms_of_delivery"/>
+                    </group>
+                </page>
+            </xpath>
 
         </field>
     </record>
