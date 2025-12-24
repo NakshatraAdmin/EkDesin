@@ -5,8 +5,7 @@ class StockPicking(models.Model):
 
     material_requested_by_id = fields.Many2one(
         'res.users',
-        string="Requisition By",
-        default=lambda self: self.env.user.name
+        string="Requisition By"
         )
 
     material_received_by_id = fields.Many2one(
