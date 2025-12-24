@@ -26,15 +26,16 @@
         <table style="width:100%; border-collapse:collapse;">
             <tr>
                 <td style="border-bottom:1px solid black; padding:4px;">Doc No:</td>
-                <td style="border-bottom:1px solid black; padding:4px;">EKD/STR/FR/01</td>
+                <td style="border-bottom:1px solid black; padding:4px;">
+                    <span t-esc="o.doc_no or '-'"/></td>
             </tr>
             <tr>
                 <td style="border-bottom:1px solid black; padding:4px;">Rev No:</td>
-                <td style="border-bottom:1px solid black; padding:4px;">0</td>
+                <td style="border-bottom:1px solid black; padding:4px;"><span t-esc="o.revision_no or '-'" /></td>
             </tr>
             <tr>
                 <td style="padding:4px;">Rev Date:</td>
-                <td style="padding:4px;">01-12-2024</td>
+                <td style="padding:4px;"><span t-esc="o.revision_date and o.revision_date.strftime('%d/%m/%Y') or ''"/></td>
             </tr>
         </table>
     </td>
@@ -56,17 +57,19 @@
 <tr>
     <td style="border:1px solid black; padding:6px;">Requisition By:</td>
     <td style="border:1px solid black; padding:6px;">
-        <t t-esc="o.user_id.name"/>
+        <t t-esc="o.material_requested_by_id.name"/>
     </td>
     <td style="border:1px solid black; padding:6px;">Material Received By:</td>
-    <td style="border:1px solid black; padding:6px;"></td>
+    <td style="border:1px solid black; padding:6px;">
+         <t t-esc="o.material_received_by_id.name"/>
+    </td>
 </tr>
 </table>
 
 <!-- LINES -->
 <table style="width:100%; border-collapse:collapse; border:1px solid black; margin-top:-1px;">
 <thead>
-<tr style="font-weight:bold; text-align:center;">
+<tr style="font-weight:bold; text-align:center;background-color:#FFCCCB;" >
     <td style="border:1px solid black;">Sr.No</td>
     <td style="border:1px solid black;">Material Description</td>
     <td style="border:1px solid black;">Required Qty</td>
@@ -92,8 +95,8 @@
     <td style="border:1px solid black; text-align:center;">
         <t t-esc="line.quantity"/>
     </td>
-    <td style="border:1px solid black;"></td>
-    <td style="border:1px solid black;"></td>
+    <td style="border:1px solid black;"><t t-esc="line.remark"/></td>
+    <td style="border:1px solid black;"><t t-esc="line.material_issued_by_id.name"/></td>
 </tr>
 <t t-set="sr" t-value="sr + 1"/>
 </t>

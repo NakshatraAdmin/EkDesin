@@ -3,42 +3,23 @@ from odoo import models, fields
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
-    prepared_by_id = fields.Many2one(
+    material_requested_by_id = fields.Many2one(
         'res.users',
-        string="Prepared By",
-        default=lambda self: self.env.user
-    )
+        string="Requisition By",
+        default=lambda self: self.env.user.name
+        )
 
-    approved_by_id = fields.Many2one(
+    material_received_by_id = fields.Many2one(
         'res.users',
-        string="Approved By"
+        string="Material Received By:"
     )
 
-    doc_no = fields.Char(
-        string="Document No",
-        default="EKD/STR/FR/01"
-    )
+    
+class StockMove(models.Model):
+    _inherit = 'stock.move'
 
-    revision_no = fields.Char(
-        string="Revision No",
-        default="0"
-    )
-
-    revision_date = fields.Date(
-        string="Revision Date",
-        default=fields.Datetime.now()
-    )
-
-    invoice_no = fields.Char(
-        string="Invoice No",
-        
-    )
-
-    invoice_date = fields.Date(
-        string="Invoice Date",
-        default=fields.Datetime.now()
-    )
-    terms_of_delivery= fields.Char(
-        string="Terms Of Delivery"
-        
+    remark = fields.Text(string="Remark")
+    material_issued_by_id = fields.Many2one(
+        'res.users',
+        string="Material Issued By:"
     )
