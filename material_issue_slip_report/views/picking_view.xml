@@ -7,8 +7,8 @@
         <field name="inherit_id" ref="stock.view_picking_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='origin']" position="after" >
-                        <field name="material_requested_by_id" invisible="'operation_type_id', '!=',9"/>
-                        <field name="material_received_by_id" invisible="'operation_type_id', '!=', 9"/>
+                        <field name="material_requested_by_id" invisible="'operation_type_id.sequence', '!=',18"/>
+                        <field name="material_received_by_id" invisible="'operation_type_id.sequence', '!=',18"/>
             </xpath>
 
             <xpath expr="//header" position="inside">
@@ -16,16 +16,17 @@
                     name="%(action_material_issue_slip)d"
                     string="Material Issue Slip"
                     type="action"
-                    invisible="'operation_type_id', '!=',9"
+                    invisible="'operation_type_id.sequence', '!=',18"
                     class="btn-primary"/>
             </xpath>
             <xpath expr="//field[@name='move_ids_without_package']/list" position="inside">
-                    <field name="remark" invisible="'operation_type_id', '!=',9"/>
-                    <field name="material_issued_by_id" invisible="'operation_type_id', '!=',9"/>
+                    <field name="remark" invisible="'operation_type_id.sequence', '!=',18"/>
+                    <field name="material_issued_by_id" invisible="'operation_type_id.sequence', '!=',18"/>
                 </xpath>
 
         </field>
     </record>
 
 </odoo>
+
 
