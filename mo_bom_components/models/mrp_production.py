@@ -46,5 +46,9 @@ class StockPicking(models.Model):
                 )
 
             picking.mo_id = mo
-            picking.mo_product_id = mo.bom_id.product_id if mo.bom_id.product_id else False
-            picking.mo_product_tmpl_id = mo.product_id if mo else False
+            if mo:
+                picking.mo_product_id = mo.bom_id.product_id if mo else False
+                picking.mo_product_tmpl_id = mo.product_id if mo else False
+            else:
+                picking.mo_product_id = mo.bom_id.product_id if mo else False
+                picking.mo_product_tmpl_id = mo.product_id if mo else False
