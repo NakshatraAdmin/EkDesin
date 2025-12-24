@@ -22,7 +22,7 @@
  -->            </xpath>
             <xpath expr="//field[@name='move_ids_without_package']/list" position="inside">
                     <field name="remark" />
-                    <field name="material_issued_by_id">
+                    <field name="material_issued_by_id"/>
                 </xpath>
 
         </field>
