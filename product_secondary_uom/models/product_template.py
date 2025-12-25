@@ -3,6 +3,35 @@ from collections import defaultdict
 
 from odoo import models, fields, api
 
+
+class ItemType(models.Model):
+    _name = 'item.type'
+    _description = 'Item Type'
+
+    name = fields.Char(string='Item Type Name', required=True)
+
+
+class ProductGroup(models.Model):
+    _name = 'product.group'
+    _description = 'Product Group'
+
+    name = fields.Char(string='Product Group Name', required=True)
+
+
+class SubProductGroup(models.Model):
+    _name = 'sub.product.group'
+    _description = 'Sub Product Group'
+
+    name = fields.Char(string='Sub Product Group Name', required=True)
+
+
+class CostSegment(models.Model):
+    _name = 'cost.segment'
+    _description = 'Cost Segment'
+
+    name = fields.Char(string='Cost Segment Name', required=True)
+    
+
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
 

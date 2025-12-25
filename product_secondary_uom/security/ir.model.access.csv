@@ -1,2 +1,7 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_generate_qr_wizard,access_generate_qr_wizard,model_generate_qr_wizard,base.group_user,1,1,1,1
+access_item_type_user,item.type user,model_item_type,base.group_user,1,1,1,1
+access_product_group_user,product.group user,model_product_group,base.group_user,1,1,1,1
+access_sub_product_group_user,sub.product.group user,model_sub_product_group,base.group_user,1,1,1,1
+access_cost_segment_user,cost.segment user,model_cost_segment,base.group_user,1,1,1,1
+
