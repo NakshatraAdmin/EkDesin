@@ -105,6 +105,7 @@ class ProductProduct(models.Model):
     def _compute_total_qty(self):
         for product in self:
             if not product.sec_uom_ratio or not product.qty_available:
+                print("self===",self[25].name,product.sec_uom_ratio,product.qty_available)
                 product.sec_uom_qty = 0
                 continue
             product.sec_uom_qty = product.qty_available * product.sec_uom_ratio

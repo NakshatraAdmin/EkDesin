@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
-  
-
-
     <template id="material_issue_slip_pdf_doc">
     <t t-call="web.basic_layout">
 

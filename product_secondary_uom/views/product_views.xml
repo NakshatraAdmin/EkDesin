@@ -10,7 +10,7 @@
                  <!-- groups="uom.group_uom" -->
                 <field name="sec_uom_id" />
 <!--                 invisible="not is_need_secondary_uom" groups="uom.group_uom"
- -->                <field name="sec_uom_ratio"/>
+ -->            <field name="sec_uom_ratio"/>
                 <field name="ratio"/>
                 <field name="inverse_ratio" invisible="not is_need_secondary_uom" groups="uom.group_uom"/>
                 <field name="is_need_consumption_uom" groups="uom.group_uom"/>
