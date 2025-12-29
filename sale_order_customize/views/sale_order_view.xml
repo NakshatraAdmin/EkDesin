@@ -13,4 +13,13 @@
 
         </field>
     </record>
+
+    <record id="account.res_partner_action_customer" model="ir.actions.act_window">
+        <field name="domain">[('is_customer_partner', '=', True)]</field>
+         <field name="context">{'search_default_is_customer_partner': True,'res_partner_search_mode': 'customer', 'default_is_company': True, 'default_is_customer_partner': True}</field>
+    </record>
+    <record id="account.res_partner_action_supplier" model="ir.actions.act_window">
+        <field name="domain">[('is_vendor_partner', '=', True)]</field>
+         <field name="context">{'search_default_is_vendor_partner': True,'res_partner_search_mode': 'supplier', 'default_is_company': True, 'default_is_vendor_partner': True}</field>
+    </record>
 </odoo>
