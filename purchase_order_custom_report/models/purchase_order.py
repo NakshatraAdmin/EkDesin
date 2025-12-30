@@ -46,14 +46,14 @@ class PurchaseOrder(models.Model):
             order.amount_roundoff = float(rounded_total - total)
             order.amount_total_rounded = float(rounded_total)
 
-    def create(self, vals):
-        # sssssss
-        # Create the RFQ
-        order = super(PurchaseOrder, self).create(vals)
+    # def create(self, vals):
+    #     # sssssss
+    #     # Create the RFQ
+    #     order = super(PurchaseOrder, self).create(vals)
 
-        # Check if the RFQ is in 'draft' state and confirm it automatically
-        if order.state == 'draft':
-            order.button_confirm()  # This will confirm the RFQ and create the Purchase Order
+    #     # Check if the RFQ is in 'draft' state and confirm it automatically
+    #     if order.state == 'draft':
+    #         order.button_confirm()  # This will confirm the RFQ and create the Purchase Order
         
-        return order
+    #     return order
 
