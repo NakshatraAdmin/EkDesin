@@ -5,7 +5,7 @@ class SaleOrder(models.Model):
     _inherit = "sale.order"
 
     def _action_confirm(self):
-        """Override to auto-confirm subcontract POs and validate receipts"""
+        """Override to auto-confirm draft POs related to this SO and create receipts"""
         res = super()._action_confirm()
         
         for order in self:
@@ -17,22 +17,13 @@ class SaleOrder(models.Model):
                             | order.procurement_group_id.stock_move_ids.move_orig_ids.purchase_line_id.order_id \
                             | order.procurement_group_id.purchase_line_ids.order_id
             
-            # Filter for subcontract POs: POs where partner has subcontractor location
-            # This identifies POs created for subcontractors
-            subcontract_pos = purchase_orders.filtered(
-                lambda po: po.partner_id.with_company(po.company_id).property_stock_subcontractor
-            )
-            
             # Filter only draft POs (newly created)
-            draft_subcontract_pos = subcontract_pos.filtered(
-                lambda po: po.state == 'draft'
-            )
+            draft_pos = purchase_orders.filtered(lambda po: po.state == 'draft')
             
-            for po in draft_subcontract_pos:
+            # Confirm draft POs (this will create the receipt picking automatically)
+            for po in draft_pos:
                 try:
-                    # Auto-confirm the PO (this will create the receipt picking automatically)
                     po.button_confirm()
-                    
                 except Exception:
                     # Log error but don't fail the SO confirmation
                     continue
