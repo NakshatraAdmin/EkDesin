@@ -1,7 +1,7 @@
 {
     'name': 'Sale Order Customer Vendor Control',
     'version': '1.0',
-    'depends': ['base','contacts','stock','purchase','sale'],
+    'depends': ['base','contacts','stock','purchase','sale','mrp_subcontracting','mrp_subcontracting_purchase'],
     'data': [
         'security/security_groups.xml',
         'security/ir_rule.xml',
