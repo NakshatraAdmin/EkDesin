@@ -4,7 +4,7 @@
     "summary": "Custom GRN for Odoo 18",
     "author": "Nakshatra",
     "category": "Purchases",
-    "depends": ["stock","web"],
+    "depends": ["stock","web",'project','product_dimensions'],
     "data": [
         "views/report_grn_document_action.xml",
         "views/report_grn_document.xml",

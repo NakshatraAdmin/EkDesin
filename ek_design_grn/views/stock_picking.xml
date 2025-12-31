@@ -8,6 +8,7 @@
             <xpath expr="//sheet/notebook" position="inside">
                 <page string="GRN Footer">
                     <group>
+                    <group>
                         <field name="prepared_by_id"/>
                         <field name="approved_by_id"/>
                         <field name="doc_no"/>
@@ -15,11 +16,17 @@
                         <field name="revision_date"/>
                     </group>
                     <group>
+                        <field name="project_id"/>
                         <field name="invoice_no"/>
                         <field name="invoice_date"/>
                         <field name="terms_of_delivery"/>
                     </group>
+                </group>
                 </page>
+            </xpath>
+            <xpath expr="//field[@name='move_ids_without_package']/list/field[@name='quantity']" position="after">
+                <field name="reject_qty"/>
+                <field name="accept_qty"/>
             </xpath>
 
         </field>
