@@ -39,19 +39,6 @@ class SaleOrderLine(models.Model):
                 else:
                     self.secondary_product_uom_qty = 0
 
-    @api.onchange('product_id')
-    def _onchange_product_id(self):
-        if self.product_id:
-            self.product_uom = self.product_id.uom_id
-            if self.product_id.is_need_secondary_uom:
-                self.sec_uom_id = self.product_id.sec_uom_id
-                self.product_uom_qty = self.product_uom_qty or 1
-                if self.product_uom_qty > 0:
-                    self.secondary_product_uom_qty = (
-                        self.product_id.sec_uom_ratio * self.product_uom_qty
-                    )
-                else:
-                    self.secondary_product_uom_qty = 0
 
     @api.depends("product_uom_qty", "product_id.sec_uom_ratio")
     def _compute_secondary_product_uom_qty(self):
