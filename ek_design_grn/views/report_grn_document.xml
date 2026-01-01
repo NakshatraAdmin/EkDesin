@@ -160,17 +160,17 @@
                 <td style="border:1px solid #000; text-align:center; padding:4px;">
                     <t t-esc="sr"/>
                 </td>
-                <td style="border:1px solid black; padding:5px;" t-esc="l.product_id.default_code"></td>
-                <td style="border:1px solid black; padding:5px;" t-esc="l.product_id.name"></td>
-                <td style="border:1px solid black; padding:5px;" t-esc="l.assume_length"></td>
-                <td style="border:1px solid black; padding:5px;" t-esc="l.assume_width"></td>
-                <td style="border:1px solid black; padding:5px;" t-esc="l.assume_height"></td>
-                <td style="border:1px solid black; padding:5px; text-align:right;" t-esc="l.product_uom_qty"></td>
-                <td style="border:1px solid black; padding:5px;" t-esc="l.product_uom.name"></td>
-                <td style="border:1px solid black; padding:5px; text-align:right;" t-esc="l.quantity"></td>
-                <td style="border:1px solid black; padding:5px; text-align:right;" t-esc="l.accept_qty"></td>
-                <td style="border:1px solid black; padding:5px; text-align:right;" t-esc="l.reject_qty"></td>
-                <td style="border:1px solid black; padding:5px;" t-esc="o.location_dest_id.complete_name"></td>
+                <td style="border:1px solid black; padding:5px;" t-esc="l.product_id.default_code or ''"></td>
+                <td style="border:1px solid black; padding:5px;" t-esc="l.product_id.name or ''"></td>
+                <td style="border:1px solid black; padding:5px;" t-esc="l.assume_length or ''"></td>
+                <td style="border:1px solid black; padding:5px;" t-esc="l.assume_width or ''"></td>
+                <td style="border:1px solid black; padding:5px;" t-esc="l.assume_height or ''"></td>
+                <td style="border:1px solid black; padding:5px; text-align:right;" t-esc="l.product_uom_qty or ''"></td>
+                <td style="border:1px solid black; padding:5px;" t-esc="l.product_uom.name or ''"></td>
+                <td style="border:1px solid black; padding:5px; text-align:right;" t-esc="l.quantity or ''"></td>
+                <td style="border:1px solid black; padding:5px; text-align:right;" t-esc="l.accept_qty or ''"></td>
+                <td style="border:1px solid black; padding:5px; text-align:right;" t-esc="l.reject_qty or ''"></td>
+                <td style="border:1px solid black; padding:5px;" t-esc="o.location_dest_id.complete_name or ''"></td>
                 </tr>
                 </t>
             </tbody>
