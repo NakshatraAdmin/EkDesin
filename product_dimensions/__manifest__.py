@@ -13,7 +13,7 @@
     "license": "LGPL-3",
     "category": "Inventory",
     "version": "18.0.1.0.0",
-    "depends": ["purchase", "mrp", "stock"],
+    "depends": ["purchase", "mrp", "stock", "product_secondary_uom"],
     "data": [
         "security/ir.model.access.csv",
         "views/product_template.xml",
