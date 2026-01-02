@@ -4,40 +4,46 @@
 <t t-call="web.basic_layout">
 
         <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)"/>
-          <div style="text-align:left; margin-bottom:10px;">
-            <img t-if="o.company_id.logo"
-                 t-att-src="image_data_uri(o.company_id.logo)"
-                 style="max-height:80px;"/>
-        </div>
-        <div style="text-align:center; margin-top:-50px;">
-            <h2 style="font-weight:700; text-transform:uppercase;">Purchase Order</h2>
-        </div>
-        <table style="
-        width:100%;
-        border:1px solid black;
-        border-collapse:collapse;
-        margin-top:10px;
-    ">
-        <tr>
-            <td style="padding:6px; width:10%; text-align:center;">
-                Rev No
-                <span t-esc="o.revision_no"/>
-            </td>
-            <td style="padding:6px; width:40%; text-align:right;">
-                Rev Date
-                <t t-esc="o.revision_date and o.revision_date.strftime('%d/%m/%Y') or ''"/>
-            <td style="padding:6px; width:40%;text-align:right;">
-                Doc No
-                <span t-esc="o.doc_no"/>
-            </td>
-            
-            
-            </td>
-        </tr>
-    </table>
+         <table width="100%" style="border:1px solid #000; border-collapse:collapse;">
+
+                <!-- HEADER ROW -->
+                <tr>
+                    <!-- LOGO -->
+                    <td style="border:1px solid #000; width:25%; padding:8px;">
+                        <img t-if="o.company_id.logo"
+                             t-att-src="image_data_uri(o.company_id.logo)"
+                             style="max-height:60px;"/>
+                    </td>
+
+                    <!-- TITLE -->
+                    <td style="border:1px solid #000; width:50%; text-align:center; font-weight:600;font-size:20px" >
+                        Purchase Order
+                    </td>
+
+                    <!-- DOC INFO -->
+                    <td style="border:1px solid #000; width:25%; padding:6px;font-size:10px; line-height:14px;">
+                                <strong>Rev No:</strong>
+                                <span t-field="o.revision_no"/><br/>
+
+                                <strong>Rev Date:</strong>
+                                <t t-if="o.revision_date">
+                                    <span t-field="o.revision_date"/>
+                                </t>
+                                <t t-else="">
+                                    <span>-</span>
+                                </t>
+                                <br/>
+
+                                <strong>Doc No:</strong>
+                                <span t-field="o.doc_no"/>
+                    </td>
+
+                </tr>
+            </table>
+          
 
 
-    <div class="page">
+     <div class="page" style="padding-top:0;">
 
         <table style="width:100%; border-collapse:collapse; margin-top:8px; font-size:15px;">
             <tr>
@@ -118,9 +124,12 @@
                 <table class="table table-bordered order-table" style="width:100%; border-collapse: collapse; margin-top:10px;font-size:15px;">
             <thead>
                 <tr>
-                    <th style="border:1px solid #000; padding:4px;">Sr No</th>
+                    <th style="border:1px solid #000; padding:4px;width:10%;">Sr No</th>
                     <th style="border:1px solid #000; padding:4px; width:10%;">Product Code</th>
                     <th style="border:1px solid #000; padding:4px; width:30%;">Product Name</th>
+                    <th style="border:1px solid black; padding:5px;">Length</th>
+                    <th style="border:1px solid black; padding:5px;">Height</th>
+                    <th style="border:1px solid black; padding:5px;">Weight</th>
                     <th style="border:1px solid #000; padding:4px; width:10%;">Expected date</th>
                     <th style="border:1px solid #000; padding:4px; width:6%;">UOM</th>
                     <th style="border:1px solid #000; padding:4px; width:6%;">Disc</th>
@@ -141,6 +150,9 @@
                         </td>
                         <td style="border:1px solid #000; padding:4px;"><span t-esc="l.product_id.default_code or ''"/></td>
                         <td style="border:1px solid #000; padding:4px;"><span t-esc="l.product_id.name"/></td>
+                        <td style="border:1px solid black; padding:5px;" t-esc="l.length"></td>
+                        <td style="border:1px solid black; padding:5px;" t-esc="l.width"></td>
+                        <td style="border:1px solid black; padding:5px;" t-esc="l.height"></td>
                         <td style="border:1px solid #000; padding:4px;"><span t-esc="l.date_planned and l.date_planned.strftime('%d/%m/%Y') or ''"/></td>
                         <td style="border:1px solid #000; padding:4px;"><span t-esc="l.product_uom.name"/></td>
                         <td style="border:1px solid #000; padding:4px;"><span t-esc="l.discount"/>%</td>
