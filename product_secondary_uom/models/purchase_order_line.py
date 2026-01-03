@@ -100,18 +100,16 @@ class PurchaseOrderLine(models.Model):
 
     @api.onchange('secondary_product_uom_qty')
     def _onchange_secondary_product_uom_qty(self):
-        if self.product_id.is_need_secondary_uom and self.secondary_product_uom_qty > 0:
+        if self.product_id and self.product_id.is_need_secondary_uom and self.secondary_product_uom_qty > 0:
             if self.product_id.sec_uom_ratio:
                 self.product_qty = (
                     self.secondary_product_uom_qty / self.product_id.sec_uom_ratio
                 )
-        else:
-            self.product_qty = 0
 
     def _inverse_secondary_product_uom_qty(self):
         for line in self:
-            if line.product_id.is_need_secondary_uom and line.secondary_product_uom_qty > 0:
+            # Only update product_qty if product has secondary UOM enabled
+            # Don't reset to 0 if product doesn't have secondary UOM - preserve existing value
+            if line.product_id and line.product_id.is_need_secondary_uom and line.secondary_product_uom_qty > 0:
                 if line.product_id.sec_uom_ratio:
                     line.product_qty = line.secondary_product_uom_qty / line.product_id.sec_uom_ratio
-            else:
-                line.product_qty = 0
