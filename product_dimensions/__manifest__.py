@@ -21,5 +21,6 @@
         "views/purchase_order_views.xml",
         "views/stock_move_line_views.xml",
         "views/mrp_production_views.xml",
+        "views/mrp_bom.xml",
     ],
 }
