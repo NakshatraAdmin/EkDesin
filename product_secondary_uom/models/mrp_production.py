@@ -58,10 +58,10 @@ class MrpProduction(models.Model):
                     move.secondary_product_uom_qty = move.product_uom_qty * move.product_id.sec_uom_ratio
                 else:
                     move.secondary_product_uom_qty = 0.0
-                if move.length and move.width and move.height:
-                    move.secondary_product_uom_qty = (move.length * move.width * move.height)*move.product_uom_qty 
-                else:
-                    move.secondary_product_uom_qty = 0.0
+                # if move.length and move.width and move.height:
+                #     move.secondary_product_uom_qty = (move.length * move.width * move.height)*move.product_uom_qty 
+                # else:
+                #     move.secondary_product_uom_qty = 0.0
 
 
     @api.onchange('product_id','length','width','height')
@@ -75,10 +75,10 @@ class MrpProduction(models.Model):
                     move.secondary_product_uom_qty = move.product_uom_qty * move.product_id.sec_uom_ratio
                 else:
                     move.secondary_product_uom_qty = 0.0
-                if move.length and move.width and move.height:
-                    move.secondary_product_uom_qty = (move.length * move.width * move.height)*move.product_uom_qty 
-                else:
-                    move.secondary_product_uom_qty = 0.0
+                # if move.length and move.width and move.height:
+                #     move.secondary_product_uom_qty = (move.length * move.width * move.height)*move.product_uom_qty 
+                # else:
+                #     move.secondary_product_uom_qty = 0.0
 
 
     def _prepare_stock_lot_values(self):
@@ -159,6 +159,21 @@ class StockMove(models.Model):
         # related="product_id.depth",
         store=True,
         readonly=False,
+    )
+    assume_width = fields.Float(
+        string="Actual Width",
+        help="Assumed width value (editable)",
+        digits='Product Unit of Measure',
+    )
+    assume_length = fields.Float(
+        string="Actual Length",
+        help="Assumed length value (editable)",
+        digits='Product Unit of Measure',
+    )
+    assume_height = fields.Float(
+        string="Actual Height",
+        help="Assumed height value (editable)",
+        digits='Product Unit of Measure',
     )
 
     @api.onchange('secondary_product_uom_qty')

@@ -72,7 +72,7 @@ class MrpProduction(models.Model):
 
 
 
-    @api.depends('move_raw_ids.product_uom_qty', 'move_raw_ids.product_id.sec_uom_ratio','move_raw_ids.length', 'move_raw_ids.width', 'move_raw_ids.height')
+    @api.depends('move_raw_ids.product_uom_qty', 'move_raw_ids.product_id.sec_uom_ratio','move_raw_ids.assume_length', 'move_raw_ids.assume_width', 'move_raw_ids.assume_height')
     def _compute_secondary_product_uom_qty(self):
         for record in self:
             for move in record.move_raw_ids:
@@ -81,8 +81,9 @@ class MrpProduction(models.Model):
                 else:
                     move.secondary_product_uom_qty = 0.0
 
-                if move.length and move.width and move.height:
-                    move.secondary_product_uom_qty = (move.length * move.width * move.height)*move.product_uom_qty 
+                if move.assume_length and move.assume_width and move.assume_height:
+                    move.secondary_product_uom_qty = (move.assume_length * move.assume_width * move.assume_height)*move.product_uom_qty
+                    print("=move.secondary_product_uom_qty===",move.secondary_product_uom_qty)
                 else:
                     move.secondary_product_uom_qty = 0.0
 

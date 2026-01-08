@@ -43,7 +43,7 @@ class PurchaseOrderLine(models.Model):
                 'length': self.length,
                 'width': self.width,
                 'height': self.height,
-                'secondary_product_uom_qty':self.secondary_product_uom_qty,
+                # 'secondary_product_uom_qty':self.secondary_product_uom_qty,
                 'sec_uom': self.sec_uom,
                 'assume_length': 0.0,
                 'assume_width': 0.0,

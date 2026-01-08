@@ -97,11 +97,16 @@ class StockMove(models.Model):
 
     name = fields.Char(string='Description', required=True)
 
-    @api.depends('product_uom_qty', 'product_id.sec_uom_ratio')
+    @api.depends('product_uom_qty', 'product_id.sec_uom_ratio','assume_length', 'assume_width', 'assume_height')
     def _compute_secondary_product_uom_qty(self):
         for move in self:
             if move.product_id.is_need_secondary_uom and move.product_id.sec_uom_ratio:
                 move.secondary_product_uom_qty = move.product_uom_qty * move.product_id.sec_uom_ratio
+            else:
+                move.secondary_product_uom_qty = 0.0
+
+            if move.assume_length and move.assume_width and move.assume_height:
+                move.secondary_product_uom_qty = (move.assume_length * move.assume_width * move.assume_height)*move.product_uom_qty 
             else:
                 move.secondary_product_uom_qty = 0.0
 

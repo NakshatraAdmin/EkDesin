@@ -12,10 +12,10 @@
                 <field name="width" invisible="show_dimensions != True"/>
                 <field name="height" invisible="show_dimensions != True"/>
             </xpath>
-            <xpath expr="//field[@name='order_line']/list/field[@name='sec_uom_id']" position="before">
+           <!--  <xpath expr="//field[@name='order_line']/list/field[@name='sec_uom_id']" position="before">
                 <field name="sec_uom" invisible="show_dimensions != True" readonly="1"/>
 
-            </xpath>
+            </xpath> -->
         </field>
     </record>
 </odoo>
