@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from odoo import models, fields
+from odoo import models, fields,api
 from odoo.exceptions import UserError
 
 
@@ -14,46 +14,39 @@ class MrpBomLine(models.Model):
     )
 
     width = fields.Float(
-        related="product_id.width",
         readonly=False,
         store=True,
     )
     length = fields.Float(
-        related="product_id.length",
         readonly=False,
         store=True,
     )
     height = fields.Float(
-        related="product_id.height",
         readonly=False,
         store=True,
     )
-    original_width = fields.Float(
-        string="Width",
+    sec_uom = fields.Char(
+        string="UoM", 
+        readonly=True, default="ft²")
+    
+    secondary_product_uom_qty = fields.Float(
+        string="Secondary Quantity",
+        help="Secondary UoM Quantity",
+        compute="_compute_secondary_product_uom_qty",
         store=True,
-        readonly=False,
-    )
-    original_length = fields.Float(
-        string="Length",
-        store=True,
-        readonly=False,
-    )
-    original_height = fields.Float(
-        string="Height",
-        store=True,
-        readonly=False,
     )
 
-    assume_width = fields.Float(
-        string="Actual Width",
-        digits='Product Unit of Measure',
-    )
-    assume_length = fields.Float(
-        string="Actual Length",
-        digits='Product Unit of Measure',
-    )
-    assume_height = fields.Float(
-        string="Actual Height",
-        digits='Product Unit of Measure',
-    )
+    @api.depends("product_qty", "product_id.sec_uom_ratio",'length', 'width', 'height')
+    def _compute_secondary_product_uom_qty(self):
+        for line in self:
+            if line.product_id.is_need_secondary_uom and line.product_qty > 0:
+                line.secondary_product_uom_qty = (
+                    line.product_id.sec_uom_ratio * line.product_qty
+                )
+            else:
+                line.secondary_product_uom_qty = 0
+            if line.length and line.width and line.height:
+                line.secondary_product_uom_qty = (line.length * line.width * line.height)*line.product_qty 
+            else:
+                line.secondary_product_uom_qty = 0.0
 

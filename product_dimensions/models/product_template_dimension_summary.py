@@ -42,7 +42,7 @@ class ProductTemplateDimensionSummary(models.Model):
                     total_qty += move.product_uom_qty
                 # Calculate cubic feet only if available
                 if move.cubic_ft and move.product_uom_qty:
-                    total_cubic_ft += move.secondary_product_uom_qty * move.product_uom_qty
+                    total_cubic_ft += move.secondary_product_uom_qty
             # BOM Subtraction: Find all BOM lines where this product is a component
             bom_lines = self.env['mrp.bom.line'].search([
                 ('product_id', 'in', variants.ids),
@@ -68,7 +68,7 @@ class ProductTemplateDimensionSummary(models.Model):
                     mo_qty += move.product_uom_qty
                 # Calculate cubic feet only if available
                 if move.cubic_ft and move.product_uom_qty:
-                    mo_cubic_ft += move.secondary_product_uom_qty * move.product_uom_qty
+                    mo_cubic_ft += move.secondary_product_uom_qty * 1
             
             # Net Calculation
             net_cubic_ft = total_cubic_ft  - mo_cubic_ft

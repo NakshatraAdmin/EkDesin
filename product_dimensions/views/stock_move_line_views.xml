@@ -7,13 +7,33 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='move_ids_without_package']/list/field[@name='product_uom']" position="after">
                 <field name="show_dimensions" readonly="1" invisible="not purchase_line_id"/>
-                <field name="length" readonly="1" invisible="not purchase_line_id"/>
-                <field name="width" readonly="1" invisible="not purchase_line_id"/>
-                <field name="height" readonly="1" invisible="not purchase_line_id"/>
-                <field name="assume_length" invisible="not purchase_line_id"/>
-                <field name="assume_width" invisible="not purchase_line_id"/>
-                <field name="assume_height" invisible="not purchase_line_id"/>
+                <field name="length" readonly="1"/>
+                <field name="width" readonly="1" />
+                <field name="height" readonly="1" />
+                <field name="assume_length" />
+                <field name="assume_width" />
+                <field name="assume_height"/>
+            </xpath>
+             <xpath expr="//field[@name='move_ids_without_package']/list/field[@name='sec_uom_id']" position="before">
+                <field name="sec_uom" invisible="show_dimensions != True" readonly="1"/>
             </xpath>
         </field>
     </record>
+   <!--  <record id="view_stock_move_line_operation_tree_delivery" model="ir.ui.view">
+        <field name="name">stock.move.line.operation.tree.deliverires</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.view_stock_move_line_operation_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='quantity']" position="after">
+                <field name="on_hand_qty" />
+            </xpath>
+            <xpath expr="//field[@name='move_line_ids']/inside" position="inside">
+                <field name="length"/>
+                <field name="width"/>
+                <field name="height"/>
+</xpath>
+        </field>
+    </record> -->
+    
+
 </odoo>

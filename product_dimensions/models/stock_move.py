@@ -34,6 +34,9 @@ class StockMove(models.Model):
         store=True,
         readonly=False,
     )
+    sec_uom = fields.Char(
+        string="UoM", 
+        readonly=True, default="ft²")
     
     # Assumption fields - editable by user (for PO receipts and MO)
     assume_width = fields.Float(
@@ -58,26 +61,34 @@ class StockMove(models.Model):
         store=True,
         help="Cubic feet calculated from dimensions (Length * Width * Height)",
     )
+    dary_product_uom_qty = fields.Float(string="All Quantity")
 
-    @api.depends('product_id.width', 'product_id.length', 'product_id.height', 
-                 'assume_width', 'assume_length', 'assume_height')
+    base_length = fields.Float(string="Base Length", default=0.0)
+    base_width = fields.Float(string="Base Width", default=0.0)
+    base_height = fields.Float(string="Base Height", default=0.0)
+
+
+
+    @api.depends(
+    'base_length', 'base_width', 'base_height',
+    'assume_length', 'assume_width', 'assume_height'
+    )
     def _compute_dimensions(self):
-        """Compute dimensions by subtracting assumption values from product dimensions"""
-        for move in self:
-            # Get original product dimensions
-            product_width = move.product_id.width or 0.0
-            product_length = move.product_id.length or 0.0
-            product_height = move.product_id.height or 0.0
-            
-            # Get assumption values
-            assume_w = move.assume_width or 0.0
-            assume_l = move.assume_length or 0.0
-            assume_h = move.assume_height or 0.0
-            
-            # Calculate: original - assumption
-            move.width = product_width - assume_w
-            move.length = product_length - assume_l
-            move.height = product_height - assume_h
+        pass
+        # for move in self:
+        #     # Use base values ONLY
+        #     bl = move.base_length or 0.0
+        #     bw = move.base_width or 0.0
+        #     bh = move.base_height or 0.0
+
+        #     al = move.assume_length or 0.0
+        #     aw = move.assume_width or 0.0
+        #     ah = move.assume_height or 0.0
+
+        #     # Never allow negative values
+        #     move.length = max(bl - al, 0.0)
+        #     move.width = max(bw - aw, 0.0)
+        #     move.height = max(bh - ah, 0.0)
 
     def _inverse_width(self):
         """Inverse method for width - allows manual editing if needed"""
@@ -91,7 +102,7 @@ class StockMove(models.Model):
         """Inverse method for height - allows manual editing if needed"""
         pass
 
-    @api.onchange('assume_width', 'assume_length', 'assume_height')
+    @api.onchange('assume_width', 'assume_length', 'assume_height','length','width','height')
     def _onchange_assume_dimensions(self):
         """Trigger recomputation when assumption fields change"""
         self._compute_dimensions()

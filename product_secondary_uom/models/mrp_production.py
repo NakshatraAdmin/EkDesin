@@ -50,7 +50,7 @@ class MrpProduction(models.Model):
         readonly=False,
     )
 
-    @api.depends('move_raw_ids.product_uom_qty', 'move_raw_ids.product_id.sec_uom_ratio')
+    @api.depends('move_raw_ids.product_uom_qty', 'move_raw_ids.product_id.sec_uom_ratio','move_raw_ids.length','move_raw_ids.width','move_raw_ids.height',)
     def _compute_secondary_product_uom_qty(self):
         for record in self:
             for move in record.move_raw_ids:
@@ -58,8 +58,13 @@ class MrpProduction(models.Model):
                     move.secondary_product_uom_qty = move.product_uom_qty * move.product_id.sec_uom_ratio
                 else:
                     move.secondary_product_uom_qty = 0.0
+                if move.length and move.width and move.height:
+                    move.secondary_product_uom_qty = (move.length * move.width * move.height)*move.product_uom_qty 
+                else:
+                    move.secondary_product_uom_qty = 0.0
 
-    @api.onchange('product_id')
+
+    @api.onchange('product_id','length','width','height')
     def _onchange_product_id(self):
         self.action_compute_secondary_quantity()
 
@@ -70,6 +75,11 @@ class MrpProduction(models.Model):
                     move.secondary_product_uom_qty = move.product_uom_qty * move.product_id.sec_uom_ratio
                 else:
                     move.secondary_product_uom_qty = 0.0
+                if move.length and move.width and move.height:
+                    move.secondary_product_uom_qty = (move.length * move.width * move.height)*move.product_uom_qty 
+                else:
+                    move.secondary_product_uom_qty = 0.0
+
 
     def _prepare_stock_lot_values(self):
         self.ensure_one()

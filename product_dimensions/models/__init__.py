@@ -7,3 +7,5 @@ from . import product_template_dimension_summary
 from . import product_product
 from . import purchase_order_line
 from . import stock_move
+from . import mrp_production
+from . import stock_move_line

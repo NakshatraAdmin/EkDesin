@@ -7,9 +7,6 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='invoice_policy']" position="after">
                 <field name="show_dimensions"/>
-                <field name="length" invisible="not show_dimensions"/>
-                <field name="width" invisible="not show_dimensions"/>
-                <field name="height" invisible="not show_dimensions"/>
             </xpath>
         </field>
     </record>
