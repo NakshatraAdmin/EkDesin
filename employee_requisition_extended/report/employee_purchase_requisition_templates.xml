@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Add reason field in report -->
+    <template id="report_purchase_requisition_extended" inherit_id="employee_purchase_requisition.report_purchase_requisition">
+        <!-- Add reason field inside "Other Information" table, after Rejected Date row -->
+        <xpath expr="//tr[.//th[contains(text(), 'Rejected Date')]]" position="after">
+            <tr>
+                <th style="font-weight:bold;background-color: #f2f2f2; padding: 8px; text-align: left;">
+                    Reason For Requisition:
+                </th>
+                <td colspan="3" style="padding: 8px;">
+                    <t t-if="rec['requisition_description']">
+                        <t t-esc="rec['requisition_description']"/>
+                    </t>
+                    <t t-if="not rec['requisition_description']">
+                        <span style="color: #999;">-</span>
+                    </t>
+                </td>
+            </tr>
+        </xpath>
+    </template>
+</odoo>

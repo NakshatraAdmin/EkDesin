@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Update vendor column visibility and readonly based on parent request_type -->
+    <record id="requisition_order_view_tree_extended" model="ir.ui.view">
+        <field name="name">requisition.order.view.tree.extended</field>
+        <field name="model">requisition.order</field>
+        <field name="inherit_id" ref="employee_purchase_requisition.requisition_order_view_tree"/>
+        <field name="arch" type="xml">
+            <!-- Update partner_id field: visibility and readonly -->
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="column_invisible">parent.request_type == 'material_requisition'</attribute>
+                <!-- Readonly for PR until waiting_department_approval stage -->
+                <attribute name="readonly">parent.state in ['new']</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

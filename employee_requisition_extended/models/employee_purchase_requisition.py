@@ -15,9 +15,33 @@ class PurchaseRequisitionExtended(models.Model):
        tracking=True, readonly=True, states={'new': [('readonly', False)]},
        help='Material Requisition: Internal stock movement only (Internal Transfer). Purchase Requisition: Can create both Purchase Order and Internal Transfer.')
 
+    # Override employee_id to default to logged-in user's employee
+    employee_id = fields.Many2one(
+        comodel_name='hr.employee',
+        string='Employee',
+        required=True,
+        default=lambda self: self.env.user.employee_id.id if self.env.user.employee_id else False,
+        help='Select an employee'
+    )
+
+    # Update state field: Change "Purchase Order Created" to "Order Created"
+    state = fields.Selection([
+        ('new', 'New'),
+        ('waiting_department_approval', 'Waiting Department Approval'),
+        ('waiting_head_approval', 'Waiting Head Approval'),
+        ('approved', 'Approved'),
+        ('purchase_order_created', 'Order Created'),
+        ('received', 'Received'),
+        ('cancelled', 'Cancelled')
+    ], default='new', copy=False, tracking=True)
+
     @api.model
     def create(self, vals):
-        """Override to validate PR creation permission"""
+        """Override to validate PR creation permission and set defaults"""
+        # Set default employee_id if not provided
+        if 'employee_id' not in vals and self.env.user.employee_id:
+            vals['employee_id'] = self.env.user.employee_id.id
+        
         result = super(PurchaseRequisitionExtended, self).create(vals)
         
         # Step 2: Check PR creation permission
@@ -30,12 +54,33 @@ class PurchaseRequisitionExtended(models.Model):
         
         return result
 
+    @api.onchange('request_type')
+    def _onchange_request_type(self):
+        """Update line types when request_type changes"""
+        if self.request_type == 'material_requisition':
+            # Update all existing lines to Material Requisition (internal_transfer)
+            for line in self.requisition_order_ids:
+                line.requisition_type = 'internal_transfer'
+                
+        elif self.request_type == 'purchase_requisition':
+            # Update all existing lines to Purchase Requisition (purchase_order)
+            for line in self.requisition_order_ids:
+                line.requisition_type = 'purchase_order'
+
     def write(self, vals):
         """Override to validate PR creation on request_type change"""
         result = super(PurchaseRequisitionExtended, self).write(vals)
         
+        # Update all child lines' requisition_type when parent request_type changes
         if 'request_type' in vals:
             for rec in self:
+                # Update all existing lines to match new request_type
+                if rec.request_type == 'material_requisition':
+                    rec.requisition_order_ids.write({'requisition_type': 'internal_transfer'})
+                elif rec.request_type == 'purchase_requisition':
+                    rec.requisition_order_ids.write({'requisition_type': 'purchase_order'})
+                
+                # Validate PR creation permission
                 if rec.request_type == 'purchase_requisition' and rec.state == 'new':
                     if not self.env.user.has_group('employee_requisition_extended.group_purchase_requisition_creator'):
                         raise ValidationError(

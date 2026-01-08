@@ -17,4 +17,30 @@
             </xpath>
         </field>
     </record>
+
+    <!-- Add group by and filter for request_type -->
+    <record id="employee_purchase_requisition_view_search_extended" model="ir.ui.view">
+        <field name="name">employee.purchase.requisition.view.search.extended</field>
+        <field name="model">employee.purchase.requisition</field>
+        <field name="inherit_id" ref="employee_purchase_requisition.employee_purchase_requisition_view_search"/>
+        <field name="arch" type="xml">
+            <!-- Add filters at top -->
+            <xpath expr="//search" position="inside">
+                <filter string="Material Requisition" name="material_requisition" 
+                        domain="[('request_type','=','material_requisition')]"/>
+                <filter string="Purchase Requisition" name="purchase_requisition" 
+                        domain="[('request_type','=','purchase_requisition')]"/>
+            </xpath>
+            <!-- Add group by at top - before first filter -->
+            <xpath expr="//group[@expand='1']/filter[@name='employee_id']" position="before">
+                <filter string="Request Type" name="request_type" 
+                        context="{'group_by':'request_type', 'residual_visible':True}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Rename "Employee Purchase Requisition" to "Employee Requisition" -->
+    <record id="employee_purchase_requisition.employee_purchase_requisition_action" model="ir.actions.act_window">
+        <field name="name">Employee Requisition</field>
+    </record>
 </odoo>
