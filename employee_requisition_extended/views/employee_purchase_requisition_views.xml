@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Step 1: Add form-level request type toggle -->
+    <record id="employee_purchase_requisition_view_form_extended" model="ir.ui.view">
+        <field name="name">employee.purchase.requisition.view.form.extended</field>
+        <field name="model">employee.purchase.requisition</field>
+        <field name="inherit_id" ref="employee_purchase_requisition.employee_purchase_requisition_view_form"/>
+        <field name="arch" type="xml">
+            <!-- Add request_type field after title, before employee fields -->
+            <xpath expr="//div[@class='oe_title']" position="after">
+                <group>
+                    <field name="request_type" widget="radio" 
+                           options="{'horizontal': true}"
+                           readonly="state != 'new'"
+                           required="1"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
