@@ -11,8 +11,8 @@
                 <field name="width" invisible="show_dimensions != True"/>
                 <field name="height" invisible="show_dimensions != True"/>
                 <field name="secondary_product_uom_qty" invisible="show_dimensions != True"/>
-<!--                 <field name="sec_uom" invisible="show_dimensions != True"/>
- -->                 
+                 <field name="sec_uom_id" readonly="1"/>
+                 
 
             </xpath>
         </field>

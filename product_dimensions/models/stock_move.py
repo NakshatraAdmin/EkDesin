@@ -75,20 +75,6 @@ class StockMove(models.Model):
     )
     def _compute_dimensions(self):
         pass
-        # for move in self:
-        #     # Use base values ONLY
-        #     bl = move.base_length or 0.0
-        #     bw = move.base_width or 0.0
-        #     bh = move.base_height or 0.0
-
-        #     al = move.assume_length or 0.0
-        #     aw = move.assume_width or 0.0
-        #     ah = move.assume_height or 0.0
-
-        #     # Never allow negative values
-        #     move.length = max(bl - al, 0.0)
-        #     move.width = max(bw - aw, 0.0)
-        #     move.height = max(bh - ah, 0.0)
 
     def _inverse_width(self):
         """Inverse method for width - allows manual editing if needed"""
@@ -116,16 +102,3 @@ class StockMove(models.Model):
                 move.cubic_ft = move.length * move.width * move.height
             else:
                 move.cubic_ft = 0.0
-
-    @api.depends('product_uom_qty', 'product_id.sec_uom_ratio','assume_length', 'assume_width', 'assume_height')
-    def _compute_secondary_product_uom_qty(self):
-        for move in self:
-            if move.product_id.is_need_secondary_uom and move.product_id.sec_uom_ratio:
-                move.secondary_product_uom_qty = move.product_uom_qty * move.product_id.sec_uom_ratio
-            else:
-                move.secondary_product_uom_qty = 0.0
-
-            if move.assume_length and move.assume_width and move.assume_height:
-                move.secondary_product_uom_qty = (move.assume_length * move.assume_width * move.assume_height)*move.product_uom_qty 
-            else:
-                move.secondary_product_uom_qty = 0.0

@@ -68,26 +68,6 @@ class MrpProduction(models.Model):
 
         return res
 
-
-
-
-
-    @api.depends('move_raw_ids.product_uom_qty', 'move_raw_ids.product_id.sec_uom_ratio','move_raw_ids.assume_length', 'move_raw_ids.assume_width', 'move_raw_ids.assume_height')
-    def _compute_secondary_product_uom_qty(self):
-        for record in self:
-            for move in record.move_raw_ids:
-                if move.product_id and move.product_id.sec_uom_ratio > 0 and move.product_uom_qty > 0:
-                    move.secondary_product_uom_qty = move.product_uom_qty * move.product_id.sec_uom_ratio
-                else:
-                    move.secondary_product_uom_qty = 0.0
-
-                if move.assume_length and move.assume_width and move.assume_height:
-                    move.secondary_product_uom_qty = (move.assume_length * move.assume_width * move.assume_height)*move.product_uom_qty
-                    print("=move.secondary_product_uom_qty===",move.secondary_product_uom_qty)
-                else:
-                    move.secondary_product_uom_qty = 0.0
-
-
 class StockMove(models.Model):
     _inherit = "stock.move"
 

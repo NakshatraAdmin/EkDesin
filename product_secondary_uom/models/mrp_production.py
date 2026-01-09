@@ -12,12 +12,12 @@ class MrpProduction(models.Model):
         readonly=True,
     )
 
-    secondary_product_uom_qty = fields.Float(
-        string="Secondary Quantity",
-        help="Secondary UoM Quantity",
-        compute="_compute_secondary_product_uom_qty",
-        store=True,
-    )
+    # secondary_product_uom_qty = fields.Float(
+    #     string="Secondary Quantity",
+    #     help="Secondary UoM Quantity",
+    #     compute="_compute_secondary_product_uom_qty",
+    #     store=True,
+    # )
 
     weight = fields.Float(
         string="Weight",
@@ -50,16 +50,16 @@ class MrpProduction(models.Model):
         readonly=False,
     )
 
-    @api.depends('move_raw_ids.product_uom_qty', 'move_raw_ids.product_id.sec_uom_ratio','move_raw_ids.length','move_raw_ids.width','move_raw_ids.height',)
-    def _compute_secondary_product_uom_qty(self):
-        for record in self:
-            for move in record.move_raw_ids:
-                if move.product_id and move.product_id.sec_uom_ratio > 0 and move.product_uom_qty > 0:
-                    move.secondary_product_uom_qty = move.product_uom_qty * move.product_id.sec_uom_ratio
-                else:
-                    move.secondary_product_uom_qty = 0.0
-                # if move.length and move.width and move.height:
-                #     move.secondary_product_uom_qty = (move.length * move.width * move.height)*move.product_uom_qty 
+    # @api.depends('move_raw_ids.product_uom_qty', 'move_raw_ids.product_id.sec_uom_ratio','move_raw_ids.length','move_raw_ids.width','move_raw_ids.height',)
+    # def _compute_secondary_product_uom_qty(self):
+    #     for record in self:
+    #         for move in record.move_raw_ids:
+    #             if move.product_id and move.product_id.sec_uom_ratio > 0 and move.product_uom_qty > 0:
+    #                 move.secondary_product_uom_qty = move.product_uom_qty * move.product_id.sec_uom_ratio
+    #             else:
+    #                 move.secondary_product_uom_qty = 0.0
+    #             if move.length and move.width and move.height:
+    #                 move.secondary_product_uom_qty = (move.length * move.width * move.height)*move.product_uom_qty 
                 # else:
                 #     move.secondary_product_uom_qty = 0.0
 
@@ -75,8 +75,8 @@ class MrpProduction(models.Model):
                     move.secondary_product_uom_qty = move.product_uom_qty * move.product_id.sec_uom_ratio
                 else:
                     move.secondary_product_uom_qty = 0.0
-                # if move.length and move.width and move.height:
-                #     move.secondary_product_uom_qty = (move.length * move.width * move.height)*move.product_uom_qty 
+                if move.length and move.width and move.height:
+                    move.secondary_product_uom_qty = (move.length * move.width * move.height)*move.product_uom_qty 
                 # else:
                 #     move.secondary_product_uom_qty = 0.0
 
@@ -176,15 +176,15 @@ class StockMove(models.Model):
         digits='Product Unit of Measure',
     )
 
-    @api.onchange('secondary_product_uom_qty')
-    def _onchange_secondary_product_uom_qty(self):
-        if self.product_id and self.product_id.is_need_secondary_uom and self.secondary_product_uom_qty > 0:
-            if self.product_id.sec_uom_ratio:
-                self.product_uom_qty = self.secondary_product_uom_qty / self.product_id.sec_uom_ratio
-            else:
-                self.product_uom_qty = 0.0
-        else:
-            self.product_uom_qty = 0.0
+    # @api.onchange('secondary_product_uom_qty')
+    # def _onchange_secondary_product_uom_qty(self):
+    #     if self.product_id and self.product_id.is_need_secondary_uom and self.secondary_product_uom_qty > 0:
+    #         if self.product_id.sec_uom_ratio:
+    #             self.product_uom_qty = self.secondary_product_uom_qty / self.product_id.sec_uom_ratio
+    #         else:
+    #             self.product_uom_qty = 0.0
+    #     else:
+    #         self.product_uom_qty = 0.0
 
     @api.onchange('product_uom_qty')
     def _onchange_product_uom_qty(self):

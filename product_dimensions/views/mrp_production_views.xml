@@ -10,13 +10,9 @@
 
                 <field name="assume_width"/>
                 <field name="assume_length"/>
-                <field name="assume_height"/>
-<!--                 <field name="dary_product_uom_qty"/>
- -->                
+                <field name="assume_height"/>               
             </xpath>
-            <!--  <xpath expr="//field[@name='move_raw_ids']/list/field[@name='sec_uom_id']" position="before">
-                <field name="sec_uom" invisible="show_dimensions != True" readonly="1"/>
-                </xpath> -->
+            
         </field>
     </record>
 </odoo>

@@ -106,20 +106,20 @@ class StockMove(models.Model):
                 move.secondary_product_uom_qty = 0.0
 
             if move.assume_length and move.assume_width and move.assume_height:
-                move.secondary_product_uom_qty = (move.assume_length * move.assume_width * move.assume_height)*move.product_uom_qty 
+                self.secondary_product_uom_qty = (move.assume_length * move.assume_width * move.assume_height)*move.product_uom_qty 
             else:
                 move.secondary_product_uom_qty = 0.0
 
-    @api.onchange('secondary_product_uom_qty')
-    def _onchange_secondary_product_uom_qty(self):
-        for move in self:
-            if move.product_id.is_need_secondary_uom and move.secondary_product_uom_qty > 0:
-                if move.product_id.sec_uom_ratio:
-                    move.product_uom_qty = (
-                        move.secondary_product_uom_qty / move.product_id.sec_uom_ratio
-                    )
-            else:
-                move.product_uom_qty = 0
+    # @api.onchange('secondary_product_uom_qty')
+    # def _onchange_secondary_product_uom_qty(self):
+    #     for move in self:
+    #         if move.product_id.is_need_secondary_uom and move.secondary_product_uom_qty > 0:
+    #             if move.product_id.sec_uom_ratio:
+    #                 move.product_uom_qty = (
+    #                     move.secondary_product_uom_qty / move.product_id.sec_uom_ratio
+    #                 )
+    #         else:
+    #             move.product_uom_qty = 0
 
 class StockPicking(models.Model):
     _inherit = "stock.picking"

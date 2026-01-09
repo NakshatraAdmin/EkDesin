@@ -12,6 +12,12 @@ class MrpBomLine(models.Model):
         readonly=True,
         store=True,
     )
+    sec_uom_id = fields.Many2one(
+        "uom.uom",
+        string="Secondary UoM",
+        related="product_id.sec_uom_id",
+        readonly=True,
+    )
 
     width = fields.Float(
         readonly=False,
