@@ -89,6 +89,25 @@ class PurchaseRequisitionExtended(models.Model):
         
         return result
 
+    def action_confirm_requisition(self):
+        """Override to set Production location (ID 15) as destination for Material Requisition"""
+        # Call parent method first to set source_location_id and other fields
+        super(PurchaseRequisitionExtended, self).action_confirm_requisition()
+        
+        # Override destination_location_id only for Material Requisition
+        if self.request_type == 'material_requisition':
+            # Set Production location (ID 15) as destination
+            production_location = self.env['stock.location'].browse(15)
+            if production_location.exists():
+                self.destination_location_id = production_location.id
+            else:
+                # Fallback to original logic if location doesn't exist
+                self.destination_location_id = (
+                    self.employee_id.sudo().employee_location_id.id) if (
+                    self.employee_id.sudo().employee_location_id) else (
+                    self.env.ref('stock.stock_location_stock').id)
+        # For Purchase Requisition, keep the original logic (already set by parent method)
+
     def action_create_purchase_order(self):
         """Step 3: Update create logic - MR creates Transfer only, PR creates both PO and Transfer"""
         # Check if request_type is set, if not use default or fallback
