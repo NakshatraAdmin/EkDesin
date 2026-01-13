@@ -85,6 +85,9 @@ class RequisitionOrderExtended(models.Model):
         
         return result
 
+    # Override quantity field to set default value to 1
+    quantity = fields.Integer(string='Quantity', help='Product quantity', default=1)
+
     @api.onchange('requisition_product_id')
     def _onchange_requisition_product_id(self):
         """Auto-set requisition_type based on parent request_type"""

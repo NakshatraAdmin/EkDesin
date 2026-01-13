@@ -15,6 +15,12 @@
                            required="1"/>
                 </group>
             </xpath>
+            <!-- Add project_ids field after user_id (Responsible) field -->
+            <xpath expr="//field[@name='user_id']" position="after">
+                <field name="project_ids" widget="many2many_tags" 
+                       readonly="state not in ['new']"
+                       options="{'no_create': True}"/>
+            </xpath>
         </field>
     </record>
 

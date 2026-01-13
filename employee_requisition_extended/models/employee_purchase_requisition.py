@@ -24,6 +24,13 @@ class PurchaseRequisitionExtended(models.Model):
         help='Select an employee'
     )
 
+    # Add many2many field for projects
+    project_ids = fields.Many2many(
+        comodel_name='project.project',
+        string='Projects',
+        help='Related projects for this requisition'
+    )
+
     # Update state field: Change "Purchase Order Created" to "Order Created"
     state = fields.Selection([
         ('new', 'New'),

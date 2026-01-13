@@ -13,7 +13,7 @@
            - PR (Purchase Requisition): Creates both PO and Internal Transfer
     """,
     'author': 'EkDesin',
-    'depends': ['base', 'hr', 'stock', 'purchase', 'employee_purchase_requisition'],
+    'depends': ['base', 'hr', 'stock', 'purchase', 'employee_purchase_requisition', 'project'],
     'data': [
         'security/requisition_extended_groups.xml',
         'security/ir.model.access.csv',
