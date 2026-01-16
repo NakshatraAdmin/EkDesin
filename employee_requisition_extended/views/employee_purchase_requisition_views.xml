@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <!-- Step 1: Add form-level request type toggle -->
+    <!-- Step 1: Add form-level request type toggle and update workflow -->
     <record id="employee_purchase_requisition_view_form_extended" model="ir.ui.view">
         <field name="name">employee.purchase.requisition.view.form.extended</field>
         <field name="model">employee.purchase.requisition</field>
         <field name="inherit_id" ref="employee_purchase_requisition.employee_purchase_requisition_view_form"/>
         <field name="arch" type="xml">
+            <!-- Update statusbar to remove waiting_department_approval -->
+            <xpath expr="//field[@name='state'][@widget='statusbar']" position="attributes">
+                <attribute name="statusbar_visible">new,waiting_head_approval,approved,purchase_order_created,received</attribute>
+            </xpath>
+            
+            <!-- Update Confirm button help text -->
+            <xpath expr="//button[@name='action_confirm_requisition']" position="attributes">
+                <attribute name="help">Submit to Head Approval</attribute>
+            </xpath>
+            
+            <!-- Remove department approval buttons -->
+            <xpath expr="//button[@name='action_department_approval']" position="replace"/>
+            <xpath expr="//button[@name='action_department_cancel']" position="replace"/>
+            
             <!-- Add request_type field after title, before employee fields -->
             <xpath expr="//div[@class='oe_title']" position="after">
                 <group>
@@ -20,6 +34,32 @@
                 <field name="project_ids" widget="many2many_tags" 
                        readonly="state not in ['new']"
                        options="{'no_create': True}"/>
+            </xpath>
+            
+            <!-- Update readonly condition for requisition_order_ids: Allow editing in new, waiting_head_approval, and approved states -->
+            <!-- Approved state is needed for Purchase department to select vendors -->
+            <xpath expr="//field[@name='requisition_order_ids']" position="attributes">
+                <attribute name="readonly">1 if state not in ['new','waiting_head_approval','approved'] else 0</attribute>
+            </xpath>
+            
+            <!-- Add Purchase Orders (RFQs) page to show linked RFQs -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Purchase Orders (RFQs)" 
+                      groups="employee_purchase_requisition.employee_requisition_manager,employee_purchase_requisition.employee_requisition_head"
+                      invisible="request_type == 'material_requisition'">
+                    <field name="purchase_order_ids" readonly="1" nolabel="1" 
+                           context="{'default_employee_requisition_id': id}"
+                           view_mode="list"
+                           view_id="employee_requisition_extended.purchase_order_tree_requisition"/>
+                </page>
+            </xpath>
+            
+            <!-- Update Received button visibility: For Material Requisition, only creator can see it; For Purchase Requisition, manager can see it -->
+            <xpath expr="//button[@name='action_receive']" position="attributes">
+                <!-- Remove groups restriction - we'll use computed field can_receive instead -->
+                <attribute name="groups" remove="1"/>
+                <!-- Use computed field can_receive to control visibility -->
+                <attribute name="invisible">not can_receive</attribute>
             </xpath>
         </field>
     </record>
@@ -42,6 +82,49 @@
                 <filter string="Request Type" name="request_type" 
                         context="{'group_by':'request_type', 'residual_visible':True}"/>
             </xpath>
+        </field>
+    </record>
+
+    <!-- Update tree view to remove waiting_department_approval from decorations -->
+    <record id="employee_purchase_requisition_view_tree_extended" model="ir.ui.view">
+        <field name="name">employee.purchase.requisition.view.tree.extended</field>
+        <field name="model">employee.purchase.requisition</field>
+        <field name="inherit_id" ref="employee_purchase_requisition.employee_purchase_requisition_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state'][@widget='badge']" position="attributes">
+                <attribute name="decoration-warning">state == 'waiting_head_approval'</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Update kanban view to remove waiting_department_approval from decorations -->
+    <record id="employee_purchase_requisition_view_kanban_extended" model="ir.ui.view">
+        <field name="name">employee.purchase.requisition.view.kanban.extended</field>
+        <field name="model">employee.purchase.requisition</field>
+        <field name="inherit_id" ref="employee_purchase_requisition.employee_purchase_requisition_view_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state'][@widget='badge']" position="attributes">
+                <attribute name="decoration-warning">state == 'waiting_head_approval'</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Create a separate tree view for Purchase Orders in Requisition context -->
+    <record id="purchase_order_tree_requisition" model="ir.ui.view">
+        <field name="name">purchase.order.tree.requisition</field>
+        <field name="model">purchase.order</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="date_order"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'purchase'"
+                       decoration-info="state == 'done'"
+                       decoration-warning="state in ['to approve']"
+                       decoration-danger="state == 'cancel'"/>
+                <field name="amount_total"/>
+            </list>
         </field>
     </record>
 

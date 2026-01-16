@@ -15,11 +15,13 @@
     'author': 'EkDesin',
     'depends': ['base', 'hr', 'stock', 'purchase', 'employee_purchase_requisition', 'project'],
     'data': [
+        'data/ir_sequence_data.xml',
         'security/requisition_extended_groups.xml',
         'security/ir.model.access.csv',
         'views/employee_purchase_requisition_views.xml',
         'views/employee_purchase_requisition_menu.xml',
         'views/requisition_order_views.xml',
+        'views/purchase_order_views.xml',
         'report/employee_purchase_requisition_templates.xml',
     ],
     'installable': True,
