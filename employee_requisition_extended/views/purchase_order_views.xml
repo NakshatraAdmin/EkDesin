@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Add Source Requisition field in Purchase Order form -->
+    <record id="purchase_order_form_extended" model="ir.ui.view">
+        <field name="name">purchase.order.form.extended</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="employee_purchase_requisition.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <!-- Add employee_requisition_id field after requisition_order field -->
+            <xpath expr="//field[@name='requisition_order']" position="after">
+                <field name="employee_requisition_id" 
+                       readonly="1"
+                       string="Source Requisition"
+                       invisible="employee_requisition_id == False"
+                       options="{'no_create': True}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
