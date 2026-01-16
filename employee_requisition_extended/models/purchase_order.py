@@ -11,6 +11,5 @@ class PurchaseOrderExtended(models.Model):
         comodel_name='employee.purchase.requisition',
         string='Source Requisition',
         help='Employee Purchase Requisition that created this RFQ/Purchase Order',
-        ondelete='set null',
-        index=True
+        ondelete='set null',index=True
     )
