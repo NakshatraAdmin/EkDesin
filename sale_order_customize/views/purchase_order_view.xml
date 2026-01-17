@@ -13,4 +13,23 @@
 
         </field>
     </record>
+    <record id="purchase_order_form_discount_type" model="ir.ui.view">
+        <field name="name">purchase.order.form.discount.type</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='discount']" position="before">
+                <field name="discount_type"/>
+                <field name="discount_amount"/>
+            </xpath>
+
+            <!-- Optional: hide % when amount selected -->
+           <!--  <xpath expr="//field[@name='discount']" position="attributes">
+                <attribute name="attrs">{'invisible': [('discount_type','=','amount')]}</attribute>
+            </xpath> -->
+
+        </field>
+    </record>
+
     </odoo>
