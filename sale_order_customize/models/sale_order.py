@@ -4,6 +4,30 @@ from odoo import models
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
+    def _should_auto_confirm_po(self, po):
+        """Only True if every product line has a subcontracting BOM with subcontractor set.
+        Otherwise do not auto-confirm the PO.
+        """
+        MrpBom = self.env['mrp.bom'].sudo()
+        has_product_lines = False
+        for line in po.order_line:
+            if line.display_type:
+                continue
+            if not line.product_id:
+                return False
+            has_product_lines = True
+            bom = MrpBom.search([
+                ('product_tmpl_id', '=', line.product_id.product_tmpl_id.id),
+                '|', ('product_id', '=', False), ('product_id', '=', line.product_id.id),
+                ('type', '=', 'subcontract'),
+                ('subcontractor_ids', '!=', False),
+                ('company_id', 'in', [False, po.company_id.id]),
+                ('active', '=', True),
+            ], limit=1)
+            if not bom:
+                return False
+        return has_product_lines
+
     def _action_confirm(self):
         """Override to auto-confirm draft POs related to this SO and create receipts"""
         res = super()._action_confirm()
@@ -64,8 +88,11 @@ class SaleOrder(models.Model):
             if not draft_pos:
                 continue
             
-            # Confirm draft POs (this will create the receipt picking automatically)
+            # Confirm draft POs only if: product has BOM, BOM type=Subcontracting, and BOM has subcontractor.
+            # Otherwise leave the PO in draft/sent.
             for po in draft_pos:
+                if not self._should_auto_confirm_po(po):
+                    continue
                 try:
                     # Check if approval is needed (for dynamic_approval_purchase module)
                     if hasattr(po, 'is_approved') and not po.is_approved:
