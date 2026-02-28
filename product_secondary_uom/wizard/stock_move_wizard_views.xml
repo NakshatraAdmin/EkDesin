@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_generate_qr_wizard" model="ir.ui.view">
+        <field name="name">generate.qr.wizard.form</field>
+        <field name="model">generate.qr.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Generate QR Code">
+                <group>
+                    <field name="first_lot_number"/>
+                    <field name="quantity_per_lot"/>
+                    <field name="quantity_received"/>
+                    <!-- <field name="keep_current_lines"/> -->
+                </group>
+                <footer>
+                    <button name="action_confirm" type="object" string="Confirm" class="btn btn-primary"/>
+                    <button string="Cancel" class="btn btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_generate_qr_wizard" model="ir.actions.act_window">
+        <field name="name">Generate QR</field>
+        <field name="res_model">generate.qr.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_generate_qr_wizard"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

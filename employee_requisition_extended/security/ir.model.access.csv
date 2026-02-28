@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_employee_purchase_requisition_extended,employee.purchase.requisition extended,employee_purchase_requisition.model_employee_purchase_requisition,employee_requisition_extended.group_purchase_requisition_creator,1,1,1,1

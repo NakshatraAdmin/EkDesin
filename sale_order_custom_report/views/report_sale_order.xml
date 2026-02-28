@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+     <record id="paperformat_sale_order" model="report.paperformat">
+    <field name="name">Custom sale Order</field>
+    <field name="default">False</field>
+    <field name="format">A4</field> <!-- Options: A4, Letter -->
+    <field name="orientation">Portrait</field> <!-- Portrait or Landscape -->
+    <field name="margin_top">10</field>
+    <field name="margin_bottom">10</field>
+    <field name="margin_left">10</field>
+    <field name="margin_right">10</field>
+    </record>
+   		 <record id="custome_action_report_sale_order_uuu" model="ir.actions.report">
+
+        <field name="name"></field>
+            <field name="model">sale.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">sale_order_custom_report.sale_order_pdf</field>
+            <field name="report_file">sale_order_custom_report.sale_order_pdf</field>
+            <field name="binding_model_id" ref="sale.model_sale_order"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="paperformat_sale_order"/>
+            <field name="print_report_name">object.partner_id.name + '_' + object.name</field>
+
+        </record>
+          
+</odoo>
+

@@ -1,0 +1,41 @@
+<odoo>
+    <record id="sale_order_form_inherit_customer_domain" model="ir.ui.view">
+        <field name="name">sale.order.form.customer.domain</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="domain">
+                    [('is_customer_partner','=',True)]
+                </attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="account.res_partner_action_customer" model="ir.actions.act_window">
+        <field name="domain">[('is_customer_partner', '=', True)]</field>
+         <field name="context">{'search_default_is_customer_partner': True,'res_partner_search_mode': 'customer', 'default_is_company': True, 'default_is_customer_partner': True}</field>
+    </record>
+    <record id="account.res_partner_action_supplier" model="ir.actions.act_window">
+        <field name="domain">[('is_vendor_partner', '=', True)]</field>
+         <field name="context">{'search_default_is_vendor_partner': True,'res_partner_search_mode': 'supplier', 'default_is_company': True, 'default_is_vendor_partner': True}</field>
+    </record>
+
+    <record id="sale_order_form_discount_type" model="ir.ui.view">
+        <field name="name">sale.order.form.discount.type</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+             <xpath expr="//page/field[@name='order_line']/list/field[@name='discount']"
+                   position="before">
+                    <field name="discount_type"/>
+                <field name="discount_amount"/>
+
+                />
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,170 @@
+<odoo>
+    <data>
+
+ <record id="product_template_only_form_view_seconday_uom" model="ir.ui.view">
+            <field name="name">product.template.view.form.inherit.product.secondary.uom</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='categ_id']" position="before">
+                    <field name="std_unit_cost" string="STD Unit Cost"/>
+                    <field name="landing_cost" string="Landing Cost (%)"/>
+                    <field name="net_unit_cost" string="Net Unit Cost"/>
+                    <field name="consumable_unit_rate" string="Consumable Unit Rate"/>
+                </xpath>
+                <xpath expr="//field[@name='standard_price']" position="attributes">
+                    <attribute name="string">Unit Purchase Rate</attribute>
+                </xpath>
+                <xpath expr="//field[@name='default_code']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='invoice_policy']" position="after">
+                    <field name="is_need_secondary_uom"/>
+                    <field name="sec_uom_ratio" invisible="not is_need_secondary_uom" groups="uom.group_uom"/>
+                    <field name="sec_uom_id" invisible="not is_need_secondary_uom" groups="uom.group_uom"/>
+                    <field name="ratio" invisible="not is_need_secondary_uom" groups="uom.group_uom"/>
+                    <field name="inverse_ratio" invisible="not is_need_secondary_uom" groups="uom.group_uom"/>
+                </xpath>
+                <xpath expr="//field[@name='inverse_ratio']" position="after">
+                    <field name="is_need_consumption_uom"/>
+                    <field name="consumption_uom_ratio" invisible="not is_need_consumption_uom" groups="uom.group_uom"/>
+                    <field name="consumption_uom_id" invisible="not is_need_consumption_uom" groups="uom.group_uom"/>
+                    <field name="consumption_ratio" invisible="not is_need_consumption_uom" groups="uom.group_uom"/>
+                    <field name="consumption_inverse_ratio" invisible="not is_need_consumption_uom"
+                           groups="uom.group_uom"/>
+                    <field name="weight"/>
+                    <field name="height"/>
+                    <field name="length"/>
+                    <field name="width"/>
+                    <field name="depth"/>
+                </xpath>
+                <xpath expr="//field[@name='uom_po_id']" position="after">
+                    <field name="alternet_unit_qty"/>
+                    <field name="alternet_ratio" string="Alternate Ratio"/>
+                    <field name="inverse_alternet_ratio" string="Inverse Alternate Ratio"/>
+                </xpath>
+                <!-- <xpath expr="//field[@name='standard_price']/following-sibling::span" position="replace">
+                    <span groups="uom.group_uom">per
+                        <field name="uom_po_name" class="oe_inline"/>
+                    </span>
+                </xpath> -->
+                
+                <xpath expr="//field[@name='categ_id']" position="after">
+                    <field name="item_type_id"/>
+                    <field name="product_group_id" />
+                    <field name="sub_product_group_id" />
+                    <field name="cost_segment_id" />
+                </xpath>
+            </field>
+        </record>
+        <record id="view_item_type_tree" model="ir.ui.view">
+            <field name="name">item.type.tree</field>
+            <field name="model">item.type</field>
+            <field name="arch" type="xml">
+                <list string="Item Types">
+                    <field name="name"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="action_item_type" model="ir.actions.act_window">
+            <field name="name">Item Types</field>
+            <field name="res_model">item.type</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <record id="view_product_group_form" model="ir.ui.view">
+            <field name="name">product.group.form</field>
+            <field name="model">product.group</field>
+            <field name="arch" type="xml">
+                <form string="Product Group">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_product_group_tree" model="ir.ui.view">
+            <field name="name">product.group.tree</field>
+            <field name="model">product.group</field>
+            <field name="arch" type="xml">
+                <list string="Product Groups">
+                    <field name="name"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="action_product_group" model="ir.actions.act_window">
+            <field name="name">Product Groups</field>
+            <field name="res_model">product.group</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <record id="view_sub_product_group_form" model="ir.ui.view">
+            <field name="name">sub.product.group.form</field>
+            <field name="model">sub.product.group</field>
+            <field name="arch" type="xml">
+                <form string="Sub Product Group">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_sub_product_group_tree" model="ir.ui.view">
+            <field name="name">sub.product.group.tree</field>
+            <field name="model">sub.product.group</field>
+            <field name="arch" type="xml">
+                <list string="Sub Product Groups">
+                    <field name="name"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="action_sub_product_group" model="ir.actions.act_window">
+            <field name="name">Sub Product Groups</field>
+            <field name="res_model">sub.product.group</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <record id="view_cost_segment_form" model="ir.ui.view">
+            <field name="name">cost.segment.form</field>
+            <field name="model">cost.segment</field>
+            <field name="arch" type="xml">
+                <form string="Cost Segment">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_cost_segment_tree" model="ir.ui.view">
+            <field name="name">cost.segment.tree</field>
+            <field name="model">cost.segment</field>
+            <field name="arch" type="xml">
+                <list string="Cost Segments">
+                    <field name="name"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="action_cost_segment" model="ir.actions.act_window">
+            <field name="name">Cost Segments</field>
+            <field name="res_model">cost.segment</field>
+            <field name="view_mode">list,form</field>
+        </record>
+        <menuitem id="menu_item_type" name="Item Types" parent="stock.menu_stock_config_settings" action="action_item_type"/>
+        <menuitem id="menu_product_group" name="Product Groups" parent="stock.menu_stock_config_settings" action="action_product_group"/>
+        <menuitem id="menu_sub_product_group" name="Sub Product Groups" parent="stock.menu_stock_config_settings" action="action_sub_product_group"/>
+        <menuitem id="menu_cost_segment" name="Cost Segments" parent="stock.menu_stock_config_settings" action="action_cost_segment"/>
+    </data>
+</odoo>

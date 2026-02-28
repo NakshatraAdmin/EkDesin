@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Step 2: Security group for Purchase Requisition Creator -->
+    <record id="group_purchase_requisition_creator" model="res.groups">
+        <field name="name">Purchase Requisition Creator</field>
+        <field name="category_id" ref="employee_purchase_requisition.employee_requisition"/>
+        <field name="comment">Users in this group can create Purchase Requisitions (PR). All users can create Material Requisitions (MR).</field>
+    </record>
+</odoo>

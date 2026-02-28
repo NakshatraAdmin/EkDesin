@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="material_issue_slip_pdf_doc">
+    <t t-call="web.basic_layout">
+
+<div class="page" style="font-size:13px;">
+
+<!-- HEADER -->
+<table style="width:100%; border-collapse:collapse; border:1px solid black;">
+<tr>
+    <td style="width:15%; border-right:1px solid black; padding:5px;">
+        <img t-if="docs.company_id.logo"
+                 t-att-src="image_data_uri(o.company_id.logo)"
+                 style="max-height:80px;"/>
+    </td>
+
+    <td style="width:55%; text-align:center; font-size:20px; font-weight:bold; border-right:1px solid black;">
+        Material Issue Slip
+    </td>
+
+    <td style="width:30%; padding:0;">
+        <table style="width:100%; border-collapse:collapse;">
+            <tr>
+                <td style="border-bottom:1px solid black; padding:4px;">Doc No:</td>
+                <td style="border-bottom:1px solid black; padding:4px;">
+                    <span t-esc="o.doc_no or '-'"/></td>
+            </tr>
+            <tr>
+                <td style="border-bottom:1px solid black; padding:4px;">Rev No:</td>
+                <td style="border-bottom:1px solid black; padding:4px;"><span t-esc="o.revision_no or '-'" /></td>
+            </tr>
+            <tr>
+                <td style="padding:4px;">Rev Date:</td>
+                <td style="padding:4px;"><span t-esc="o.revision_date and o.revision_date.strftime('%d/%m/%Y') or ''"/></td>
+            </tr>
+        </table>
+    </td>
+</tr>
+</table>
+
+<!-- INFO -->
+<table style="width:100%; border-collapse:collapse; border:1px solid black; margin-top:-1px;">
+<tr>
+    <td style="border:1px solid black; width:20%; padding:6px;">Requisition Date:</td>
+    <td style="border:1px solid black; width:30%; padding:6px;">
+        <t t-esc="o.scheduled_date"/>
+    </td>
+    <td style="border:1px solid black; width:20%; padding:6px;">Project Name:</td>
+    <td style="border:1px solid black; width:30%; padding:6px;">
+        <t t-esc="o.origin or ''"/>
+    </td>
+</tr>
+<tr>
+    <td style="border:1px solid black; padding:6px;">Requisition By:</td>
+    <td style="border:1px solid black; padding:6px;">
+        <t t-esc="o.material_requested_by_id.name"/>
+    </td>
+    <td style="border:1px solid black; padding:6px;">Material Received By:</td>
+    <td style="border:1px solid black; padding:6px;">
+         <t t-esc="o.material_received_by_id.name"/>
+    </td>
+</tr>
+</table>
+
+<!-- LINES -->
+<table style="width:100%; border-collapse:collapse; border:1px solid black; margin-top:-1px;">
+<thead>
+<tr style="font-weight:bold; text-align:center;background-color:#FFCCCB;" >
+    <td style="border:1px solid black;">Sr.No</td>
+    <td style="border:1px solid black;">Material Description</td>
+    <td style="border:1px solid black;">Required Qty</td>
+    <td style="border:1px solid black;">Issue Qty</td>
+    <td style="border:1px solid black;">Remarks</td>
+    <td style="border:1px solid black;">Material Issued By</td>
+</tr>
+</thead>
+
+<tbody>
+<t t-set="sr" t-value="1"/>
+<t t-foreach="o.move_ids_without_package" t-as="line">
+<tr>
+    <td style="border:1px solid black; text-align:center;">
+        <t t-esc="sr"/>
+    </td>
+    <td style="border:1px solid black; padding-left:5px;">
+        <t t-esc="line.product_id.name"/>
+    </td>
+    <td style="border:1px solid black; text-align:center;">
+        <t t-esc="line.product_uom_qty"/>
+    </td>
+    <td style="border:1px solid black; text-align:center;">
+        <t t-esc="line.quantity"/>
+    </td>
+    <td style="border:1px solid black;"><t t-esc="line.remark"/></td>
+    <td style="border:1px solid black;"><t t-esc="line.material_issued_by_id.name"/></td>
+</tr>
+<t t-set="sr" t-value="sr + 1"/>
+</t>
+</tbody>
+</table>
+
+<!-- SIGNATURE -->
+<table style="width:100%; border-collapse:collapse; border:1px solid black; margin-top:-1px;">
+<tr>
+    <td style="width:50%; height:70px; border-right:1px solid black; text-align:center; vertical-align:bottom;">
+        Requester Signature
+    </td>
+    <td style="width:50%; text-align:center; vertical-align:bottom;">
+        Store Person Signature
+    </td>
+</tr>
+</table>
+
+</div>
+</t>
+</template>
+
+  <template id="material_issue_slip_pdf">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="material_issue_slip_report.material_issue_slip_pdf_doc" t-lang="o.partner_id.lang"/>
+        </t>
+    </t>
+</template>
+
+</odoo>
+

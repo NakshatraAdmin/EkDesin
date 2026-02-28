@@ -1,0 +1,10 @@
+<odoo>
+    <data noupdate="0">
+        <record id="sale.action_report_saleorder" model="ir.actions.report">
+            <field name="report_name">sale_order_custom_report.sale_order_pdf</field>
+            <field name="report_file">sale_order_custom_report.sale_order_pdf</field>
+            <field name="name">EK Design Quotation</field>
+        </record>
+    </data>
+</odoo>
+

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Rename menu items from "Employee Purchase Requisition" to "Employee Requisition" -->
+    <record id="employee_purchase_requisition.employee_purchase_requisition_menu_root" model="ir.ui.menu">
+        <field name="name">Employee Requisition</field>
+    </record>
+    <record id="employee_purchase_requisition.employee_purchase_requisition_menu_create_purchase_requisition" model="ir.ui.menu">
+        <field name="name">Requisitions</field>
+    </record>
+
+</odoo>

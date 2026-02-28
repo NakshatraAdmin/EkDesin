@@ -1,0 +1,11 @@
+/* Order line list view - resize HTML images */
+.o_list_view .sale_comment_html img {
+    width: 50px !important;
+    height: 50px !important;
+    object-fit: contain;
+    display: block;
+}
+.o_list_view .sale_comment_html {
+    text-align: center;
+}
+

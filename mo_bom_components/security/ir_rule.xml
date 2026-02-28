@@ -1,0 +1,24 @@
+	<odoo>
+
+	<record id="rule_partner_customer_only" model="ir.rule">
+	    <field name="name">Customer Partners Only</field>
+	    <field name="model_id" ref="base.model_res_partner"/>
+	    <field name="groups" eval="[(4, ref('sale_order_customize.group_partner_customer'))]"/>
+	    <field name="domain_force">[('is_customer_partner','=',True)]</field>
+	</record>
+
+	<record id="rule_partner_vendor_only" model="ir.rule">
+	    <field name="name">Vendor Partners Only</field>
+	    <field name="model_id" ref="base.model_res_partner"/>
+	    <field name="groups" eval="[(4, ref('sale_order_customize.group_partner_vendor'))]"/>
+	    <field name="domain_force">[('is_vendor_partner','=',True)]</field>
+	</record>
+
+	<record id="rule_partner_internal_only" model="ir.rule">
+	    <field name="name">Internal Partners Only</field>
+	    <field name="model_id" ref="base.model_res_partner"/>
+	    <field name="groups" eval="[(4, ref('sale_order_customize.group_partner_internal'))]"/>
+	    <field name="domain_force">[('is_internal_partner','=',True)]</field>
+	</record>
+	</odoo>
+

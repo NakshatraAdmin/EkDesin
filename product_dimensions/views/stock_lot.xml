@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Lot Form View -->
+    <record id="view_stock_lot_form_inherit_dim" model="ir.ui.view">
+        <field name="name">stock.lot.form.inherit.dim</field>
+        <field name="model">stock.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group" position="inside">
+                <group string="Product Dimensions">
+                    <field name="length" readonly="1"/>
+                    <field name="width" readonly="1"/>
+                    <field name="height" readonly="1"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Lot Tree View -->
+    <record id="view_production_lot_tree_inherit" model="ir.ui.view">
+        <field name="name">stock.production.lot.tree.inherit.dim</field>
+        <field name="model">stock.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="inside">
+                <field name="length"/>
+                <field name="width" optional="show"/>
+                <field name="height" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

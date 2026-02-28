@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+       <record id="mrp_bom_form_inherit_dimensions" model="ir.ui.view">
+        <field name="name">mrp.bom.form.inherit.dimensions</field>
+        <field name="model">mrp.bom</field>
+        <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+        <field name="arch" type="xml">
+           <xpath expr="//field[@name='bom_line_ids']/list/field[@name='product_qty']" position="after">
+                <field name="show_dimensions" invisible="show_dimensions != True"/>
+                <field name="length" invisible="show_dimensions != True"/>
+                <field name="width" invisible="show_dimensions != True"/>
+                <field name="height" invisible="show_dimensions != True"/>
+                <field name="secondary_product_uom_qty" invisible="show_dimensions != True"/>
+                 <field name="sec_uom_id" readonly="1"/>
+                 
+
+            </xpath>
+        </field>
+    </record>
+</odoo>

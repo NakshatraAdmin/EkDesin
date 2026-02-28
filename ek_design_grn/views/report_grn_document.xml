@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="report_grn_custom">
+<t t-call="web.html_container">
+
+         <table width="100%" style="border:1px solid #000; border-collapse:collapse;">
+
+                <!-- HEADER ROW -->
+                <tr>
+                    <!-- LOGO -->
+                    <td style="border:1px solid #000; width:25%; padding:8px;">
+                        <img t-if="o.company_id.logo"
+                             t-att-src="image_data_uri(o.company_id.logo)"
+                             style="max-height:60px;"/>
+                    </td>
+
+                    <!-- TITLE -->
+                    <td style="border:1px solid #000; width:50%; text-align:center; font-weight:600;font-size:20px" >
+                        FURNITURE QUOTE FOR SAMPLE
+                    </td>
+
+                    <!-- DOC INFO -->
+                    <td style="border:1px solid #000; width:25%; padding:6px;font-size:10px; line-height:14px;">
+                                <strong>Rev No:</strong>
+                                <span t-field="o.revision_no"/><br/>
+
+                                <strong>Rev Date:</strong>
+                                <t t-if="o.revision_date">
+                                    <span t-field="o.revision_date"/>
+                                </t>
+                                <t t-else="">
+                                    <span>-</span>
+                                </t>
+                                <br/>
+
+                                <strong>Doc No:</strong>
+                                <span t-field="o.doc_no"/>
+                    </td>
+
+                </tr>
+            </table>
+
+    <div class="page" style="padding-top:0;">
+        <table style="width:100%; border-collapse:collapse; margin-top:8px; font-size:15px;">
+            <tr>
+
+                <!-- Bill To -->
+                
+                 <td style="width:50%; border:1px solid #000; padding:5px;">
+                    <strong>Vendor</strong><br/>
+                    <t t-esc="o.partner_id.name"/><br/>
+                    <t t-esc="o.partner_id.street or ''"/><br/>
+                    <t t-esc="o.partner_id.street2 or ''"/><br/>
+                    <t t-esc="(o.partner_id.city or '') + ' ' + (o.partner_id.zip or '')"/><br/>
+                    <t t-esc="o.partner_id.state_id.name or ''"/> ,
+                    <t t-esc="o.partner_id.country_id.name or ''"/><br/>
+                    GSTIN: <t t-esc="o.partner_id.vat or '-'"/>
+                </td>
+                <!-- Ship To -->
+                <td style="width:50%; border:1px solid #000; padding:5px;">
+                    <strong>Ship To</strong><br/>
+                    <t t-esc="o.company_id.name"/><br/>
+                    <t t-esc="o.company_id.street or ''"/><br/>
+                    <t t-esc="o.company_id.street2 or ''"/><br/>
+                    <t t-esc="(o.company_id.city or '') + ' ' + (o.company_id.zip or '')"/><br/>
+                    <t t-esc="o.company_id.state_id.name or ''"/> ,
+                    <t t-esc="o.company_id.country_id.name or ''"/><br/>
+                    GSTIN: <t t-esc="o.company_id.vat or '-'"/>
+                </td>
+
+            </tr>
+        </table>
+        <table style="width:100%; border-collapse:collapse; font-size:15px;">
+            <tr>
+
+                <!-- Supplier -->
+                <td style="width:50%; border:1px solid #000; padding:5px;">
+                    <strong><t t-esc="o.company_id.name"/></strong><br/>
+                    <t t-esc="o.company_id.street or ''"/><br/>
+                    <t t-esc="o.company_id.street2 or ''"/><br/>
+                    <t t-esc="(o.company_id.city or '') + ' ' + (o.company_id.zip or '')"/><br/>
+                    <t t-esc="o.company_id.state_id.name or ''"/> ,
+                    <t t-esc="o.company_id.country_id.name or ''"/><br/>
+                    GSTIN: <t t-esc="o.company_id.vat or '-'"/>
+                </td>
+               
+
+                <!-- PO Info -->
+               <td style="width:50%; border:1px solid #000; padding:5px; vertical-align:top;">
+    <table style="width:100%; border-collapse:collapse; font-size:13px;">
+        <tr>
+            <td style="width:45%; font-weight:bold;">Invoice No</td>
+            <td style="width:5%;">:</td>
+            <td style="width:50%;"><t t-esc="o.invoice_no or '-'"/></td>
+        </tr>
+        <tr>
+            <td style="font-weight:bold;">Invoice Date</td>
+            <td>:</td>
+            <td>
+                <t t-esc="o.invoice_date"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:bold;">Terms Of Delivery</td>
+            <td>:</td>
+            <td>
+                <t t-esc="o.terms_of_delivery"/>
+            </td>
+        </tr>
+        <tr>
+            <td style="font-weight:bold;">Project</td>
+            <td>:</td>
+            <td>
+                <t t-esc="o.project_id.name"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:bold;">GRN No</td>
+            <td>:</td>
+            <td><t t-esc="o.name or '-'"/></td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:bold;">GRN Date</td>
+            <td>:</td>
+            <td>
+                <t t-esc="o.date_done"/>
+            </td>
+        </tr>
+    </table>
+</td>
+
+
+            </tr>
+        </table>
+        <table style="width:100%; border:1px solid black; border-collapse:collapse; font-size:12px;margin-top:15px;">
+            <thead>
+                <tr style="background:#f0f0f0;">
+                 <th style="border:1px solid #000; padding:4px;">Sr No</th>
+                <th style="border:1px solid black; padding:5px;">Part Code</th>
+                <th style="border:1px solid black; padding:5px;">Description</th>
+                <th style="border:1px solid black; padding:5px;">Length</th>
+                <th style="border:1px solid black; padding:5px;">Height</th>
+                <th style="border:1px solid black; padding:5px;">Weight</th>
+                <th style="border:1px solid black; padding:5px;">Inv. Qty</th>
+                <th style="border:1px solid black; padding:5px;">UOM</th>
+                <th style="border:1px solid black; padding:5px;">Rec. Qty</th>
+                <th style="border:1px solid black; padding:5px;">Accepted Qty</th>
+                <th style="border:1px solid black; padding:5px;">Rej/Short Qty</th>
+                <th style="border:1px solid black; padding:5px;">Warehouse</th>
+                </tr>
+            </thead>
+            <tbody>
+                  <t t-set="sr" t-value="0"/>
+                <t t-foreach="o.move_ids_without_package" t-as="l">
+                    <t t-set="sr" t-value="sr + 1"/>
+                <tr>
+                <td style="border:1px solid #000; text-align:center; padding:4px;">
+                    <t t-esc="sr"/>
+                </td>
+                <td style="border:1px solid black; padding:5px;" t-esc="l.product_id.default_code or ''"></td>
+                <td style="border:1px solid black; padding:5px;" t-esc="l.product_id.name or ''"></td>
+                <td style="border:1px solid black; padding:5px;" t-esc="l.assume_length or ''"></td>
+                <td style="border:1px solid black; padding:5px;" t-esc="l.assume_width or ''"></td>
+                <td style="border:1px solid black; padding:5px;" t-esc="l.assume_height or ''"></td>
+                <td style="border:1px solid black; padding:5px; text-align:right;" t-esc="l.product_uom_qty or ''"></td>
+                <td style="border:1px solid black; padding:5px;" t-esc="l.product_uom.name or ''"></td>
+                <td style="border:1px solid black; padding:5px; text-align:right;" t-esc="l.quantity or ''"></td>
+                <td style="border:1px solid black; padding:5px; text-align:right;" t-esc="l.accept_qty or ''"></td>
+                <td style="border:1px solid black; padding:5px; text-align:right;" t-esc="l.reject_qty or ''"></td>
+                <td style="border:1px solid black; padding:5px;" t-esc="o.location_dest_id.complete_name or ''"></td>
+                </tr>
+                </t>
+            </tbody>
+    </table>
+
+<!-- <t t-set="sign_name" t-value="o.user_id.name or 'OdooBot'"/>
+ -->
+<table style="width:100%; margin-top:120px; border-collapse:collapse;">
+    <tr>
+        <!-- Prepared By -->
+        <td style="width:50%; text-align:left; vertical-align:top;">
+            <table style="margin-left:0 50px; border-collapse:collapse;">
+                <tr>
+                    <td style="
+                        width:200px;
+                        height:30px;
+                        border:1px solid #000;
+                        vertical-align:middle;
+                        text-align:left;
+                        font-size:13px;">
+                        <t t-esc="o.prepared_by_id.name"/>
+                        <!-- Empty box or name -->
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-top:6px;text-align:center; font-size:12px;">
+                        Prepared By
+                    </td>
+                </tr>
+            </table>
+        </td>
+
+        <!-- Accepted By -->
+        <td style="width:50%;margin-left:-450px; text-align:right; vertical-align:top;">
+            <table style="margin-left:250px; border-collapse:collapse;">
+                <tr>
+                    <td style="
+                        width:200px;
+                        height:30px;
+                        border:1px solid #000;
+                        vertical-align:middle;
+                        text-align:center;
+                        font-size:13px;">
+                        <t t-esc="o.approved_by_id.name"/>
+                        <!-- Empty box or name -->
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-top:6px; text-align:center;font-size:12px;">
+                        Accepted By
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+
+    <!-- DOC INFO LINE -->
+
+
+    <!-- FOOT NOTE -->
+    <div style="text-align:center; font-size:11px; margin-top:50px;">
+        This is a computer-generated document and does not require a signature.
+    </div>
+
+
+
+
+    </div>
+    </t> 
+</template>
+
+
+<template id="report_grn_document">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="ek_design_grn.report_grn_custom" t-lang="o.partner_id.lang"/>
+        </t>
+    </t>
+</template>
+
+ <!-- <record id="purchase.action_report_purchase_order" model="ir.actions.report">
+        <field name="report_name">purchase_order_custom_report.purchase_order_pdf</field>
+        <field name="report_file">purchase_order_custom_report.purchase_order_pdf</field>
+        <field name="name">Purchase Order</field>
+    </record>-->
+
+</odoo> 
+

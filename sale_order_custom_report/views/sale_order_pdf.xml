@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="sale_order_pdf_document">
+    <t t-call="web.basic_layout">
+        <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)"/>
+
+        <div class="page" style="font-size:12px;">
+
+            <!-- OUTER BORDER -->
+            <table width="100%" style="border:1px solid #000; border-collapse:collapse;">
+
+                <!-- HEADER ROW -->
+                <tr>
+                    <!-- LOGO -->
+                    <td style="border:1px solid #000; width:25%; padding:8px;">
+                        <img t-if="o.company_id.logo"
+                             t-att-src="image_data_uri(o.company_id.logo)"
+                             style="max-height:60px;"/>
+                    </td>
+
+                    <!-- TITLE -->
+                    <td style="border:1px solid #000; width:50%; text-align:center; font-weight:600;font-size:20px" >
+                        FURNITURE QUOTE FOR SAMPLE
+                    </td>
+
+                    <!-- DOC INFO -->
+                    <td style="border:1px solid #000; width:25%; padding:6px;">
+                        <strong>Doc No:</strong> <span t-field="o.name"/><br/>
+                        <strong>Doc Rev:</strong><br/>
+                        <strong>Rev Date:</strong> <span t-field="o.date_order"/>
+                    </td>
+                </tr>
+
+                <!-- ADDRESS ROW -->
+                <tr>
+                    <td colspan="3" style="border:1px solid #000; text-align:center; padding:6px;">
+                        <strong>Head office Address:</strong>
+                        6th Floor, VB Capitol, Range Hills Road, Opposite Hotel Symphony,
+                        Bhosale Nagar, Shivaji Nagar, Pune, Maharashtra 411007 India
+                    </td>
+                </tr>
+
+                <!-- CLIENT INFO ROW 1 -->
+                <tr>
+                    <td style="border:1px solid #000; padding:6px;background-color:#D2D9C3;">
+                        <strong>Quote For:</strong>
+                        <span t-esc="o.partner_id.name"/>
+                    </td>
+                    <td style="border:1px solid #000; padding:6px;background-color:#D2D9C3;">
+                        <strong>Date of Issue:</strong>
+                        <span t-esc="o.date_order"/>
+                    </td>
+                    <td style="border:1px solid #000; padding:6px;background-color:#D2D9C3;">
+                        <strong>Client Contract Info:</strong>
+                        <span t-esc="o.partner_id.phone"/>
+                    </td>
+                </tr>
+
+                <!-- CLIENT INFO ROW 2 -->
+                <tr>
+                    <td style="border:1px solid #000; padding:6px;background-color:#D2D9C3;">
+                        <strong>Client Contact Person:</strong>
+                        <span t-esc="o.partner_id.mobile"/>
+                    </td>
+                    <td style="border:1px solid #000; padding:6px;background-color:#D2D9C3;">
+                        <strong>Client GST:</strong>
+                        <span t-esc="o.partner_id.vat"/>
+                    </td>
+                    <td colspan="2" style="background-color:#D2D9C3;border:1px solid #000; padding:6px;">
+                        <strong>Client Billing Address:</strong>
+                        <span t-esc="o.partner_invoice_id.name"/>
+                    <span t-esc="o.partner_invoice_id.street or ''"/><br/>
+                    <span t-esc="o.partner_invoice_id.street2 or ''"/><br/>
+                    <span t-esc="(o.partner_invoice_id.city or '') + ' ' + (o.partner_invoice_id.zip or '')"/><br/>
+                    <span t-esc="o.partner_invoice_id.state_id.name or ''"/> ,
+                    <span t-esc="o.partner_invoice_id.country_id.name or ''"/><br/>
+                    </td>
+                </tr>
+                <!-- CLIENT INFO ROW 3 -->
+                <tr>
+                    <td style="background-color:#D2D9C3;border:1px solid #000; padding:6px;">
+                        <strong>EK Design Responsibility:</strong>
+                        <span t-esc="o.company_id.phone"/>
+                    </td>
+                    <td style="background-color:#D2D9C3;border:1px solid #000; padding:6px;">
+                        <strong>EK Design Contact Info:</strong>
+                        <span t-esc="o.company_id.phone"/>
+                    </td>
+                    <td colspan="2" style="background-color:#D2D9C3;border:1px solid #000; padding:6px;">
+                        <strong>Quote Revision Number:</strong>
+                        <span t-esc="o.name"/>
+                    </td>
+                </tr>
+
+            </table>
+            <!-- SALE ORDER LINES TABLE -->
+<table width="100%" style="border:1px solid #000; border-collapse:collapse; font-size:11px; margin-top:10px;">
+
+    <!-- TABLE HEADER -->
+    <thead>
+        <tr style="background-color:#FFCCCB; font-weight:600; text-align:center;">
+            <th style="border:1px solid #000; padding:4px;">Sr No</th>
+            <th style="border:1px solid #000; padding:4px;">Product Description</th>
+            <th style="border:1px solid #000; padding:4px;">Basic Dimension</th>
+            <th style="border:1px solid #000; padding:4px;">Reference Image</th>
+            <th style="border:1px solid #000; padding:4px;">Specifications</th>
+            <th style="border:1px solid #000; padding:4px;">UOM</th>
+            <th style="border:1px solid #000; padding:4px;">Price Per Unit</th>
+            <th style="border:1px solid #000; padding:4px;">Quantity</th>
+            <th style="border:1px solid #000; padding:4px;">Total excl tax</th>
+            <th style="border:1px solid #000; padding:4px;">Tax</th>
+            <th style="border:1px solid #000; padding:4px;">Total with tax</th>
+            <th style="border:1px solid #000; padding:4px;">Comments</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <t t-set="sr" t-value="0"/>
+        <t t-foreach="o.order_line" t-as="line">
+            <t t-set="sr" t-value="sr + 1"/>
+            <tr>
+                <!-- Sr No -->
+                <td style="border:1px solid #000; text-align:center; padding:4px;">
+                    <t t-esc="sr"/>
+                </td>
+
+                <!-- Product Description -->
+                <td style="border:1px solid #000; padding:4px;">
+                    <strong t-esc="line.product_id.display_name"/>
+                </td>
+
+                <!-- Basic Dimension -->
+                <td style="border:1px solid #000; text-align:center; padding:4px;">
+<!--                     <t t-esc="line.product_id.notes or ''"/>
+ -->                </td>
+
+                <!-- Reference Image -->
+                <td style="border:1px solid #000; text-align:center; padding:4px;">
+                    <img t-if="line.product_id.image_1920"
+                         t-att-src="image_data_uri(line.product_id.image_1920)"
+                         style="max-height:60px; max-width:80px;"/>
+                </td>
+
+                <!-- Specifications -->
+                <td style="border:1px solid #000; padding:4px;">
+                    <t t-esc="line.name"/>
+                </td>
+
+                <!-- UOM -->
+                <td style="border:1px solid #000; text-align:center; padding:4px;">
+                    <t t-esc="line.product_uom.name"/>
+                </td>
+
+                <!-- Price Per Unit -->
+                <td style="border:1px solid #000; text-align:right; padding:4px;">
+                    <t t-esc="line.price_unit"/>
+                </td>
+
+                <!-- Quantity -->
+                <td style="border:1px solid #000; text-align:center; padding:4px;">
+                    <t t-esc="line.product_uom_qty"/>
+                </td>
+
+                <!-- Total excl tax -->
+                <td style="border:1px solid #000; text-align:right; padding:4px;">
+                    <t t-esc="line.price_subtotal"/>
+                </td>
+
+                <!-- Tax -->
+                <td style="border:1px solid #000; text-align:right; padding:4px;">
+                    <t t-esc="line.price_tax"/>
+                </td>
+
+                <!-- Total with tax -->
+                <td style="border:1px solid #000; text-align:right; padding:4px;">
+                    <t t-esc="line.price_total"/>
+                </td>
+
+                <!-- Comments -->
+                <td style="border:1px solid #000; padding:4px;">
+                <div class="sale-comment">
+                    <t t-raw="line.sale_comment"/>
+                </div>
+            </td>
+
+            <style>
+            .sale-comment img {
+                width: 50px !important;
+                height: auto !important;
+            }
+            </style>
+            </tr>
+        </t>
+    </tbody>
+
+</table>
+<!-- TOTAL SUMMARY SECTION -->
+<table width="100%" style="margin-top:10px; border-collapse:collapse; font-size:11px;">
+    <tr>
+        <!-- EMPTY LEFT SPACE -->
+        <td width="70%"></td>
+
+        <!-- RIGHT TOTAL TABLE -->
+        <td width="30%">
+            <table width="100%" style="border:1px solid #000; border-collapse:collapse;">
+
+                <tr>
+                    <td style="border:1px solid #000; padding:4px;">
+                        <strong>Basic Amount</strong>
+                    </td>
+                    <td style="border:1px solid #000; padding:4px; text-align:right;">
+                        <t t-esc="o.amount_untaxed"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="border:1px solid #000; padding:4px;">
+                        <strong>Adjustments</strong>
+                    </td>
+                    <td style="border:1px solid #000; padding:4px; text-align:right;">
+                        <t t-esc="o.amount_roundoff or 0.0"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="border:1px solid #000; padding:4px;">
+                        <strong>Total</strong>
+                    </td>
+                    <td style="border:1px solid #000; padding:4px; text-align:right;">
+                        <t t-esc="o.amount_untaxed + (o.amount_roundoff or 0.0)"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="border:1px solid #000; padding:4px;">
+                        <strong>GST @ 18%</strong>
+                    </td>
+                    <td style="border:1px solid #000; padding:4px; text-align:right;">
+                        <t t-esc="o.amount_tax"/>
+                    </td>
+                </tr>
+
+                <tr style="font-weight:600;">
+                    <td style="border:1px solid #000; padding:4px;">
+                        <strong>GRAND TOTAL</strong>
+                    </td>
+                    <td style="border:1px solid #000; padding:4px; text-align:right;">
+                        <t t-esc="o.amount_total_rounded"/>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+</table>
+<table class="table table-sm" style="width:100%; border-collapse:collapse; font-size:12px;">
+    <!-- Header -->
+    <tr>
+        <td colspan="2"
+            style="background-color:#a9c9e6; font-weight:bold; padding:6px; border:1px solid #000;">
+            Terms &amp; Conditions:
+        </td>
+    </tr>
+
+    <!-- Rows -->
+    <tr>
+        <td colspan="2" style="border:1px solid #000; padding:5px;">
+            <span style="color:red; font-weight:bold;">* The rates provided are Ex-Factory.</span>
+            Transportation, loading, and unloading are either to be arranged by the client or will be charged additionally.
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2" style="border:1px solid #000; padding:5px;">
+            * The rates are provided by considering solid shade of laminate. If any shade other than solid color, rates will change as per layout optimization.
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2" style="border:1px solid #000; padding:5px;">
+            * The quote is given as per reference images only. Any change in design, specifications, dimensions or reference image may lead to change in amount.
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2" style="border:1px solid #000; padding:5px;">
+            * For modular product installations, the quoted cost covers 07 working days of assembly team.
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2" style="border:1px solid #000; padding:5px;">
+            * Terms of Payment: 50% with confirmed PO, 30% before production completion, 15% before delivery, 5% upon completion of project site and handover.
+        </td>
+    </tr>
+</table>
+<table class="table table-sm" style="width:100%; border-collapse:collapse; margin-top:10px; font-size:12px;">
+    <!-- Header -->
+    <tr>
+        <td colspan="2"
+            style="background-color:#a9c9e6; font-weight:bold; padding:6px; border:1px solid #000;">
+            Bank Details for Payment Transfers
+        </td>
+    </tr>
+
+    <tr>
+        <td style="border:1px solid #000; padding:5px; width:30%;">Account Name</td>
+        <td style="border:1px solid #000; padding:5px;">EK DESIGN INDUSTRIES LIMITED</td>
+    </tr>
+
+    <tr>
+        <td style="border:1px solid #000; padding:5px;">Account Number</td>
+        <td style="border:1px solid #000; padding:5px;">50200092973814</td>
+    </tr>
+
+    <tr>
+        <td style="border:1px solid #000; padding:5px;">Account Type</td>
+        <td style="border:1px solid #000; padding:5px;">Current Account</td>
+    </tr>
+
+    <tr>
+        <td style="border:1px solid #000; padding:5px;">IFSC Code</td>
+        <td style="border:1px solid #000; padding:5px;">HDFC0003981</td>
+    </tr>
+
+    <tr>
+        <td style="border:1px solid #000; padding:5px;">Bank and Branch</td>
+        <td style="border:1px solid #000; padding:5px;">HDFC Bank Pune Aundh</td>
+    </tr>
+</table>
+<table style="width:100%; margin-top:8px;">
+    <tr>
+        <td style="background-color:#b7d99a; padding:6px; border:1px solid #000; font-size:12px;">
+            <strong>*</strong> We also accept payments via UPI, Debit / Credit Card and Netbanking.
+            Please ask your EK Design representative about these options at the time of placing your order.
+        </td>
+    </tr>
+</table>
+
+
+
+
+
+
+
+        </div>
+    </t>
+</template>
+
+
+    <template id="sale_order_pdf">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="sale_order_custom_report.sale_order_pdf_document" t-lang="o.partner_id.lang"/>
+        </t>
+    </t>
+</template>
+
+<!-- 
+ <record id="sale.action_report_saleorder" model="ir.actions.report">
+        <field name="report_name">sale_order_custom_report.sale_order_pdf</field>
+        <field name="report_file">sale_order_custom_report.sale_order_pdf</field>
+        <field name="name">Sale Order</field>
+    </record> -->
+
+    <!-- <record id="sale.action_report_saleorder" model="ir.actions.report">
+    <field name="binding_model_id" eval="False"/>
+</record> -->
+
+  <!--   <record id="sale.action_report_saleorder" model="ir.actions.report">
+    <field name="report_name">sale_order_custom_report.sale_order_pdf</field>
+    <field name="report_file">sale_order_custom_report.sale_order_pdf</field>
+    <field name="name">EK Desing Quotation </field>
+</record> -->
+
+<!-- <record id="sale.action_report_saleorder" model="ir.actions.report">
+    <field name="binding_model_id" eval="False"/>
+</record> -->
+
+<!-- <record id="sale.report_saleorder" model="ir.actions.report">
+    <field name="binding_model_id" eval="False"/>
+</record> -->
+
+ <!-- <record id="sale.action_report_saleorder" model="ir.actions.report">
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">report</field>
+    </record>
+    <record id="sale.action_report_saleorder" model="ir.actions.report">
+    <field name="binding_model_id" ref="sale.model_sale_order"/>
+    <field name="binding_type">report</field>
+</record> -->
+</odoo>
+

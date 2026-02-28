@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="purchase_order_form_inherit_dimension" model="ir.ui.view">
+        <field name="name">purchase.order.view.form.inherit.dimensions</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="model">purchase.order</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/list/field[@name='product_uom'][2]" position="after">
+                 <field name="show_dimensions"/>
+                <field name="length"
+                invisible="show_dimensions != True"/>
+                <field name="width" invisible="show_dimensions != True"/>
+                <field name="height" invisible="show_dimensions != True"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

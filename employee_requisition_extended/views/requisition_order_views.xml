@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Update vendor column visibility and readonly based on parent request_type and state -->
+    <record id="requisition_order_view_tree_extended" model="ir.ui.view">
+        <field name="name">requisition.order.view.list.extended</field>
+        <field name="model">requisition.order</field>
+        <field name="inherit_id" ref="employee_purchase_requisition.requisition_order_view_tree"/>
+        <field name="arch" type="xml">
+            <!-- Update partner_id field: visibility, readonly, and groups -->
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="column_invisible">parent.request_type == 'material_requisition'</attribute>
+                <!-- Remove groups restriction - allow Purchase department users to see and edit vendor -->
+                <attribute name="groups" remove="1"/>
+                <!-- Vendor selection: Readonly during new and approval stages, editable only in 'approved' state -->
+                <!-- Server-side validation ensures only Purchase department users can edit vendor in approved state -->
+                <attribute name="readonly">parent.state != 'approved'</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

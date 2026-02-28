@@ -1,0 +1,32 @@
+<odoo>
+
+    <record id="product_template_form_sale_comment" model="ir.ui.view">
+        <field name="name">product.template.form.sale.comment</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//notebook" position="inside">
+                <page string="product Comment">
+                    <field name="product_comment" widget="html"/>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+   <!--  <record id="product_product_form_sale_comment" model="ir.ui.view">
+        <field name="name">product.product.form.sale.comment</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//notebook" position="inside">
+                <page string="product Comment">
+                    <field name="product_comment" widget="html"/>
+                </page>
+            </xpath>
+
+        </field>
+    </record> -->
+</odoo>
