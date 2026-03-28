@@ -72,7 +72,7 @@
                 >is_approval_required or state in ('draft','pending_approval', 'rejected')</attribute>
             </xpath>
             <xpath
-                expr="//header//button[@name='action_cancel']"
+                expr="//header//button[@name='action_open_cancel_reason']"
                 position="attributes"
             >
                 <attribute
