@@ -4,3 +4,5 @@
 from . import mrp_bom
 from . import approval_request
 from . import dynamic_approval_rule
+from . import mrp_production
+from . import sale_order
