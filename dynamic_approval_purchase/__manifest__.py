@@ -8,6 +8,6 @@
     "license": "LGPL-3",
     "summary": "Dynamic approval workflow for Purchase Orders based on rules.",
     "data": [
-        "views/purchase_order_views.xml",
+        # "views/purchase_order_views.xml",
     ],
 }

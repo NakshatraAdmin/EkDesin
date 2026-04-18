@@ -142,8 +142,8 @@ class PurchaseOrder(models.Model):
 
     def button_confirm(self):
         is_approved = self.is_approved
-        if not is_approved:
-            raise UserError(_("This order requires approval before confirmation."))
+        # if not is_approved:
+        #     raise UserError(_("This order requires approval before confirmation."))
         return super().button_confirm()
 
     def action_rfq_send(self):
