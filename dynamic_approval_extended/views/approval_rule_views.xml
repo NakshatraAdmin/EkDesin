@@ -1,0 +1,12 @@
+<odoo>
+    <record id="view_dynamic_approval_rule_form_inherit" model="ir.ui.view">
+        <field name="name">dynamic.approval.rule.form.inherit</field>
+        <field name="model">dynamic.approval.rule</field>
+        <field name="inherit_id" ref="dynamic_approval_rule.view_dynamic_approval_rule_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='approval_type']" position="attributes">
+                <attribute name="readonly">False</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
