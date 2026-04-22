@@ -1,0 +1,42 @@
+<odoo>
+    <record id="view_form_approval_request_parallel_inherit" model="ir.ui.view">
+        <field name="name">approval.request.form.parallel.inherit</field>
+        <field name="model">approval.request</field>
+        <field name="inherit_id" ref="dynamic_approval_rule.view_form_approval_request" />
+        <field name="arch" type="xml">
+            <xpath expr="//form/header/field[@name='state']" position="after">
+                <button
+                    name="action_approve"
+                    type="object"
+                    string="Approve"
+                    class="btn-primary"
+                    invisible="not is_show_approve_reject_button"
+                />
+                <button
+                    name="action_reject"
+                    type="object"
+                    string="Reject"
+                    class="btn-danger"
+                    invisible="not is_show_approve_reject_button"
+                />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_my_pending_approval_request" model="ir.actions.act_window">
+        <field name="name">My Pending Approvals</field>
+        <field name="res_model">approval.request</field>
+        <field name="view_mode">list,form</field>
+        <field
+            name="domain"
+        >[('state', '=', 'to_approve'), '|', ('approval_line_ids.primary_approver', '=', uid), ('approval_line_ids.secondary_approver', '=', uid)]</field>
+    </record>
+
+    <menuitem
+        id="menu_my_pending_approval_request"
+        name="My Pending Approvals"
+        parent="dynamic_approval_rule.menu_dynamic_approval_rules"
+        action="action_my_pending_approval_request"
+        sequence="25"
+    />
+</odoo>
