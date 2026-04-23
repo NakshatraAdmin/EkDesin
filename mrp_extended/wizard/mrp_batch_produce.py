@@ -15,7 +15,9 @@ class MrpBatchProduce(models.TransientModel):
 
             production = wizard.production_id
             lot_name = production.lot_producing_id.name
-            if not lot_name and production.product_id.tracking in ('lot', 'serial'):
-                lot_name = stock_lot._generate_lot_serial_number(production.product_id)
+            if production.product_id.tracking == 'serial' and production.lot_producing_id:
+                lot_name = stock_lot._get_next_serial(production.company_id, production.product_id)
+            elif not lot_name and production.product_id.tracking in ('lot', 'serial'):
+                lot_name = stock_lot._get_next_serial(production.company_id, production.product_id)
 
             wizard.lot_name = lot_name

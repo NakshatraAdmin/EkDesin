@@ -81,6 +81,12 @@ class StockLot(models.Model):
             next_seq += 1
 
     @api.model
+    def _get_next_serial(self, company, product):
+        if not product or product.tracking == 'none':
+            return False
+        return self._generate_lot_serial_number(product)
+
+    @api.model
     def create(self, vals_list):
         if isinstance(vals_list, dict):
             vals_list = [vals_list]
