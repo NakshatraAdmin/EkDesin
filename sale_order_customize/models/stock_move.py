@@ -6,6 +6,8 @@ class StockMove(models.Model):
 
     def write(self, vals):   # Greater than Demand Quantity
         for move in self:
+            if move.raw_material_production_id or move.production_id:
+                continue
             demand_qty = vals.get('product_uom_qty', move.product_uom_qty)
             qty = vals.get('quantity', move.quantity)
 
