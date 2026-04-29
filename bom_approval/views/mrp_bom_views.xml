@@ -11,10 +11,11 @@
                         class="btn btn-primary"
                         name="button_send_for_approval"
                         type="object"
-                        invisible="not is_approval_required or state != False"
+                        invisible="state != False"
                         string="Send For Approval"
                         data-hotkey="q"
                     />
+                    <!-- not is_approval_required or  -->
                     <button
                         class="btn btn-primary"
                         name="button_send_to_draft"
