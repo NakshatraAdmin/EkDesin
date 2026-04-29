@@ -18,6 +18,7 @@ class MrpBom(models.Model):
         ],
         string="Stage",
         tracking=True,
+        copy=False
     )
     is_show_approve_reject_button = fields.Boolean(
         compute="_compute_show_approve_reject_button"
