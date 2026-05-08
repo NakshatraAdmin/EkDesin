@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="paperformat_material_issue_slip" model="report.paperformat">
+        <field name="name">Material Issue Slip</field>
+        <field name="default">False</field>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">10</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">10</field>
+        <field name="margin_right">10</field>
+    </record>
+
+    <record id="action_report_material_issue_slip" model="ir.actions.report">
+        <field name="name">Material Issue Slip</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ek_design_grn.report_material_issue_slip_document</field>
+        <field name="report_file">ek_design_grn.report_material_issue_slip_document</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'Material Issue Slip - %s' % (object.name or '')</field>
+        <field name="paperformat_id" ref="paperformat_material_issue_slip"/>
+    </record>
+</odoo>

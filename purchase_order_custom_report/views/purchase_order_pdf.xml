@@ -4,42 +4,43 @@
 <t t-call="web.basic_layout">
 
         <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)"/>
-         <table width="100%" style="border:1px solid #000; border-collapse:collapse;">
+         <table width="100%" style="border:0px solid white !important;">
 
                 <!-- HEADER ROW -->
                 <tr>
                     <!-- LOGO -->
-                    <td style="border:1px solid #000; width:25%; padding:8px;">
+                    <td style="border:0px solid white !important; width:25%;">
                         <img t-if="o.company_id.logo"
                              t-att-src="image_data_uri(o.company_id.logo)"
                              style="max-height:60px;"/>
                     </td>
 
                     <!-- TITLE -->
-                    <td style="border:1px solid #000; width:50%; text-align:center; font-weight:600;font-size:20px" >
+                    <td style="border:0px solid white !important; width:50%; text-align:center; font-weight:600;font-size:20px" >
                         Purchase Order
                     </td>
 
                     <!-- DOC INFO -->
-                    <td style="border:1px solid #000; width:25%; padding:6px;font-size:10px; line-height:14px;">
-                                <strong>Rev No:</strong>
-                                <span t-field="o.revision_no"/><br/>
-
-                                <strong>Rev Date:</strong>
-                                <t t-if="o.revision_date">
-                                    <span t-field="o.revision_date"/>
-                                </t>
-                                <t t-else="">
-                                    <span>-</span>
-                                </t>
-                                <br/>
-
-                                <strong>Doc No:</strong>
-                                <span t-field="o.doc_no"/>
+                    <td style="border:0px solid white !important; width:25%; padding:6px;font-size:10px; line-height:14px;">
                     </td>
 
                 </tr>
             </table>
+        <div style="text-align: right;font-size: 10px;">
+            (<span>Doc No:</span>
+            <span t-field="o.doc_no"/>
+
+            <span>Rev No:</span>
+            <span t-field="o.revision_no"/>
+
+            <span>Rev Date:</span>
+            <t t-if="o.revision_date">
+                <span t-field="o.revision_date"/>
+            </t>
+            <t t-else="">
+                <span>-</span>
+            </t>)
+        </div>
           
 
 

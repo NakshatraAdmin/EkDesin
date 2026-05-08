@@ -8,15 +8,16 @@
     "data": [
         "views/report_grn_document_action.xml",
         "views/report_grn_document.xml",
-         "views/stock_picking.xml"
+        "views/report_material_issue_slip_action.xml",
+        "views/report_material_issue_slip.xml",
+        "views/stock_picking.xml"
     ],
     "assets": {
         "web.report_assets_pdf": [
-            "purchase_order_custom_report/static/src/css/purchase_report.css"
+            "ek_design_grn/static/src/css/purchase_report.css"
         ]
     },
     "installable": True,
     "application": False,
     "license": "LGPL-3"
 }
-

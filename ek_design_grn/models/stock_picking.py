@@ -2,6 +2,7 @@ from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 from odoo.tools.float_utils import float_compare
 
+
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
