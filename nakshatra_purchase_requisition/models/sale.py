@@ -35,7 +35,7 @@ class SaleOrder(models.Model):
 
     def action_confirm(self):
         res = super().action_confirm()
-        self.action_create_purchase_requisition()
+        #self.action_create_purchase_requisition()
         return res
 
     def action_create_purchase_requisition(self):
