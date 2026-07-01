@@ -207,18 +207,9 @@
             </table>
         </t>
 
-        <div style="
-        background:#ffffff !important;
-        color:#000000 !important;
-        font-size:10px;
-        text-align:center;
-        padding:6px 0;
-        border-top:1px solid #000;
-         margin-top:30px;
-    ">
-        This is a computer-generated document and does not require a signature
-       
-        Page <span class="page"/> of <span class="topage"/>
+        <div class="footer" style="background:#ffffff !important; color:#000000 !important; font-size:10px; text-align:center; padding:6px 0 0; border-top:1px solid #000; width:100%;">
+        <div>This is a computer-generated document and does not require a signature</div>
+        <div>Page <span class="page"/> of <span class="topage"/></div>
     </div>
              </div>
 
